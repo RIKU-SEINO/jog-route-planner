@@ -1,0 +1,35 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #fff;
+    font-family: "Arial";
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: 10px;
+    background-color: #c5c2c2;
+    top: 0;
+    width: 100%;
+}
+
+#icon {
+    float: left;
+}
+
+.login-signup-btns {
+    float: right;
+}
+
+#map {
+    height: 100%;
+}
+
+#map-container {
+    flex: 1;
+}
