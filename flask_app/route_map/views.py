@@ -1,9 +1,12 @@
-from flask import Flask, Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 import osmnx as ox
-import json
-from shapely.geometry import box
+import networkx as nx
 from utils.custom_thread import CustomThread
 import threading
+from math import radians, sin, cos, sqrt, atan2
+import numpy as np
+from flask_app.route_map.route_lib.fetch_graph import fetch_graph
+from flask_app.route_map.route_lib.plan_route import plan_route
 
 route_map = Blueprint(
     'route_map',
@@ -13,20 +16,20 @@ route_map = Blueprint(
     url_prefix='/map',
 )
 
-def fetch_graph_data(bounds):
-    west, south, east, north = list(map(float, bounds.split(",")))
-    bbox = box(west, south, east, north)
-    custom_filter = '["highway"~"|footway|path|steps"]["footway"!="crossing"]["highway"!="pedestrian"]["access"!="private"]'
-    print("地図読込み開始")
-    G = ox.graph_from_polygon(bbox, network_type='walk', custom_filter=custom_filter)
-    print("地図読込み終了")
-    return G
+def execute_search(lat_lon, target_distance_min):
+    G, start_point, end_point = fetch_graph(lat_lon=lat_lon)
+    route, route_length = plan_route(G=G,start_point=start_point, end_point=end_point, target_distance_min=target_distance_min)
+    return route, route_length
 
 @route_map.route("/",methods=["POST","GET"])
 def home():
     if request.method == "POST":
-        bounds = request.json["bounds"]
-        thread = CustomThread(target=fetch_graph_data, args=(bounds,))
+        lat_lon = (request.json["startlatLng"], request.json["endlatLng"])
+        target_distance_min = 5000
+        route, route_length = execute_search(lat_lon=lat_lon, target_distance_min=target_distance_min)
+
+        '''
+        thread = CustomThread(target=execute_search, args=(lat_lon,target_distance_min))
         current_threads = threading.enumerate()
         print(current_threads)
         print("上がカレンとスレッド！！！！")
@@ -42,8 +45,9 @@ def home():
         print(threading.enumerate())
         print("\n\n\n")
         thread.join()
-
-
+        '''
+        print(route)
+        return jsonify({'route': route, 'route_length': route_length})
     return render_template('map/index.html')
 
 def process_graph(G):

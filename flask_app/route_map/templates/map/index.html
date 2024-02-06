@@ -36,6 +36,7 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <script>
+        let controller = null;
         let map = L.map('map').setView([35.683969, 139.753326], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -55,46 +56,72 @@
             if (!startMarker) {
                 // スタート位置が選択されていない場合
                 startMarker = L.marker(latLng).addTo(map);
-                startAddress = reverseGeoCoder(latLng.lat, latLng.lng)
+                startlatLng = latLng;
+                startAddress = reverseGeoCoder(startlatLng)
             } else if (!goalMarker) {
                 // ゴール位置が選択されていない場合
                 goalMarker = L.marker(latLng).addTo(map);
-                goalAddress = reverseGeoCoder(latLng.lat, latLng.lng)
-                updateRoute();
+                endlatLng = latLng;
+                endAddress = reverseGeoCoder(endlatLng)
+                updateRoute(startlatLng, endlatLng);
             }
         })
 
-        function updateRoute(){
-            let bounds = map.getBounds();
+        async function updateRoute(startlatLng, endlatLng){
 
-            fetch('/map',{
+            await fetch('/map',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ bounds: bounds.toBBoxString() })
+                body: JSON.stringify({ startlatLng: startlatLng, endlatLng: endlatLng })
             })
             .then(response => response.json())
-            .then(graphData => {
-            console.log('Received graph data:', graphData);
+            .then(data => {
+                L.polyline(data.route, { "color": "red" }).addTo(map);
+                for (var i=0; i<=data.route.length-1; i++) {
+                    coordinate = data.route[i];
+                    if (i == 0){
+                        var color = "blue";
+                    }else if (i == data.route.length-1){
+                        var color = "green";
+                    }else {
+                        var color = "red";
+                    }
+                    L.circle(coordinate, 5, {
+                        color: color
+                    }).addTo(map).bindPopup("通過点"+(i+1)+"/"+data.route.length);
+                };
             }).catch(error => alert(error));
         }
 
-        async function reverseGeoCoder(lat, lng) {
-            let url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng;
-            try {
-                let response = await fetch(url);
+        async function reverseGeoCoder(latLng) {
+            // 以前のリクエストがあればキャンセル
+            if (controller) {
+                controller.abort();
+            }
 
+            controller = new AbortController();
+            let signal = controller.signal;
+
+            let url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + latLng.lat + '&lon=' + latLng.lng;
+
+            try {
+                const response = await fetch(url, { signal });
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok');
                 }
-                let data = await response.json();
-                let address = data.display_name;
+                const data = await response.json();
+                const address = data.display_name;
                 alert(address)
                 return address;
             } catch (error) {
-            console.error('Error:', error);
-            return ""; // エラーが発生した場合は空の文字列を返す
+                if (error.name === 'AbortError') {
+                    console.warn('Request aborted:', error.message);
+                } else {
+                    console.error('Error:', error);
+                    return "pinned position";
+                }
             }
         }
 
