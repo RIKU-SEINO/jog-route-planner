@@ -96,10 +96,9 @@ def plan_route(G, start_point, end_point, target_distance_min):
     # A*アルゴリズムによる最短経路探索
     route = nx.shortest_path(G, start_node, end_node, weight="length")
     route_length = get_route_length(G, route)
-
+    gdf = ox.graph_to_gdfs(G, nodes=True, edges=False)
     if route_length < target_distance_min:
         print(f"route_length: {route_length}, target_distance_min: {target_distance_min}")
-        gdf = ox.graph_to_gdfs(G, nodes=True, edges=False)
         route = extend_route(G, gdf, route, target_distance_min)
         print(f"longest route length: {get_route_length(G,route)}")
         print(f"intersecrtions in longest route: {len(route)-1}")
