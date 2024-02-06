@@ -23,4 +23,3 @@ class CustomThread(threading.Thread):
         resu = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), ctypes.py_object(SystemExit))
         if resu > 1:
             ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), 0)
-            print('Failure in raising exception')

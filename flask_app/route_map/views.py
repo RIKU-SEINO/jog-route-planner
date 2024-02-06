@@ -2,8 +2,7 @@ from flask import Flask, Blueprint, render_template, request
 import osmnx as ox
 import json
 from shapely.geometry import box
-from threading import Thread
-from utils.utils import CustomThread
+from utils.custom_thread import CustomThread
 import threading
 
 route_map = Blueprint(
@@ -13,8 +12,6 @@ route_map = Blueprint(
     template_folder='templates',
     url_prefix='/map',
 )
-
-ox.config(use_cache=False, log_console=True)
 
 def fetch_graph_data(bounds):
     west, south, east, north = list(map(float, bounds.split(",")))
@@ -44,6 +41,7 @@ def home():
         print("中止後")
         print(threading.enumerate())
         print("\n\n\n")
+        thread.join()
 
 
     return render_template('map/index.html')
