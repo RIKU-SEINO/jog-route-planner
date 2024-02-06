@@ -34,10 +34,10 @@ def score_neighbor_node(graph, gdf, start_node, prev_node, current_node, neighbo
   norm_vec_prev_to_current = np.linalg.norm(vec_prev_to_current)
   prod = np.dot(vec_current_to_neighbor, vec_prev_to_current)
   if (norm_vec_prev_to_current <= 10e-10) or (norm_vec_current_to_neighbor <= 10e-10):
-    cosine = 0.5
+    cosine = 1
   else:
     cosine = prod / (norm_vec_current_to_neighbor*norm_vec_prev_to_current)
-  cosine_score = cosine
+  cosine_score = 1 - cosine
   shortest_path_length_between_neighbor_and_end = nx.shortest_path_length(graph, neighbor_node, end_node, weight="length")
   shortest_path_length_between_current_and_neighbor = nx.shortest_path_length(graph, current_node, neighbor_node, weight="length")
   score = (shortest_path_length_between_neighbor_and_end + shortest_path_length_between_current_and_neighbor) * cosine_score
@@ -99,10 +99,11 @@ def plan_route(G, start_point, end_point, target_distance_min):
     gdf = ox.graph_to_gdfs(G, nodes=True, edges=False)
     if route_length < target_distance_min:
         print(f"route_length: {route_length}, target_distance_min: {target_distance_min}")
-        route = extend_route(G, gdf, route, target_distance_min)
-        print(f"longest route length: {get_route_length(G,route)}")
-        print(f"intersecrtions in longest route: {len(route)-1}")
+        longest_route = extend_route(G, gdf, route, target_distance_min)
+        longest_route_length = get_route_length(G,longest_route)
+        print(f"longest route length: {longest_route_length}")
+        print(f"intersecrtions in longest route: {len(longest_route)-1}")
     print("探索終了")
-    route = get_nodes_coordinates(gdf,route)
+    longest_route = get_nodes_coordinates(gdf,longest_route)
 
-    return route, route_length
+    return longest_route, longest_route_length

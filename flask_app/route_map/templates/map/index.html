@@ -92,6 +92,7 @@
                         color: color
                     }).addTo(map).bindPopup("通過点"+(i+1)+"/"+data.route.length);
                 };
+                alert("route length: "+(data.route_length/1000)+"km")
             }).catch(error => alert(error));
         }
 
