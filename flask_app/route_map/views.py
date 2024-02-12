@@ -1,12 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify
-import osmnx as ox
-import networkx as nx
-from utils.custom_thread import CustomThread
-import threading
-from math import radians, sin, cos, sqrt, atan2
-import numpy as np
-from flask_app.route_map.route_lib.fetch_graph import fetch_graph
-from flask_app.route_map.route_lib.plan_route import plan_route
+from flask import Blueprint, render_template, request, jsonify, send_from_directory
+import requests
 
 route_map = Blueprint(
     'route_map',
@@ -16,39 +9,34 @@ route_map = Blueprint(
     url_prefix='/map',
 )
 
-def execute_search(lat_lon, target_distance_min):
-    G, start_point, end_point = fetch_graph(lat_lon=lat_lon)
-    route, route_length = plan_route(G=G,start_point=start_point, end_point=end_point, target_distance_min=target_distance_min)
-    return route, route_length
+def execute_search(y_start, x_start, y_end, x_end, target_length):
+    url = f"https://trailrouter.com/ors/experimentalroutes?coordinates={x_start},{y_start}%7C{x_end},{y_end}&skip_segments=&green_preference=0.8&avoid_unsafe_streets=false&avoid_unlit_streets=false&hills_preference=0&avoid_repetition=true&target_distance={target_length}&roundtrip=false"
+    res = requests.get(url)
+    data = res.json()
+    route = data["routes"][0]["geometry"]["coordinates"]
+    route_length = data["routes"][0]["distance"]
+    way_points = data["routes"][0]["waypoints"]
+    return route, route_length, way_points
+
 
 @route_map.route("/",methods=["POST","GET"])
 def home():
     if request.method == "POST":
-        lat_lon = (request.json["startlatLng"], request.json["endlatLng"])
-        target_distance_min = 5000
-        route, route_length = execute_search(lat_lon=lat_lon, target_distance_min=target_distance_min)
-
-        '''
-        thread = CustomThread(target=execute_search, args=(lat_lon,target_distance_min))
-        current_threads = threading.enumerate()
-        print(current_threads)
-        print("上がカレンとスレッド！！！！")
-        for current_thread in current_threads:
-            try:
-                current_thread.raise_exception()
-                print(f"{str(current_thread)}を中止しました。")
-            except:
-                print(f"{str(current_thread)}は中止できません。")
-        thread.start()
-        print(f"{str(thread)}が追加されました")
-        print("中止後")
-        print(threading.enumerate())
-        print("\n\n\n")
-        thread.join()
-        '''
-        print(route)
-        return jsonify({'route': route, 'route_length': route_length})
+        try:
+            data = request.get_json()
+            y_start = float(data["startlat"])
+            x_start = float(data["startlng"])
+            y_goal = float(data["goallat"])
+            x_goal = float(data["goallng"])
+            target_length = int(float(data["targetLength"])*1e3) # convert to km
+            route, route_length, way_points = execute_search(y_start, x_start, y_goal, x_goal, target_length)
+            return jsonify({'route': route, 
+                            'routeLngth': route_length,
+                            'wayPoints': way_points})
+        except Exception as e:
+            return jsonify({'error': str(e)})
     return render_template('map/index.html')
 
-def process_graph(G):
-    return {"nodes": list(G.nodes), "edges": list(G.edges)}
+@route_map.route('/<path:filename>')
+def serve_file(filename):
+    return send_from_directory('route_map/templates/map', filename)

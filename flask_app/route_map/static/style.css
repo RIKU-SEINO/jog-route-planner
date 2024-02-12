@@ -6,16 +6,17 @@ html, body {
 
 body {
     background-color: #fff;
-    font-family: "Arial";
+    font-family: "Oswald", sans-serif;
     display: flex;
     flex-direction: column;
 }
 
 header {
     padding: 10px;
-    background-color: #c5c2c2;
+    background-color: #e1f2df;
     top: 0;
     width: 100%;
+    font-family: "Oswald", sans-serif;
 }
 
 #icon {
@@ -32,4 +33,45 @@ header {
 
 #map-container {
     flex: 1;
+}
+
+.sidebar-content {
+    position: absolute;
+    top: 3px; /* 3px下に配置 */
+    left: 0; /* 右端に配置（左端の場合はleft: 0;に変更） */
+    z-index: 1000; /* 必要に応じてZインデックスを設定 */
+    background-color: #fff; /* サイドバーの背景色 */
+    padding: 10px; /* 必要に応じてパディングを調整 */
+    max-width: 300px; /* 必要に応じて最大幅を設定 */
+    margin-top: 60px;
+    margin-left: 5px;
+    border-radius: 8px;
+    border: solid;
+}
+
+.leaflet-routing-geocoder {
+    display: inline-block;
+}
+
+.geocoders {
+    width: 100%;
+}
+
+#input-start-point, #input-goal-point {
+    margin: 5px auto;
+    width: 230px;
+}
+
+.leaflet-routing-add-waypoint {
+    float: right;
+}
+
+#custom-distance {
+    margin: 5px auto;
+    display: flex;
+    align-items: center;
+}
+
+#inputCustomDistance {
+    width: 50%;
 }
