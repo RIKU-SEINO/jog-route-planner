@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     <link rel="stylesheet" href="static/style.css">
     <!-- Leaflet JavaScript -->
     <!-- Your map initialization script -->
@@ -94,6 +94,7 @@
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <script src="https://browser.sentry-cdn.com/5.29.2/bundle.min.js" integrity="sha384-ir4+BihBClNpjZk3UKgHTr0cwRhujAjy/M5VEGvcOzjhM1Db79GAg9xLxYn4uVK4" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         
@@ -112,11 +113,27 @@
         let startlatLng = null;
         let goallatLng = null;
 
+        let startIcon = L.divIcon({
+            html: `<div style="background-color: #3085d6; height:30px; width:30px; border-radius: 50%; padding: 5px; display: flex; justify-content: center; align-items: center;">
+                    <i class="fa-solid fa-s fa-xl" style="color: #fff; width: 60%;"></i>
+                   </div>`,
+            iconSize: [24, 24], // アイコンのサイズ
+            iconAnchor: [12, 12],
+        });
+
+        let goalIcon = L.divIcon({
+            html: `<div style="background-color: green; height:30px; width:30px; border-radius: 50%; padding: 5px; display: flex; justify-content: center; align-items: center;">
+                    <i class="fa-solid fa-g fa-xl" style="color: #fff; width: 60%;"></i>
+                   </div>`,
+            iconSize: [24, 24], // アイコンのサイズ
+            iconAnchor: [12, 12],
+        });        
+
         map.on('click', function(e) {
             let latLng = e.latlng;
             showChoicePopup().then((choice) => {
                 if (choice == "start") {
-                    startMarker = L.marker(latLng).addTo(map);
+                    startMarker = L.marker(latLng, {icon:startIcon}).addTo(map);
                     startlatLng = latLng;
                     reverseGeoCoder(startlatLng)
                         .then(address => {
@@ -124,7 +141,7 @@
                         })
                         .catch(error => console.error(error));
                 } else if (choice == "goal") {
-                    goalMarker = L.marker(latLng).addTo(map);
+                    goalMarker = L.marker(latLng, {icon:goalIcon}).addTo(map);
                     goallatLng = latLng;
                     reverseGeoCoder(goallatLng)
                         .then(address => {
@@ -142,6 +159,9 @@
                 map.eachLayer(layer => {
                 if (layer instanceof L.Polyline) {
                     map.removeLayer(layer);
+                }
+                if ((layer instanceof L.Marker) && !(layer == startMarker) && !(layer == goalMarker)) {
+                    map.removeLayer(layer)
                 }
             });
                 fetchRoute(startlatLng, goallatLng);
@@ -173,16 +193,25 @@
             })
             .then(routeData => {
                 let routeLatLng = routeData["route"].map(coord => L.latLng(coord[1], coord[0]));
-                let wayPointsLatLng = routeData["wayPoints"].map(coord => L.latLng(coord[1], coord[0]));
+                let wayPointIndices = routeData["wayPointIndices"];
                 let routePolyline = L.polyline(routeLatLng, { color: 'blue' })
                 routePolyline.addTo(map);
-                let wayPointsPolyline = L.polyline(wayPointsLatLng, {color: 'blue'})
-                addVertexMarkers(wayPointsPolyline, map);
                 map.fitBounds(routePolyline.getBounds());
+
+                for (var i = 0; i < routeLatLng.length; i++) {
+                    if (wayPointIndices.includes(i) && !(i == 0) && !(i == routeLatLng.length-1)) {
+                        // このインデックスが経由地点のインデックスに含まれている場合
+                        // ここで特別な処理を行う（例: マーカーの表示など）
+                        let waypointMarker = L.marker(routeLatLng[i]).addTo(map);
+                        waypointMarker.bindPopup(`Waypoint ${i + 1}`).openPopup();
+                    }
+                }
+                
             })
             .catch(error => alert(error))
         }
 
+        
         function reverseGeoCoder(latLng) {
             let url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + latLng.lat + '&lon=' + latLng.lng;
             return fetch(url)
@@ -218,21 +247,11 @@
                 }).then((result) => {
                     // ユーザーの選択に基づいて処理を実行
                     if (result.isConfirmed) {
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Registered as the starting point!",
-                            icon: "success",
-                            backdrop: false
-                        }).then(() => resolve("start")); // "start"を解決
+                         resolve("start"); // "start"を解決
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         resolve("cancel"); // "cancel"を解決
                     } else if (result.isDenied) {
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Registered as the goal point!",
-                            icon: "success",
-                            backdrop: false
-                        }).then(() => resolve("goal")); // "goal"を解決
+                        resolve("goal"); // "goal"を解決
                     } else {
                         reject("No choice made"); // キャンセルや拒否以外の場合はreject
                     }

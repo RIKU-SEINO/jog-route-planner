@@ -76,3 +76,12 @@ header {
 #inputCustomDistance {
     width: 50%;
 }
+
+h2 {
+    display: none;
+}
+
+.leaflet-marker-icon.leaflet-div-icon.leaflet-zoom-animated.leaflet-interactive {
+    background-color: transparent;
+    border: none;
+}

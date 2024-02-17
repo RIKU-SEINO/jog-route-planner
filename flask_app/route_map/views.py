@@ -15,8 +15,8 @@ def execute_search(y_start, x_start, y_end, x_end, target_length):
     data = res.json()
     route = data["routes"][0]["geometry"]["coordinates"]
     route_length = data["routes"][0]["distance"]
-    way_points = data["routes"][0]["waypoints"]
-    return route, route_length, way_points
+    way_point_indices = data["routes"][0]["waypointIndices"]
+    return route, route_length, way_point_indices
 
 
 @route_map.route("/",methods=["POST","GET"])
@@ -29,10 +29,10 @@ def home():
             y_goal = float(data["goallat"])
             x_goal = float(data["goallng"])
             target_length = int(float(data["targetLength"])*1e3) # convert to km
-            route, route_length, way_points = execute_search(y_start, x_start, y_goal, x_goal, target_length)
+            route, route_length, way_point_indices = execute_search(y_start, x_start, y_goal, x_goal, target_length)
             return jsonify({'route': route, 
-                            'routeLngth': route_length,
-                            'wayPoints': way_points})
+                            'routeLength': route_length,
+                            'wayPointIndices': way_point_indices})
         except Exception as e:
             return jsonify({'error': str(e)})
     return render_template('map/index.html')
