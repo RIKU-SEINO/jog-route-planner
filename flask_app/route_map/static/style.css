@@ -6,7 +6,7 @@ html, body {
 
 body {
     background-color: #fff;
-    font-family: "Oswald", sans-serif;
+    font-family: "Russo One", sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -16,8 +16,10 @@ header {
     background-color: #e1f2df;
     top: 0;
     width: 100%;
-    font-family: "Oswald", sans-serif;
+    font-family: "Russo One", sans-serif;
 }
+
+
 
 #icon {
     float: left;

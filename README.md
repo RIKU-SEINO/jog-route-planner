@@ -1,4 +1,4 @@
-# jog-route-planner
+# share-jog
 Create the perfect jogging route for you
 
 ディレクトリ構成は下記を参照しました。

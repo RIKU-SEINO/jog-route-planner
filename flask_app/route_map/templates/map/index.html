@@ -7,7 +7,7 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
@@ -28,11 +28,11 @@
             <div class="login-signup-btns">
                 <button type="button" class="btn btn-secondary">
                     <i class="fa fa-sign-in-alt" aria-hidden="true"></i>
-                    <span>Login</span>
+                    <span>ログイン</span>
                 </button>
                 <button type="button" class="btn btn-dark">
                     <i class="fa fa-rocket" aria-hidden="true"></i>
-                    <span>Sign Up</span>
+                    <span>新規登録</span>
                 </button>
             </div>
         </div>
@@ -47,22 +47,22 @@
                         <div class="leaflet-routing-geocoder" style="width:80%">
                             <label class="">
                                 <input class="with-gap" name="routingMode" id="inputRoundTrip" type="radio">
-                                <span class="" for="inputRoundTrip" style="margin-right: 10px">Round trip</span>
+                                <span class="" for="inputRoundTrip" style="margin-right: 10px">周回コース</span>
                             </label>
                             <label class="">
                                 <input class="with-gap" name="routingMode" id="inputPointToPoint" type="radio">
-                                <span class="" for="inputPointToPoint">Point to Point</span>
+                                <span class="" for="inputPointToPoint">片道コース</span>
                             </label>
                         </div>
                         <div class="geocoders">
                             <div class="leaflet-routing-geocoder">
-                                <input id="input-start-point" placeholder="Start location" value="">
+                                <input id="input-start-point" placeholder="スタート地点" value="">
                                 <button class="delete-waypoint">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="leaflet-routing-geocoder">
-                                <input id="input-goal-point" placeholder="Goal location" value="">
+                                <input id="input-goal-point" placeholder="ゴール地点" value="">
                                 <button class="delete-waypoint">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
@@ -76,7 +76,7 @@
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-outline-success btn-sm" id="searchBtn">
                                 <i class="fa fa-search"></i>
-                                <span>Search</span>
+                                <span>検索</span>
                             </button>
                         </div>
                     </div>
