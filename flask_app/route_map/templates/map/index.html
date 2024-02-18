@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@600&display=swap">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-search@4.0.0/dist/leaflet-search.min.css"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     <link rel="stylesheet" href="static/style.css">
@@ -44,29 +45,21 @@
             <div id="routing-container">
                 <div class="leaflet-routing-container">
                     <div class="leaflet-routing-geocoders ">
-                        <div class="leaflet-routing-geocoder" style="width:80%">
-                            <label class="">
-                                <input class="with-gap" name="routingMode" id="inputRoundTrip" type="radio">
-                                <span class="" for="inputRoundTrip" style="margin-right: 10px">周回コース</span>
-                            </label>
-                            <label class="">
-                                <input class="with-gap" name="routingMode" id="inputPointToPoint" type="radio">
-                                <span class="" for="inputPointToPoint">片道コース</span>
-                            </label>
-                        </div>
                         <div class="geocoders">
                             <div class="leaflet-routing-geocoder">
                                 <input id="input-start-point" placeholder="スタート地点" value="">
-                                <button class="delete-waypoint" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
+                                <button class="delete-waypoint" id="delete-start-point" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
                                     <i class="fa-solid fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
+                            <div class="autocomplete-container" id="autocomplete-container-input-start-point"></div>
                             <div class="leaflet-routing-geocoder">
                                 <input id="input-goal-point" placeholder="ゴール地点" value="">
-                                <button class="delete-waypoint" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
+                                <button class="delete-waypoint" id="delete-goal-point" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
                                     <i class="fa-solid fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
+                            <div class="autocomplete-container" id="autocomplete-container-input-goal-point"></div>
                         </div>
                         
                         <div class="leaflet-routing-geocoder" id="custom-distance">
@@ -95,6 +88,7 @@
     <script src="https://browser.sentry-cdn.com/5.29.2/bundle.min.js" integrity="sha384-ir4+BihBClNpjZk3UKgHTr0cwRhujAjy/M5VEGvcOzjhM1Db79GAg9xLxYn4uVK4" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-search@4.0.0/dist/leaflet-search.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         
@@ -133,18 +127,26 @@
             let latLng = e.latlng;
             showChoicePopup().then((choice) => {
                 if (choice == "start") {
+                    if (startMarker){
+                        map.removeLayer(startMarker);
+                    }
                     startMarker = L.marker(latLng, {icon:startIcon}).addTo(map);
                     startlatLng = latLng;
                     reverseGeoCoder(startlatLng)
-                        .then(address => {
+                        .then(data => {
+                            const address = data.address;
                             document.getElementById("input-start-point").value = address;
                         })
                         .catch(error => console.error(error));
                 } else if (choice == "goal") {
+                    if (goalMarker){
+                        map.removeLayer(goalMarker);
+                    }
                     goalMarker = L.marker(latLng, {icon:goalIcon}).addTo(map);
                     goallatLng = latLng;
                     reverseGeoCoder(goallatLng)
-                        .then(address => {
+                        .then(data => {
+                            const address = data.address;
                             document.getElementById("input-goal-point").value = address;
                         })
                         .catch(error => console.error(error));
@@ -153,6 +155,17 @@
                 }
             });
         })
+
+        let startInputElement = document.getElementById('input-start-point');
+        let goalInputElement = document.getElementById('input-goal-point');
+        setupAutocomplete(startInputElement);
+        setupAutocomplete(goalInputElement);
+
+        const deleteWaypointBtns = document.getElementsByClassName('delete-waypoint');
+        for (var i=0; i<deleteWaypointBtns.length; i++){
+            let deleteWaypointBtn = deleteWaypointBtns[i];
+            deletePoint(deleteWaypointBtn);
+        }
 
         routeSearchButton.addEventListener('click', function() {
             if ((startMarker) && (goalMarker)){
@@ -229,11 +242,107 @@
                 })
                 .then(data => {
                     const address = data.display_name;
-                    return address;
+                    return {
+                        "address": address
+                    }
                 })
                 .catch(error => {
-                    return "selected position";
+                    return {
+                        "address": "選択した場所"
+                    }
                 });
+        }
+
+        function originalGeocoder(query) {
+            let url = 'https://nominatim.openstreetmap.org/search?q=' + query + '&format=json&countrycodes=JP';
+            return fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                }).catch(error => {
+                    return []
+                });
+        }
+
+        function setupAutocomplete(inputElement) {
+            const inputElementId = inputElement.getAttribute("id");
+            let debounceTimer;
+
+            inputElement.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                document.getElementById('autocomplete-container-' + inputElementId).innerHTML = '';
+                debounceTimer = setTimeout(function() {
+                    containerElement = document.getElementById('autocomplete-container-' + inputElementId)
+                    const resultList = document.createElement('table');
+                    if (containerElement) {
+                        containerElement.appendChild(resultList);
+                        resultList.classList.add('autocomplete-list');
+                    } else {
+                        console.error("Container element not found");
+                        return;
+                    }
+                    const query = inputElement.value;
+                    originalGeocoder(query)
+                        .then(data => {
+                            // Clear previous results
+                            resultList.innerHTML = '';
+                            // Display new results
+                            data.forEach(result => {
+                                const listRow = document.createElement('tr');
+                                const listItem = document.createElement('td');
+                                var latLng = L.latLng(parseFloat(result.lat), parseFloat(result.lon));
+                                listItem.textContent = result.display_name;
+                                listItem.addEventListener('click', function() {
+                                    inputElement.value = result.display_name;
+                                    resultList.innerHTML = '';
+                                    map.setView(latLng, 14);
+                                    if (inputElementId == 'input-start-point') {
+                                        if (startMarker){
+                                            map.removeLayer(startMarker);
+                                        }
+                                        startMarker = L.marker(latLng, {icon:startIcon}).addTo(map); 
+                                        startlatLng = latLng;
+                                    }
+                                    else if (inputElementId == 'input-goal-point') {
+                                        if (goalMarker){
+                                            map.removeLayer(goalMarker);
+                                        }
+                                        goalMarker = L.marker(latLng, {icon:goalIcon}).addTo(map);
+                                        goallatLng = latLng;
+                                    }
+                                });
+                                listRow.appendChild(listItem);
+                                resultList.appendChild(listRow);
+                            });
+                        })
+                }, 1000); // 1000ミリ秒のデバウンス時間
+            });
+
+            // Hide results when clicking outside the input and results list
+            document.addEventListener('click', function(e) {
+                const resultList = document.getElementsByClassName('autocomplete-list')[0];
+                if (resultList && !inputElement.contains(e.target) && !resultList.contains(e.target)) {
+                        resultList.innerHTML = '';
+                }
+            });
+        }
+
+        function deletePoint(deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+                const deleteBtnId = deleteBtn.getAttribute('id');
+                const inputElementId = deleteBtnId.replace('delete','input');
+                const targetInputElement = document.getElementById(inputElementId);
+                targetInputElement.value = '';
+                if (inputElementId == 'input-start-point' && startMarker) {
+                    map.removeLayer(startMarker);
+                    startMarker = null;
+                }else if (inputElementId == 'input-goal-point' && goalMarker) {
+                    map.removeLayer(goalMarker);
+                    goalMarker = null;
+                }
+            })
         }
 
         function showChoicePopup() {
@@ -263,19 +372,6 @@
                     }
                 });
             });
-        }
-
-        function addVertexMarkers(polyline, map) {
-            polyline.getLatLngs().forEach((latLng, index) => {
-                // 頂点のマーカーを作成して地図に追加
-                L.circleMarker(latLng, { radius: 6, color: 'red', fillColor: 'white', fillOpacity: 1 })
-                    .addTo(map)
-                    .bindTooltip((index + 1).toString(), { permanent: true, direction: 'bottom' });
-            });
-        }
-
-        function createNumberedIcon(number) {
-            return L.divIcon({ className: 'numbered-marker', html: number.toString() });
         }
 
 
