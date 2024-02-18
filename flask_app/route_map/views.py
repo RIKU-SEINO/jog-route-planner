@@ -10,7 +10,11 @@ route_map = Blueprint(
 )
 
 def execute_search(y_start, x_start, y_end, x_end, target_length):
-    url = f"https://trailrouter.com/ors/experimentalroutes?coordinates={x_start},{y_start}%7C{x_end},{y_end}&skip_segments=&green_preference=0.8&avoid_unsafe_streets=false&avoid_unlit_streets=false&hills_preference=0&avoid_repetition=true&target_distance={target_length}&roundtrip=false"
+    if (y_start == y_end) and (x_start == x_end):
+        roundtrip_option = "true"
+    else:
+        roundtrip_option = "false"
+    url = f"https://trailrouter.com/ors/experimentalroutes?coordinates={x_start},{y_start}%7C{x_end},{y_end}&skip_segments=&green_preference=0.8&avoid_unsafe_streets=false&avoid_unlit_streets=false&hills_preference=0&avoid_repetition=true&target_distance={target_length}&roundtrip={roundtrip_option}"
     res = requests.get(url)
     data = res.json()
     route = data["routes"][0]["geometry"]["coordinates"]
