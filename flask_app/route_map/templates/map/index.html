@@ -43,20 +43,26 @@
     <div class="sidebar-content">
         <!-- Panes -->
         <div class="sidebar-pane active" id="routing">
-            <div id="routing-container">
+            <button class="nav-btn" id="nav-open-btn" onclick="openNavbar()" style="display: none;">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="routing-container" style="display: block;">
                 <div class="leaflet-routing-container">
                     <div class="leaflet-routing-geocoders ">
                         <div class="geocoders">
+                            <button class="nav-btn" id="nav-close-btn" onclick="closeNavbar()" style="display: block;">
+                                <i class="fa fa-times"></i>
+                            </button>
                             <div class="leaflet-routing-geocoder">
                                 <input id="input-start-point" placeholder="スタート地点" value="">
-                                <button class="delete-waypoint" id="delete-start-point" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
+                                <button class="delete-waypoint" id="delete-start-point">
                                     <i class="fa-solid fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="autocomplete-container" id="autocomplete-container-input-start-point"></div>
                             <div class="leaflet-routing-geocoder">
                                 <input id="input-goal-point" placeholder="ゴール地点" value="">
-                                <button class="delete-waypoint" id="delete-goal-point" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
+                                <button class="delete-waypoint" id="delete-goal-point">
                                     <i class="fa-solid fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -323,7 +329,7 @@
                                 resultList.appendChild(noListElem)
                             }
                         })
-                }, 1000); // 1000ミリ秒のデバウンス時間
+                }, 200); // 500ミリ秒のデバウンス時間
             });
 
             // Hide results when clicking outside the input and results list
@@ -378,6 +384,20 @@
                     }
                 });
             });
+        }
+
+        function closeNavbar() {
+            const navbar = document.querySelector('.routing-container');
+            navbar.style.height = "0";
+            navbar.style.display = "none";
+            document.querySelector('#nav-open-btn').style.display = "block";
+        }
+
+        function openNavbar() {
+            const navbar = document.querySelector('.routing-container');
+            navbar.style.display = "block";
+            navbar.style.height = "auto";
+            document.querySelector('#nav-open-btn').style.display = "none";
         }
 
 

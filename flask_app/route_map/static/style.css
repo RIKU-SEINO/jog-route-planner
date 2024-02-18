@@ -65,8 +65,10 @@ td:hover {
     border: solid;
 }
 
-#routing-container {
-    margin-top: 20px;
+.nav-btn, .delete-waypoint {
+    background-color: transparent; 
+    border-color: #fff; 
+    border-radius: 20%; 
 }
 
 .leaflet-routing-geocoder {
