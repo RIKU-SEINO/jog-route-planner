@@ -19,7 +19,7 @@ button {
 
 header {
     padding: 10px;
-    background-color: #e1f2df;
+    background-color: none;
     top: 0;
     width: 100%;
     font-family: "Noto Sans JP", sans-serif;
@@ -59,14 +59,14 @@ td:hover {
     background-color: #fff; /* サイドバーの背景色 */
     padding: 10px; /* 必要に応じてパディングを調整 */
     max-width: 300px; /* 必要に応じて最大幅を設定 */
-    margin-top: 60px;
-    margin-left: 5px;
+    margin-top: 70px;
+    margin-left: 10px;
     border-radius: 8px;
     border: solid;
 }
 
 #routing-container {
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .leaflet-routing-geocoder {
