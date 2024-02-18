@@ -7,7 +7,7 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@600&display=swap">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
@@ -57,20 +57,20 @@
                         <div class="geocoders">
                             <div class="leaflet-routing-geocoder">
                                 <input id="input-start-point" placeholder="スタート地点" value="">
-                                <button class="delete-waypoint">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                <button class="delete-waypoint" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="leaflet-routing-geocoder">
                                 <input id="input-goal-point" placeholder="ゴール地点" value="">
-                                <button class="delete-waypoint">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                <button class="delete-waypoint" style="background-color: transparent; border-color: #ebe4e4; border-radius: 20%; margin: 5px">
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
                         
                         <div class="leaflet-routing-geocoder" id="custom-distance">
-                            <input class="" id="inputCustomDistance" type="number" min="1" max="200" step="0.1" placeholder="Distance" value="">
+                            <input class="" id="inputCustomDistance" type="number" min="1" max="200" step="0.1" placeholder="数字を入力してください" value="">
                             <span>&nbsp;km</span>
                         </div>
                         <div class="d-grid gap-2">
@@ -115,7 +115,7 @@
 
         let startIcon = L.divIcon({
             html: `<div style="background-color: #3085d6; height:30px; width:30px; border-radius: 50%; padding: 5px; display: flex; justify-content: center; align-items: center;">
-                    <i class="fa-solid fa-s fa-xl" style="color: #fff; width: 60%;"></i>
+                    <i class="fa-solid fa-s fa-xl" style="color: #fff; width: 58%;"></i>
                    </div>`,
             iconSize: [24, 24], // アイコンのサイズ
             iconAnchor: [12, 12],
@@ -123,7 +123,7 @@
 
         let goalIcon = L.divIcon({
             html: `<div style="background-color: green; height:30px; width:30px; border-radius: 50%; padding: 5px; display: flex; justify-content: center; align-items: center;">
-                    <i class="fa-solid fa-g fa-xl" style="color: #fff; width: 60%;"></i>
+                    <i class="fa-solid fa-g fa-xl" style="color: #fff; width: 78%;"></i>
                    </div>`,
             iconSize: [24, 24], // アイコンのサイズ
             iconAnchor: [12, 12],
@@ -194,16 +194,22 @@
             .then(routeData => {
                 let routeLatLng = routeData["route"].map(coord => L.latLng(coord[1], coord[0]));
                 let wayPointIndices = routeData["wayPointIndices"];
-                let routePolyline = L.polyline(routeLatLng, { color: 'blue' })
+                let routePolyline = L.polyline(routeLatLng, { color: 'red' })
                 routePolyline.addTo(map);
                 map.fitBounds(routePolyline.getBounds());
 
+                var wayPointCnt = 0;
                 for (var i = 0; i < routeLatLng.length; i++) {
                     if (wayPointIndices.includes(i) && !(i == 0) && !(i == routeLatLng.length-1)) {
-                        // このインデックスが経由地点のインデックスに含まれている場合
-                        // ここで特別な処理を行う（例: マーカーの表示など）
-                        let waypointMarker = L.marker(routeLatLng[i]).addTo(map);
-                        waypointMarker.bindPopup(`Waypoint ${i + 1}`).openPopup();
+                        wayPointCnt = wayPointCnt + 1;
+                        let wayPointIcon = L.divIcon({
+                            html: `<div style="background-color: white; height:20px; width:20px; border: 1px solid #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Century Gothic',sans-serif; font-weight: 900;">
+                                    <span>`+wayPointCnt+`<\span>
+                                </div>`,
+                            iconSize: [15, 15], // アイコンのサイズ
+                            iconAnchor: [7, 7],
+                        });  
+                        let waypointMarker = L.marker(routeLatLng[i], {icon: wayPointIcon}).addTo(map);
                     }
                 }
                 
@@ -233,14 +239,14 @@
         function showChoicePopup() {
             return new Promise((resolve, reject) => {
                 Swal.fire({
-                    text: "Register the selected point as start or goal?",
+                    text: "指定した地点はどちらに登録しますか？",
                     showCancelButton: true,
-                    confirmButtonText: "Register as the start",
+                    confirmButtonText: "スタート地点",
                     confirmButtonColor: "#3085d6",
-                    cancelButtonText: "Cancel",
+                    cancelButtonText: "キャンセル",
                     cancelButtonColor: "#d33",
                     showDenyButton: true,
-                    denyButtonText: "Register as the goal",
+                    denyButtonText: "ゴール地点",
                     denyButtonColor: "green",
                     icon: "question",
                     backdrop: false

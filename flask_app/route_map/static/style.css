@@ -6,9 +6,15 @@ html, body {
 
 body {
     background-color: #fff;
-    font-family: "Russo One", sans-serif;
+    font-family: "Noto Sans JP", sans-serif;
     display: flex;
     flex-direction: column;
+}
+
+button {
+    border: none; /* ボーダーを削除 */
+    outline: none; /* フォーカス時の枠線を削除 */
+    box-shadow: none; /* 影を削除 */
 }
 
 header {
@@ -16,7 +22,7 @@ header {
     background-color: #e1f2df;
     top: 0;
     width: 100%;
-    font-family: "Russo One", sans-serif;
+    font-family: "Noto Sans JP", sans-serif;
 }
 
 
