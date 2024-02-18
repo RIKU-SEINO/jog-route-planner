@@ -185,6 +185,22 @@
                 }
             });
                 fetchRoute(startlatLng, goallatLng);
+            }else{
+                let alertMessage = "が登録されていません。";
+                let lackedItem;
+                if ((!startMarker) && (!goalMarker)){
+                    lackedItem = "スタート地点とゴール地点"
+                }else if(!startMarker) {
+                    lackedItem = "スタート地点";
+                }else{
+                    lackedItem = "ゴール地点";
+                }
+                alertMessage = lackedItem + alertMessage;
+                Swal.fire({
+                    text: alertMessage,
+                    icon: "error",
+                    backdrop: false
+                })
             }
         })
 
