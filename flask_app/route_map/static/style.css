@@ -24,7 +24,14 @@ header {
     width: 100%;
     font-family: "Noto Sans JP", sans-serif;
     box-shadow: 0 2px 0px rgba(0, 0, 0, 1);
+    display: flex;
+    align-items: center;
 }
+
+a {
+    text-decoration: none;
+}
+
 
 td {
     cursor: pointer;
@@ -34,11 +41,27 @@ td:hover {
     background-color: #cdc8c8;
 }
 
-
-
 #icon {
     float: left;
     border-radius: 20px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Adjust padding as needed */
+    width: 100%;
+}
+
+.login-signup-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.btn.btn-light.logo:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #map {
@@ -57,8 +80,8 @@ td:hover {
     background-color: #fff; /* サイドバーの背景色 */
     padding: 10px; /* 必要に応じてパディングを調整 */
     max-width: 300px; /* 必要に応じて最大幅を設定 */
-    margin-top: 100px;
-    margin-left: 15px;
+    margin-top: 120px;
+    margin-left: 13px;
     border-radius: 8px;
     border: solid;
 }
