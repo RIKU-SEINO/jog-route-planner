@@ -125,7 +125,7 @@ nav a:hover {
     flex: 1;
 }
 
-.sidebar-content {
+.searchbar-content {
     position: absolute;
     left: 0; /* 右端に配置（左端の場合はleft: 0;に変更） */
     z-index: 1000; /* 必要に応じてZインデックスを設定 */
@@ -138,7 +138,7 @@ nav a:hover {
     border: solid;
 }
 
-.nav-btn, .delete-waypoint {
+.searchbar-btn, .delete-waypoint, .resultbar-btn {
     background-color: transparent; 
     border-color: #fff; 
     border-radius: 20%; 
@@ -187,10 +187,6 @@ nav a:hover {
     border-bottom: 1.7px black solid;
 }
 
-h2 {
-    display: none;
-}
-
 .leaflet-marker-icon.leaflet-div-icon.leaflet-zoom-animated.leaflet-interactive {
     background-color: transparent;
     border: none;
@@ -198,4 +194,19 @@ h2 {
 
 .autocomplete-list {
     font-size: smaller;
+}
+
+.resultbar-container {
+    position: absolute;
+    right: 0; /* 右端に配置（左端の場合はleft: 0;に変更） */
+    z-index: 1000; /* 必要に応じてZインデックスを設定 */
+    background-color: #fff; /* サイドバーの背景色 */
+    padding: 10px; /* 必要に応じてパディングを調整 */
+    max-width: 300px; /* 必要に応じて最大幅を設定 */
+    height: 70%;
+    width: 700px;
+    margin-top: 170px;
+    margin-right: -10px;
+    border-radius: 5px;
+    border: 1.5px solid;
 }

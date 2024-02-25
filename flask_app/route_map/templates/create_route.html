@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@600&display=swap">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-search@4.0.0/dist/leaflet-search.min.css"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
@@ -69,17 +70,17 @@
         </ul>
     </nav>
 
-    <div class="sidebar-content">
+    <div class="searchbar-content">
         <!-- Panes -->
-        <div class="sidebar-pane active" id="routing">
-            <button class="nav-btn" id="nav-open-btn" onclick="openMenuBar()" style="display: none;">
+        <div class="searchbar-pane" id="routing">
+            <button class="searchbar-btn" id="searchbar-open-btn" onclick="openSearchBar()" style="display: none;">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            <div class="routing-container" style="display: block;">
-                <div class="leaflet-routing-container">
-                    <div class="leaflet-routing-geocoders ">
-                        <div class="geocoders">
-                            <button class="nav-btn" id="nav-close-btn" onclick="closeMenuBar()" style="display: block;">
+            <div class="route-container" style="display: block;">
+                <div class="leaflet-route-container">
+                    <div class="leaflet-route-geocoders ">
+                        <div class="geocoder">
+                            <button class="searchbar-btn" id="searchbar-close-btn" onclick="closeSearchBar()" style="display: block;">
                                 <i class="fa fa-times"></i>
                             </button>
                             <div class="leaflet-routing-geocoder">
@@ -89,7 +90,7 @@
                                 </button>
                             </div>
                             <div class="autocomplete-container" id="autocomplete-container-input-start-point"></div>
-                            <div class="leaflet-routing-geocoder">
+                            <div class="leaflet-route-geocoder">
                                 <input id="input-goal-point" placeholder="ゴール地点" value="">
                                 <button class="delete-waypoint" id="delete-goal-point">
                                     <i class="fa-solid fa-trash" aria-hidden="true"></i>
@@ -98,7 +99,7 @@
                             <div class="autocomplete-container" id="autocomplete-container-input-goal-point"></div>
                         </div>
                         
-                        <div class="leaflet-routing-geocoder" id="custom-distance">
+                        <div class="leaflet-route-geocoder" id="custom-distance">
                             <input class="" id="input-distance" type="number" min="1" max="200" step="0.1" placeholder="走行距離" value="">
                             <span>&nbsp;km</span>
                         </div>
@@ -109,11 +110,18 @@
                             </button>
                         </div>
                     </div>
-                    <div class="leaflet-routing-alternatives-container" style="display: none;">
+                    <div class="leaflet-routing-alternatives-container" style="display: block;">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="resultbar-container">
+        <button href="#" class="resultbar-btn" onclick="closeSidebar()">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        <!-- 他のメニューアイテムをここに追加 -->
     </div>
 
     <!-- Your map container here -->
@@ -436,18 +444,18 @@
             });
         }
 
-        function closeMenuBar() {
-            const menuBar = document.querySelector('.routing-container');
-            menuBar.style.height = "0";
-            menuBar.style.display = "none";
-            document.querySelector('#nav-open-btn').style.display = "block";
+        function closeSearchBar() {
+            const searchBar = document.querySelector('.route-container');
+            searchBar.style.height = "0";
+            searchBar.style.display = "none";
+            document.querySelector('#searchbar-open-btn').style.display = "block";
         }
 
-        function openMenuBar() {
-            const menuBar = document.querySelector('.routing-container');
-            menuBar.style.display = "block";
-            menuBar.style.height = "auto";
-            document.querySelector('#nav-open-btn').style.display = "none";
+        function openSearchBar() {
+            const searchBar = document.querySelector('.route-container');
+            searchBar.style.display = "block";
+            searchBar.style.height = "auto";
+            document.querySelector('#searchbar-open-btn').style.display = "none";
         }
 
 
