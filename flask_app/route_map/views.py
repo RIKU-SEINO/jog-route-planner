@@ -39,8 +39,4 @@ def home():
                             'wayPointIndices': way_point_indices})
         except Exception as e:
             return jsonify({'error': str(e)})
-    return render_template('map/index.html')
-
-@route_map.route('/<path:filename>')
-def serve_file(filename):
-    return send_from_directory('route_map/templates/map', filename)
+    return render_template('create_route.html')

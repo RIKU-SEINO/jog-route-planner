@@ -23,7 +23,7 @@
         <div class="header-container">
             <a href="/map">
                 <button id="icon" class="btn btn-light logo" style="font-size: 25px; background-color: transparent; border: none">
-                    <img src="static/images/logo1.png" style="width: 45px; height: 45px; background-color: transparent; padding: 3px; border-radius: 10px;">
+                    <img src="./static/logo.png" style="width: 45px; height: 45px; background-color: transparent; padding: 3px; border-radius: 10px;">
                     <span>Share Jog</span>
                 </button>
             </a>
@@ -72,14 +72,14 @@
     <div class="sidebar-content">
         <!-- Panes -->
         <div class="sidebar-pane active" id="routing">
-            <button class="nav-btn" id="nav-open-btn" onclick="openNavbar()" style="display: none;">
+            <button class="nav-btn" id="nav-open-btn" onclick="openMenuBar()" style="display: none;">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <div class="routing-container" style="display: block;">
                 <div class="leaflet-routing-container">
                     <div class="leaflet-routing-geocoders ">
                         <div class="geocoders">
-                            <button class="nav-btn" id="nav-close-btn" onclick="closeNavbar()" style="display: block;">
+                            <button class="nav-btn" id="nav-close-btn" onclick="closeMenuBar()" style="display: block;">
                                 <i class="fa fa-times"></i>
                             </button>
                             <div class="leaflet-routing-geocoder">
@@ -436,17 +436,17 @@
             });
         }
 
-        function closeNavbar() {
-            const navbar = document.querySelector('.routing-container');
-            navbar.style.height = "0";
-            navbar.style.display = "none";
+        function closeMenuBar() {
+            const menuBar = document.querySelector('.routing-container');
+            menuBar.style.height = "0";
+            menuBar.style.display = "none";
             document.querySelector('#nav-open-btn').style.display = "block";
         }
 
-        function openNavbar() {
-            const navbar = document.querySelector('.routing-container');
-            navbar.style.display = "block";
-            navbar.style.height = "auto";
+        function openMenuBar() {
+            const menuBar = document.querySelector('.routing-container');
+            menuBar.style.display = "block";
+            menuBar.style.height = "auto";
             document.querySelector('#nav-open-btn').style.display = "none";
         }
 
