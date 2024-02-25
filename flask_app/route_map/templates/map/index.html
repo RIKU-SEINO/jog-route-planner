@@ -21,22 +21,15 @@
     <header>
         <div class="header-container">
             <a href="/">
-                <button id="icon" class="btn btn-success" style="font-size: 18px;">
-                    <img src="static/images/footprint_noedge.png" style="width: 27px; height: 27px">
+                <button id="icon" class="btn btn-light" style="font-size: 25px; background-color: transparent; border: none">
+                    <img src="static/images/logo1.png" style="width: 45px; height: 45px; background-color: transparent; padding: 3px; border-radius: 10px;">
                     <span>Share Jog</span>
                 </button>
             </a>
             </div>
             <div class="login-signup-btns">
-                <button type="button" class="btn btn-outline-dark" style="font-size: 18px;">
-                    <i class="fa fa-sign-in-alt" aria-hidden="true"></i>
-                    <span>ログイン</span>
-                </button>
-                <button type="button" class="btn btn-dark" style="font-size: 18px;">
-                    <i class="fa fa-rocket" aria-hidden="true"></i>
-                    <span>新規登録</span>
-                </button>
             </div>
+
         </div>
     </header>
 
@@ -70,7 +63,7 @@
                         </div>
                         
                         <div class="leaflet-routing-geocoder" id="custom-distance">
-                            <input class="" id="inputCustomDistance" type="number" min="1" max="200" step="0.1" placeholder="半角数字" value="">
+                            <input class="" id="input-distance" type="number" min="1" max="200" step="0.1" placeholder="走行距離" value="">
                             <span>&nbsp;km</span>
                         </div>
                         <div class="d-grid gap-2">
@@ -89,6 +82,7 @@
 
     <!-- Your map container here -->
     <div id="map-container">
+        <div id="gradient-background"></div>
         <div id="map"></div>
     </div>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
@@ -99,7 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         
-        let map = L.map('map').setView([35.683969, 139.753326], 14);
+        const map = L.map('map').setView([35.683969, 139.753326], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
@@ -205,7 +199,7 @@
         })
 
         function fetchRoute(startlatLng, goallatLng) {
-            let targetLength = document.getElementById('inputCustomDistance').value
+            let targetLength = document.getElementById('input-distance').value
             if (!targetLength) {
                 targetLength = 0
             }

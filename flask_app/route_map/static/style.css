@@ -18,11 +18,12 @@ button {
 }
 
 header {
-    padding: 10px;
+    padding: 15px 10px 10px 10px;
     background-color: none;
     top: 0;
     width: 100%;
     font-family: "Noto Sans JP", sans-serif;
+    box-shadow: 0 2px 0px rgba(0, 0, 0, 1);
 }
 
 td {
@@ -37,14 +38,12 @@ td:hover {
 
 #icon {
     float: left;
-}
-
-.login-signup-btns {
-    float: right;
+    border-radius: 20px;
 }
 
 #map {
     height: 100%;
+    top: 3px
 }
 
 #map-container {
@@ -53,14 +52,13 @@ td:hover {
 
 .sidebar-content {
     position: absolute;
-    top: 3px; /* 3px下に配置 */
     left: 0; /* 右端に配置（左端の場合はleft: 0;に変更） */
     z-index: 1000; /* 必要に応じてZインデックスを設定 */
     background-color: #fff; /* サイドバーの背景色 */
     padding: 10px; /* 必要に応じてパディングを調整 */
     max-width: 300px; /* 必要に応じて最大幅を設定 */
-    margin-top: 70px;
-    margin-left: 10px;
+    margin-top: 100px;
+    margin-left: 15px;
     border-radius: 8px;
     border: solid;
 }
@@ -70,6 +68,11 @@ td:hover {
     border-color: #fff; 
     border-radius: 20%; 
 }
+
+.delete-waypoint:hover {
+    background-color: #f4f0f0;
+}
+
 
 .leaflet-routing-geocoder {
     display: inline-block;
@@ -82,6 +85,8 @@ td:hover {
 #input-start-point, #input-goal-point {
     margin: 5px auto;
     width: 230px;
+    border:none;
+    border-bottom: 1px black solid;
 }
 
 .leaflet-routing-add-waypoint {
@@ -95,8 +100,16 @@ td:hover {
     margin-bottom: 10px;
 }
 
-#inputCustomDistance {
+#input-distance {
     width: 50%;
+    border:none;
+    border-bottom: 1px black solid;
+}
+
+#input-start-point:focus, #input-goal-point:focus, #input-distance:focus {
+    border:none;
+    border-bottom: 1.7px black solid;
+    outline: none;
 }
 
 h2 {
