@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Share Jog</title>
     <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@600&display=swap">
@@ -28,12 +29,12 @@
             </a>
             <div class="login-signup-btns">
                 <a href="/map">
-                    <button type="button" class="btn btn-light login" style="font-size: 15px; background-color: transparent; border: none; display: block;">
+                    <button type="button" class="btn-login">
                         <span>ログイン</span>
                     </button>
                 </a>
                 <a href="/map">
-                    <button type="button" class="btn btn-light signup" style="font-size: 15px; background-color: transparent; border: none; display: block;">
+                    <button type="button" class="btn-signup">
                         <span>新規登録</span>
                     </button>
                 </a>
@@ -43,9 +44,30 @@
                     </button> 
                 </a>
             </div>
-
         </div>
     </header>
+    <nav id="navigation">
+        <ul>
+            <li>
+                <a href="/map">
+                    <i class="fa fa-home"></i>
+                    <span>ホーム</span>
+                </a>
+            </li>
+            <li>
+                <a href="/map">
+                    <i class="fa fa-search"></i>
+                    <span>コースをさがす</span>
+                </a>
+            </li>
+            <li>
+                <a href="/map">
+                    <i class="fa fa-map"></i>
+                    <span>コースをつくる</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
     <div class="sidebar-content">
         <!-- Panes -->
@@ -81,7 +103,7 @@
                             <span>&nbsp;km</span>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-outline-success btn-sm" id="searchBtn">
+                            <button type="submit" class="btn btn-outline-dark btn-sm" id="searchBtn">
                                 <i class="fa fa-search"></i>
                                 <span>検索</span>
                             </button>
@@ -258,7 +280,11 @@
                 }
                 
             })
-            .catch(error => alert(error))
+            .catch(error => Swal.fire({
+                    text: "走行ルートを検索できませんでした。",
+                    icon: "error",
+                    backdrop: false
+                }))
         }
 
         
