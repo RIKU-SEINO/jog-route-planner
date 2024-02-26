@@ -70,19 +70,15 @@
         </ul>
     </nav>
 
-    <div class="searchbar-content">
-        <!-- Panes -->
+    <div class="searchbar-content expand">
         <div class="searchbar-pane" id="routing">
-            <button class="searchbar-btn" id="searchbar-open-btn" onclick="openSearchBar()" style="display: none;">
-                <i class="fa-solid fa-bars"></i>
+            <button class="searchbar-btn close-btn" id="searchbar-close-btn" onclick="closeSearchBar()">
+                <i class="fa-solid fa-times"></i>
             </button>
-            <div class="route-container" style="display: block;">
+            <div class="route-container expand">
                 <div class="leaflet-route-container">
                     <div class="leaflet-route-geocoders ">
                         <div class="geocoder">
-                            <button class="searchbar-btn" id="searchbar-close-btn" onclick="closeSearchBar()" style="display: block;">
-                                <i class="fa fa-times"></i>
-                            </button>
                             <div class="leaflet-routing-geocoder">
                                 <input id="input-start-point" placeholder="スタート地点" value="">
                                 <button class="delete-waypoint" id="delete-start-point">
@@ -445,17 +441,35 @@
         }
 
         function closeSearchBar() {
-            const searchBar = document.querySelector('.route-container');
-            searchBar.style.height = "0";
-            searchBar.style.display = "none";
-            document.querySelector('#searchbar-open-btn').style.display = "block";
+            const searchBarBtn = document.querySelector('.searchbar-btn');//今回はcloseになっている
+            searchBarBtn.classList.remove("close-btn");
+            searchBarBtn.classList.add("open-btn");
+            searchBarBtn.setAttribute("onclick", "openSearchBar()");
+            const searchBarBtnImage = searchBarBtn.getElementsByTagName('i')[0];
+            searchBarBtnImage.classList.remove('fa-times');
+            searchBarBtnImage.classList.add('fa-bars');
+            const searchBarContainer = document.querySelector('.searchbar-content');
+            searchBarContainer.classList.remove("expand")
+            searchBarContainer.classList.add("shrink")
+            const routeContainer = document.querySelector('.route-container');
+            routeContainer.classList.remove("expand")
+            routeContainer.classList.add("shrink")
         }
 
         function openSearchBar() {
-            const searchBar = document.querySelector('.route-container');
-            searchBar.style.display = "block";
-            searchBar.style.height = "auto";
-            document.querySelector('#searchbar-open-btn').style.display = "none";
+            const searchBarBtn = document.querySelector('.searchbar-btn');//今回はopenになっている
+            searchBarBtn.classList.remove("open-btn")
+            searchBarBtn.classList.add("close-btn")
+            searchBarBtn.setAttribute("onclick", "closeSearchBar()");
+            const searchBarBtnImage = searchBarBtn.getElementsByTagName('i')[0];
+            searchBarBtnImage.classList.remove('fa-bars');
+            searchBarBtnImage.classList.add('fa-times');
+            const searchBarContainer = document.querySelector('.searchbar-content');
+            searchBarContainer.classList.remove("shrink")
+            searchBarContainer.classList.add("expand")
+            const routeContainer = document.querySelector('.route-container');
+            routeContainer.classList.remove("shrink")
+            routeContainer.classList.add("expand")
         }
 
 
