@@ -73,6 +73,7 @@ td:hover {
 }
 
 .btn-login:hover, .btn-signup:hover {
+    transition: border 0.5s linear;
     border: 1px solid black;
 }
 
@@ -140,12 +141,15 @@ nav a:hover {
 
 .searchbar-btn, .delete-waypoint, .resultbar-btn {
     background-color: transparent; 
+    transition: background-color 0.2s linear;
     border-color: #fff; 
     border-radius: 20%; 
 }
 
-.delete-waypoint:hover {
-    background-color: #f4f0f0;
+.searchbar-btn:hover, .delete-waypoint:hover, .resultbar-btn:hover {
+    color: inherit; /* ホバー時の色を親要素の色に継承 */
+    background-color: #f0f3f4;
+    transition: background-color 0.2s linear;
 }
 
 
