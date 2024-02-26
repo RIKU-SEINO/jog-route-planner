@@ -114,9 +114,35 @@
     </div>
 
     <div class="resultbar-container">
-        <button href="#" class="resultbar-btn" onclick="closeSidebar()">
-            <i class="fa-solid fa-times"></i>
-        </button>
+        <div class="handle">&#9654;</div>
+        <div class="ad-content">
+            <div class="course-selection">
+                <i class="fa-solid fa-chevron-left" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 12px; background-color: rgb(223, 223, 223);"></i>
+                <span>&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
+                <i class="fa-solid fa-chevron-right" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 12px; background-color: rgb(223, 223, 223);"></i>
+            </div>
+            <div class="course-roadtype">
+                <ul style="list-style: none;">
+                    <li>footway: 30%</li>
+                    <li>pathway: 40%</li>
+                    <li>stairs: 30%</li>
+                </ul>
+            </div>
+            <div class="course-elevation-chart"></div>
+            <div class="course-distance">
+                <span>23&nbsp;km</span>
+            </div>
+            <div class="register-course-btns-container">
+                <button type="submit" class="btn-register-course">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>マイコースに追加</span>
+                </button>
+                <button type="submit" class="btn-cancel-course">
+                    <span>キャンセル</span>
+                </button>
+            </div>
+        </div>
+
         <!-- 他のメニューアイテムをここに追加 -->
     </div>
 
@@ -139,7 +165,7 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        map.zoomControl.setPosition('bottomright');
+        map.zoomControl.setPosition('bottomleft');
 
         let routeSearchButton = document.getElementById("searchBtn")
 
@@ -470,6 +496,22 @@
             const routeContainer = document.querySelector('.route-container');
             routeContainer.classList.remove("shrink")
             routeContainer.classList.add("expand")
+        }
+
+        function closeResultBar() {
+            const searchBarBtn = document.querySelector('.searchbar-btn');//今回はcloseになっている
+            searchBarBtn.classList.remove("close-btn");
+            searchBarBtn.classList.add("open-btn");
+            searchBarBtn.setAttribute("onclick", "openSearchBar()");
+            const searchBarBtnImage = searchBarBtn.getElementsByTagName('i')[0];
+            searchBarBtnImage.classList.remove('fa-times');
+            searchBarBtnImage.classList.add('fa-bars');
+            const searchBarContainer = document.querySelector('.searchbar-content');
+            searchBarContainer.classList.remove("expand")
+            searchBarContainer.classList.add("shrink")
+            const routeContainer = document.querySelector('.route-container');
+            routeContainer.classList.remove("expand")
+            routeContainer.classList.add("shrink")
         }
 
 
