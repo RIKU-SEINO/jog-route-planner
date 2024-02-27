@@ -239,6 +239,10 @@ nav a:hover {
 
 .ad-content {
     padding: 10px;
+    position: relative;
+    top: -50px;
+    margin: 0 auto; 
+    text-align: center;    
   }
 
 .handle {
@@ -258,17 +262,6 @@ nav a:hover {
     color: #fff;
     box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3), /* 左下 */
                 -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
-}
-
-.course-selection {
-    position: relative;
-    top: -50px;
-    margin: 0 auto; 
-    text-align: center;    
-}
-
-.course-roadtype {
-    text-align: center; 
 }
 
 .btn-register-course, .btn-cancel-course {

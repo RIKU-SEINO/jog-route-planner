@@ -117,20 +117,14 @@
         <div class="handle">&#9654;</div>
         <div class="ad-content">
             <div class="course-selection">
-                <i class="fa-solid fa-chevron-left" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 12px; background-color: rgb(223, 223, 223);"></i>
+                <i class="fa-solid fa-chevron-left" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 11px; background-color: rgb(223, 223, 223);"></i>
                 <span>&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
-                <i class="fa-solid fa-chevron-right" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 12px; background-color: rgb(223, 223, 223);"></i>
+                <i class="fa-solid fa-chevron-right" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 11px; background-color: rgb(223, 223, 223);"></i>
             </div>
-            <div class="course-roadtype">
-                <ul style="list-style: none;">
-                    <li>footway: 30%</li>
-                    <li>pathway: 40%</li>
-                    <li>stairs: 30%</li>
-                </ul>
+            <div class="course-elevation-chart">
+                <canvas id="elevation-chart" class="chart" width="400" height="200"></canvas>
             </div>
-            <div class="course-elevation-chart"></div>
             <div class="course-distance">
-                <span>23&nbsp;km</span>
             </div>
             <div class="register-course-btns-container">
                 <button type="submit" class="btn-register-course">
@@ -157,6 +151,7 @@
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
     <script src="https://unpkg.com/leaflet-search@4.0.0/dist/leaflet-search.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         
         const map = L.map('map').setView([35.683969, 139.753326], 14);
@@ -288,35 +283,114 @@
                 return response.json();
             })
             .then(routeData => {
-                let routeLatLng = routeData["route"].map(coord => L.latLng(coord[1], coord[0]));
-                let wayPointIndices = routeData["wayPointIndices"];
-                let routePolyline = L.polyline(routeLatLng, { color: 'red' })
-                routePolyline.addTo(map);
-                map.fitBounds(routePolyline.getBounds());
-
-                var wayPointCnt = 0;
-                for (var i = 0; i < routeLatLng.length; i++) {
-                    if (wayPointIndices.includes(i) && !(i == 0) && !(i == routeLatLng.length-1)) {
-                        wayPointCnt = wayPointCnt + 1;
-                        let wayPointIcon = L.divIcon({
-                            html: `<div style="background-color: white; height:20px; width:20px; border: 1px solid #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Century Gothic',sans-serif; font-weight: 900;">
-                                    <span>`+wayPointCnt+`<\span>
-                                </div>`,
-                            iconSize: [15, 15], // アイコンのサイズ
-                            iconAnchor: [7, 7],
-                        });  
-                        let waypointMarker = L.marker(routeLatLng[i], {icon: wayPointIcon}).addTo(map);
-                    }
+                let routeIndex = 0;
+                let route = routeData["route"][routeIndex];
+                let wayPointIndices = routeData["wayPointIndices"][routeIndex];
+                let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
+                drawRoute(routeLatLng, wayPointIndices, routeIndex);
+                return routeData
+            }).then(
+                routeData => {
+                    let routeIndex = 0;
+                    let route = routeData["route"][routeIndex];
+                    let routeLength = routeData["routeLength"][routeIndex];
+                    document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
+                    createElevationChart(route);
                 }
-                
-            })
+            )
             .catch(error => Swal.fire({
-                    text: "走行ルートを検索できませんでした。",
+                    text: error,
                     icon: "error",
                     backdrop: false
                 }))
         }
 
+        function drawRoute(routeLatLng, wayPointIndices, routeIndex) {
+            let routePolyline = L.polyline(routeLatLng, { color: 'red' })
+            routePolyline.addTo(map);
+            map.fitBounds(routePolyline.getBounds());
+
+            var wayPointCnt = 0;
+            for (var i = 0; i < routeLatLng.length; i++) {
+                if (wayPointIndices.includes(i) && !(i == 0) && !(i == routeLatLng.length-1)) {
+                    wayPointCnt = wayPointCnt + 1;
+                    let wayPointIcon = L.divIcon({
+                        html: `<div style="background-color: white; height:20px; width:20px; border: 1px solid #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Century Gothic',sans-serif; font-weight: 900;">
+                                <span>`+wayPointCnt+`<\span>
+                            </div>`,
+                        iconSize: [15, 15], // アイコンのサイズ
+                        iconAnchor: [7, 7],
+                    });  
+                    let waypointMarker = L.marker(routeLatLng[i], {icon: wayPointIcon}).addTo(map);
+                }
+            }
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; // 地球の半径（km）
+            var dLat = deg2rad(lat2 - lat1);
+            var dLon = deg2rad(lon2 - lon1);
+            var a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var distance = R * c; // 距離（km）
+            return distance * 1000; // メートルに変換
+        }
+
+        // 度からラジアンに変換
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
+
+        function createElevationChart(route) {
+            var distanceData = [0];
+            distance = 0;
+            for (var i = 1; i < route.length; i++) {
+                var lat1 = route[i - 1][1];
+                var lon1 = route[i - 1][0];
+                var lat2 = route[i][1];
+                var lon2 = route[i][0];
+                var distance = distance + calculateDistance(lat1, lon1, lat2, lon2);
+                distanceData.push(distance);
+            }
+            // Canvas要素を取得
+            let ctx = document.getElementById('elevation-chart').getContext('2d');
+
+            // Chart.jsを使用して2D折線グラフを描画
+            let elevationChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: distanceData,
+                    datasets: [{
+                        data: route.map(point => ({ x: calculateDistance(point[1], point[0], route[0][1], route[0][0]), y: point[2] })),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Distance (meters)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Elevation (meters)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
         
         function reverseGeoCoder(latLng) {
             let url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + latLng.lat + '&lon=' + latLng.lng;

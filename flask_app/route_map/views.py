@@ -17,6 +17,7 @@ def execute_search(y_start, x_start, y_end, x_end, target_length):
     url = f"https://trailrouter.com/ors/experimentalroutes?coordinates={x_start},{y_start}%7C{x_end},{y_end}&skip_segments=&green_preference=0.8&avoid_unsafe_streets=false&avoid_unlit_streets=false&hills_preference=0&avoid_repetition=true&target_distance={target_length}&roundtrip={roundtrip_option}"
     res = requests.get(url)
     data = res.json()
+    return data
     route = data["routes"][0]["geometry"]["coordinates"]
     route_length = data["routes"][0]["distance"]
     way_point_indices = data["routes"][0]["waypointIndices"]
@@ -33,10 +34,19 @@ def home():
             y_goal = float(data["goallat"])
             x_goal = float(data["goallng"])
             target_length = int(float(data["targetLength"])*1e3) # convert to km
-            route, route_length, way_point_indices = execute_search(y_start, x_start, y_goal, x_goal, target_length)
-            return jsonify({'route': route, 
-                            'routeLength': route_length,
-                            'wayPointIndices': way_point_indices})
+            data = execute_search(y_start, x_start, y_goal, x_goal, target_length)
+            route_data_list = data["routes"]
+            route_list, route_length_list, way_point_indices_list = [], [], []
+            for i in range(len(route_data_list)):
+                route = route_data_list[i]["geometry"]["coordinates"]
+                route_list.append(route)
+                route_length = route_data_list[i]["distance"]
+                route_length_list.append(route_length)
+                way_point_indices = route_data_list[i]["waypointIndices"]
+                way_point_indices_list.append(way_point_indices)
+            return jsonify({'route': route_list, 
+                            'routeLength': route_length_list,
+                            'wayPointIndices': way_point_indices_list})
         except Exception as e:
             return jsonify({'error': str(e)})
     return render_template('create_route.html')
