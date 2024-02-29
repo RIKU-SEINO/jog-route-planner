@@ -118,7 +118,7 @@
         <div class="ad-content">
             <div class="course-selection">
                 <i id="prev-course" class="fa-solid fa-chevron-left"></i>
-                <span>&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
+                <span class="course-title">&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
                 <i id="next-course" class="fa-solid fa-chevron-right"></i>
             </div>
             <div class="course-distance">
@@ -130,9 +130,6 @@
                 <button type="submit" class="btn-register-course">
                     <i class="fa-solid fa-plus"></i>
                     <span>マイコースに追加</span>
-                </button>
-                <button type="submit" class="btn-cancel-course">
-                    <span>キャンセル</span>
                 </button>
             </div>
         </div>
@@ -258,6 +255,8 @@
 
         let showPrevRouteButton = document.getElementById('prev-course');
         let showNextRouteButton = document.getElementById('next-course');
+        let routeTitleElem = document.querySelector('.course-title');
+        let routeLengthElem = document.querySelector('.course-distance');
         showPrevRouteButton.addEventListener('click',function () {
             if (_routeIndex > 0) {
                 clearAllMarker();
@@ -268,7 +267,18 @@
                 let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
                 drawRoute(routeLatLng, wayPointIndices, _routeIndex);
                 let routeLength = _routeData["routeLength"][_routeIndex];
-                document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
+                if (_routeIndex  <= 0) {
+                    showPrevRouteButton.classList.add("disabled")
+                }else{
+                    showPrevRouteButton.classList.remove("disabled")
+                }
+                if (_routeIndex >= _routeData["route"].length-2) {
+                    showNextRouteButton.classList.add("disabled")
+                }else{
+                    showNextRouteButton.classList.remove("disabled")
+                }
+                routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
+                routeLengthElem.innerHTML = `${Math.floor((routeLength/1e3) * 100) / 100}&nbsp;km`
                 createElevationChart(route);
             }
         });
@@ -282,7 +292,19 @@
                 let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
                 drawRoute(routeLatLng, wayPointIndices, _routeIndex);
                 let routeLength = _routeData["routeLength"][_routeIndex];
-                document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
+                routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
+                if (_routeIndex  <= 0) {
+                    showPrevRouteButton.classList.add("disabled")
+                }else{
+                    showPrevRouteButton.classList.remove("disabled")
+                }
+                if (_routeIndex >= _routeData["route"].length-2) {
+                    showNextRouteButton.classList.add("disabled")
+                }else{
+                    showNextRouteButton.classList.remove("disabled")
+                }
+                routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
+                routeLengthElem.innerHTML = `${Math.floor((routeLength/1e3) * 100) / 100}&nbsp;km`
                 createElevationChart(route);
             }
         });
@@ -332,7 +354,19 @@
             })
             .then(routeData => {
                 let routeIndex = 0;
+                _routeData = routeData;
                 _routeIndex = routeIndex;
+                routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
+                if (_routeIndex  <= 0) {
+                    showPrevRouteButton.classList.add("disabled")
+                }else{
+                    showPrevRouteButton.classList.remove("disabled")
+                }
+                if (_routeIndex >= _routeData["route"].length-2) {
+                    showNextRouteButton.classList.add("disabled")
+                }else{
+                    showNextRouteButton.classList.remove("disabled")
+                }
                 let route = routeData["route"][routeIndex];
                 let wayPointIndices = routeData["wayPointIndices"][routeIndex];
                 let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
@@ -340,7 +374,6 @@
                 return routeData
             }).then(
                 routeData => {
-                    _routeData = routeData;
                     let route = routeData["route"][routeIndex];
                     let routeLength = routeData["routeLength"][routeIndex];
                     document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
