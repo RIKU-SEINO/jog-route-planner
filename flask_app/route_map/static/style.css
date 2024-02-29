@@ -220,13 +220,13 @@ nav a:hover {
 
 .resultbar-container {
     position: fixed;
-    right: 10px;
+    right: 7px;
     z-index: 1000; /* 必要に応じてZインデックスを設定 */
     background-color: #fff; /* サイドバーの背景色 */
     padding: 10px; /* 必要に応じてパディングを調整 */
     max-width: 300px; /* 必要に応じて最大幅を設定 */
-    height: 70%;
-    width: 700px;
+    height: 280px;
+    width: 600px;
     margin-top: 170px;
     margin-right: -10px;
     border-radius: 5px;
@@ -264,7 +264,28 @@ nav a:hover {
                 -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
 }
 
+.register-course-btns-container {
+    display: flex;
+}
+
 .btn-register-course, .btn-cancel-course {
+    font-size: 13.4px;
     border: 1px solid black;
     margin: 5px;
 }
+
+.fa-solid.fa-chevron-left,.fa-solid.fa-chevron-right {
+    width: 30px; 
+    width: 35px; 
+    border-radius: 50%; 
+    padding: 10px 10px 10px 11px; 
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color .1s linear;
+}
+
+.fa-solid.fa-chevron-left:hover,.fa-solid.fa-chevron-right:hover {
+    background-color: rgb(228, 228, 228);
+    transition: background-color .1s linear;
+}
+

@@ -117,14 +117,14 @@
         <div class="handle">&#9654;</div>
         <div class="ad-content">
             <div class="course-selection">
-                <i class="fa-solid fa-chevron-left" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 11px; background-color: rgb(223, 223, 223);"></i>
+                <i id="prev-course" class="fa-solid fa-chevron-left"></i>
                 <span>&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
-                <i class="fa-solid fa-chevron-right" style="width: 30px; width: 35px; border-radius: 50%; padding: 10px 10px 10px 11px; background-color: rgb(223, 223, 223);"></i>
-            </div>
-            <div class="course-elevation-chart">
-                <canvas id="elevation-chart" class="chart" width="400" height="200"></canvas>
+                <i id="next-course" class="fa-solid fa-chevron-right"></i>
             </div>
             <div class="course-distance">
+            </div>
+            <div class="course-elevation-chart">
+                <canvas id="elevation-chart" class="chart"></canvas>
             </div>
             <div class="register-course-btns-container">
                 <button type="submit" class="btn-register-course">
@@ -145,6 +145,7 @@
         <div id="gradient-background"></div>
         <div id="map"></div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <script src="https://browser.sentry-cdn.com/5.29.2/bundle.min.js" integrity="sha384-ir4+BihBClNpjZk3UKgHTr0cwRhujAjy/M5VEGvcOzjhM1Db79GAg9xLxYn4uVK4" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
@@ -229,16 +230,12 @@
             deletePoint(deleteWaypointBtn);
         }
 
+        var _routeData = null;
+        let routeIndex = 0;
         routeSearchButton.addEventListener('click', function() {
+            clearAllMarker();
+            clearAllPolyline();
             if ((startMarker) && (goalMarker)){
-                map.eachLayer(layer => {
-                if (layer instanceof L.Polyline) {
-                    map.removeLayer(layer);
-                }
-                if ((layer instanceof L.Marker) && !(layer == startMarker) && !(layer == goalMarker)) {
-                    map.removeLayer(layer)
-                }
-            });
                 fetchRoute(startlatLng, goallatLng);
             }else{
                 let alertMessage = "が登録されていません。";
@@ -258,6 +255,57 @@
                 })
             }
         })
+
+        let showPrevRouteButton = document.getElementById('prev-course');
+        let showNextRouteButton = document.getElementById('next-course');
+        showPrevRouteButton.addEventListener('click',function () {
+            if (_routeIndex > 0) {
+                clearAllMarker();
+                clearAllPolyline();
+                _routeIndex--;
+                let route = _routeData["route"][_routeIndex];
+                let wayPointIndices = _routeData["wayPointIndices"][_routeIndex];
+                let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
+                drawRoute(routeLatLng, wayPointIndices, _routeIndex);
+                let routeLength = _routeData["routeLength"][_routeIndex];
+                document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
+                createElevationChart(route);
+            }
+        });
+        showNextRouteButton.addEventListener('click',function () {
+            if (_routeIndex < _routeData["route"].length-2) {//last route data is shortest path, so must eliminate
+                clearAllMarker();
+                clearAllPolyline();
+                _routeIndex++;
+                let route = _routeData["route"][_routeIndex];
+                let wayPointIndices = _routeData["wayPointIndices"][_routeIndex];
+                let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
+                drawRoute(routeLatLng, wayPointIndices, _routeIndex);
+                let routeLength = _routeData["routeLength"][_routeIndex];
+                document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
+                createElevationChart(route);
+            }
+        });
+
+        function clearAllMarker() {
+            if ((startMarker) && (goalMarker)){
+                map.eachLayer(layer => {
+                    if (layer instanceof L.Polyline) {
+                        map.removeLayer(layer);
+                    }
+                });
+            }
+        }
+
+        function clearAllPolyline() {
+            if ((startMarker) && (goalMarker)){
+                map.eachLayer(layer => {
+                    if ((layer instanceof L.Marker) && !(layer == startMarker) && !(layer == goalMarker)) {
+                        map.removeLayer(layer)
+                    }
+                });
+            }
+        }
 
         function fetchRoute(startlatLng, goallatLng) {
             let targetLength = document.getElementById('input-distance').value
@@ -284,6 +332,7 @@
             })
             .then(routeData => {
                 let routeIndex = 0;
+                _routeIndex = routeIndex;
                 let route = routeData["route"][routeIndex];
                 let wayPointIndices = routeData["wayPointIndices"][routeIndex];
                 let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
@@ -291,7 +340,7 @@
                 return routeData
             }).then(
                 routeData => {
-                    let routeIndex = 0;
+                    _routeData = routeData;
                     let route = routeData["route"][routeIndex];
                     let routeLength = routeData["routeLength"][routeIndex];
                     document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
