@@ -345,6 +345,10 @@
         }
 
         function createElevationChart(route) {
+            const existingChart = Chart.getChart("elevation-chart");
+            if (existingChart) {
+                existingChart.destroy();
+            }
             var distanceData = [0];
             distance = 0;
             for (var i = 1; i < route.length; i++) {
@@ -353,39 +357,44 @@
                 var lat2 = route[i][1];
                 var lon2 = route[i][0];
                 var distance = distance + calculateDistance(lat1, lon1, lat2, lon2);
-                distanceData.push(distance);
+                distanceData.push(distance / 1000);
             }
+            let elevationData = route.map(point => point[2]);
             // Canvas要素を取得
             let ctx = document.getElementById('elevation-chart').getContext('2d');
-
-            // Chart.jsを使用して2D折線グラフを描画
-            let elevationChart = new Chart(ctx, {
+            var elevationChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: distanceData,
                     datasets: [{
-                        data: route.map(point => ({ x: calculateDistance(point[1], point[0], route[0][1], route[0][0]), y: point[2] })),
+                        data: elevationData,
                         borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 2,
+                        borderWidth: 1,
                         fill: false,
-                        pointRadius: 0
+                        pointRadius: 0,
                     }]
                 },
                 options: {
                     scales: {
                         x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        title: {
-                            display: true,
-                            text: 'Distance (meters)'
+                            type: 'linear',
+                            position: 'bottom',
+                            ticks: {
+                                stepSize: 0.1
+                            },
+                            title: {
+                                display: true,
+                                text: '距離 (km)',
                             }
                         },
                         y: {
-                            title: {
-                                display: true,
-                                text: 'Elevation (meters)'
-                            }
+                            type: 'linear',
+                            position: 'left',
+                        }
+                    },
+                    plugins:{
+                        legend:{
+                            display: false
                         }
                     }
                 }
