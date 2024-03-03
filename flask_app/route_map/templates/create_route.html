@@ -390,7 +390,7 @@
         function drawRoute(routeLatLng, wayPointIndices, routeIndex) {
             let routePolyline = L.polyline(routeLatLng, { color: 'red' })
             routePolyline.addTo(map);
-            map.fitBounds(routePolyline.getBounds());
+            map.fitBounds(routePolyline.getBounds().pad(0.6));
 
             var wayPointCnt = 0;
             for (var i = 0; i < routeLatLng.length; i++) {
