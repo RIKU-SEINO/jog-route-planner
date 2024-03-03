@@ -220,7 +220,6 @@ nav a:hover {
 
 .resultbar-container {
     position: fixed;
-    right: 7px;
     z-index: 1000; /* 必要に応じてZインデックスを設定 */
     background-color: #fff; /* サイドバーの背景色 */
     padding: 10px; /* 必要に応じてパディングを調整 */
@@ -237,7 +236,19 @@ nav a:hover {
     transition: right 0.3s ease;
 }
 
-.ad-content {
+.resultbar-container.show {
+    right: 7px;
+}
+
+.resultbar-container.none {
+    right: -500px;
+}
+
+.resultbar-container.hidden {
+    right: -290px;
+}
+
+.resultbar-content {
     padding: 10px;
     position: relative;
     top: -50px;
@@ -245,14 +256,14 @@ nav a:hover {
     text-align: center;    
   }
 
-.handle {
+.resultbar-handle {
     position: relative;
     top: 10%;
-    left: -50px;
+    left: -30.257px;
     transform: translateY(-50%);
-    width: 40px;
+    width: 20px;
     height: 50px;
-    background-color: #595a59;
+    background-color: #ffffff;
     cursor: pointer;
     border-radius: 5px 0 0 5px; /* 左上の角のみを丸く */
     transition: left 0.3s ease;

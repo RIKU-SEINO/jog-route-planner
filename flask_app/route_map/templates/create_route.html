@@ -113,9 +113,11 @@
         </div>
     </div>
 
-    <div class="resultbar-container">
-        <div class="handle">&#9654;</div>
-        <div class="ad-content">
+    <div class="resultbar-container none">
+        <div class="resultbar-handle" onclick="hideResultBar()">
+            <i class="fa-solid fa-caret-right" style="color: black;"></i>
+        </div>
+        <div class="resultbar-content">
             <div class="course-selection">
                 <i id="prev-course" class="fa-solid fa-chevron-left"></i>
                 <span class="course-title">&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
@@ -233,7 +235,7 @@
             clearAllMarker();
             clearAllPolyline();
             if ((startMarker) && (goalMarker)){
-                fetchRoute(startlatLng, goallatLng);
+                fetchRoute(startlatLng, goallatLng)
             }else{
                 let alertMessage = "が登録されていません。";
                 let lackedItem;
@@ -378,6 +380,7 @@
                     let routeLength = routeData["routeLength"][routeIndex];
                     document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
                     createElevationChart(route);
+                    openResultBar()
                 }
             )
             .catch(error => Swal.fire({
@@ -678,6 +681,32 @@
             routeContainer.classList.remove("expand")
             routeContainer.classList.add("shrink")
         }
+
+        function openResultBar() {
+            const resultBarContainer = document.querySelector('.resultbar-container');
+            resultBarContainer.classList.remove("none");
+            resultBarContainer.classList.remove("hidden");
+            resultBarContainer.classList.add("show");
+            const resultBarBtn = document.querySelector('.resultbar-handle');
+            resultBarBtn.setAttribute("onclick", "hideResultBar()")
+            const resultBarBtnImage = resultBarBtn.getElementsByTagName('i')[0];
+            resultBarBtnImage.classList.remove('fa-caret-left');
+            resultBarBtnImage.classList.add('fa-caret-right');
+        }
+
+        function hideResultBar() {
+            const resultBarContainer = document.querySelector('.resultbar-container');
+            resultBarContainer.classList.remove("none");
+            resultBarContainer.classList.remove("show");
+            resultBarContainer.classList.add("hidden");
+            const resultBarBtn = document.querySelector('.resultbar-handle');
+            resultBarBtn.setAttribute("onclick", "openResultBar()")
+            const resultBarBtnImage = resultBarBtn.getElementsByTagName('i')[0];
+            resultBarBtnImage.classList.remove('fa-caret-right');
+            resultBarBtnImage.classList.add('fa-caret-left');
+        }
+
+
 
 
 
