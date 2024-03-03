@@ -311,23 +311,19 @@
         });
 
         function clearAllMarker() {
-            if ((startMarker) && (goalMarker)){
-                map.eachLayer(layer => {
-                    if (layer instanceof L.Polyline) {
-                        map.removeLayer(layer);
-                    }
-                });
-            }
+            map.eachLayer(layer => {
+                if (layer instanceof L.Polyline) {
+                    map.removeLayer(layer);
+                }
+            });
         }
 
         function clearAllPolyline() {
-            if ((startMarker) && (goalMarker)){
-                map.eachLayer(layer => {
-                    if ((layer instanceof L.Marker) && !(layer == startMarker) && !(layer == goalMarker)) {
-                        map.removeLayer(layer)
-                    }
-                });
-            }
+            map.eachLayer(layer => {
+                if ((layer instanceof L.Marker) && !(layer == startMarker) && !(layer == goalMarker)) {
+                    map.removeLayer(layer)
+                }
+            });
         }
 
         function fetchRoute(startlatLng, goallatLng) {
