@@ -22,7 +22,7 @@ def login():
             login_user(user)
             next_ = request.args.get('next')
             if next_ is None or not next_.startswith("/"):
-                next_ = url_for("home.index")
+                next_ = url_for("profile.index")
             return redirect(next_)
         else:
             flash("メールアドレスまたはパスワードが違います。")
@@ -48,7 +48,7 @@ def signup():
         login_user(user)
         next_ = request.args.get('next')
         if next_ is None or not next_.startswith("/"):
-            next_ = url_for("home.index")
+            next_ = url_for("profile.index")
         return redirect(next_)
     
     else:

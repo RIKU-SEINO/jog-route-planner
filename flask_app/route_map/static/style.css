@@ -63,7 +63,7 @@ td:hover {
     box-shadow: none;
 }
 
-.btn-login, .btn-signup, .btn-register-course, .btn-cancel-course {
+.btn-login, .btn-signup, .btn-profile, .btn-register-course, .btn-cancel-course {
     font-size: 15px; 
     background-color: transparent; 
     display: block;
@@ -72,7 +72,7 @@ td:hover {
     border-radius: 10px;
 }
 
-.btn-login:hover, .btn-signup:hover {
+.btn-login:hover, .btn-signup:hover, .btn-profile:hover {
     transition: border 0.5s linear;
     border: 1px solid black;
 }

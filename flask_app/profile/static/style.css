@@ -76,38 +76,3 @@ td:hover {
     transition: border 0.5s linear;
     border: 1px solid black;
 }
-
-.email-login-container, .email-signup-container {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 70px;
-}
-
-.username-area, .email-area, .password-area, .login-btn-container, .signup-btn-container {
-    padding: 10px;
-}
-
-.username-input-label, .email-input-label, .password-input-label {
-    padding-bottom: 10px
-}
-
-input {
-    width: 500px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1.5px solid rgb(177, 177, 177);
-}
-
-input:focus {
-    border: 1.5px solid rgb(0, 162, 250);
-    outline: none;
-}
-
-#submit-login, #submit-signup {
-    display: block;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    width: 500px;
-    height: 40px;
-    border-radius: 50px;
-}

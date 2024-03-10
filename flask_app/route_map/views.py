@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, jsonify
-from flask_login import login_required
 import requests
 
 route_map = Blueprint(
@@ -22,7 +21,6 @@ def execute_search(y_start, x_start, y_end, x_end, target_length):
 
 
 @route_map.route("/",methods=["POST","GET"])
-@login_required
 def home():
     if request.method == "POST":
         try:

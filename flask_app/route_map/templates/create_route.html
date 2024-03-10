@@ -29,6 +29,7 @@
                 </button>
             </a>
             <div class="login-signup-btns">
+                {% if not current_user.is_authenticated %}
                 <a href="/auth/login">
                     <button type="button" class="btn-login">
                         <span>ログイン</span>
@@ -39,11 +40,13 @@
                         <span>新規登録</span>
                     </button>
                 </a>
-                <a>
-                    <button type="button" class="btn btn-light mypage" style="font-size: 15px; background-color: transparent; border: none; display: none;">
+                {% else %}
+                <a href="/profile">
+                    <button type="button" class="btn-profile">
                         <span>マイページ</span>
                     </button> 
                 </a>
+                {% endif %}
             </div>
         </div>
     </header>
