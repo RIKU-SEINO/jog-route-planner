@@ -83,7 +83,7 @@ td:hover {
     margin-top: 70px;
 }
 
-.username-area, .email-area, .password-area, .login-btn-container {
+.username-area, .email-area, .password-area, .login-btn-container, .signup-btn-container {
     padding: 10px;
 }
 
