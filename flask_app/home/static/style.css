@@ -1,0 +1,313 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #fff;
+    font-family: "Noto Sans JP", sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    border: none; /* ボーダーを削除 */
+    outline: none; /* フォーカス時の枠線を削除 */
+    box-shadow: none; /* 影を削除 */
+}
+
+header {
+    padding: 5px 5px 5px 5px;
+    background-color: none;
+    top: 0;
+    width: 100%;
+    font-family: "Noto Sans JP", sans-serif;
+    box-shadow: 0 2px 0px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+td {
+    cursor: pointer;
+}
+
+td:hover {
+    background-color: #cdc8c8;
+}
+
+#icon {
+    float: left;
+    border-radius: 20px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Adjust padding as needed */
+    width: 100%;
+}
+
+.login-signup-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.btn.btn-light:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-login, .btn-signup, .btn-register-course, .btn-cancel-course {
+    font-size: 15px; 
+    background-color: transparent; 
+    display: block;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.btn-login:hover, .btn-signup:hover {
+    transition: border 0.5s linear;
+    border: 1px solid black;
+}
+
+nav {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: black;
+    text-align: center;
+    padding:5px;
+    box-shadow: 0 5px 0px rgba(0, 0, 0, 0.05);
+}
+  
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+  
+nav li {
+    margin-right: 20px;
+    display: inline-block;
+    margin-right: 80px;
+    padding: 5px;
+}
+
+nav li:last-child {
+    margin-right: 0;
+}
+  
+nav a {
+    text-decoration: none;
+    color: black;
+    display: inline-block; 
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+}
+
+nav a:hover {
+    color: inherit; /* ホバー時の色を親要素の色に継承 */
+    text-decoration: none; /* ホバー時の下線を無効にする */
+    transition: border-bottom 0.3s ease;
+    border-bottom: 2px solid rgba(72, 75, 76, 0.738);
+}
+
+#map {
+    height: 100%;
+    top: 3px;
+    cursor: crosshair;
+}
+
+#map-container {
+    flex: 1;
+}
+
+.searchbar-content {
+    position: fixed;
+    left: 0; /* 右端に配置（左端の場合はleft: 0;に変更） */
+    z-index: 1000; /* 必要に応じてZインデックスを設定 */
+    background-color: #fff; /* サイドバーの背景色 */
+    padding: 10px; /* 必要に応じてパディングを調整 */
+    max-width: 300px; /* 必要に応じて最大幅を設定 */
+    margin-top: 150px;
+    margin-left: 13px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), /* 右下は少し太めに */
+                2px -2px 5px rgba(0, 0, 0, 0.3), /* 右上 */
+                -2px 2px 5px rgba(0, 0, 0, 0.3), /* 左下 */
+                -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
+    width: 100%;
+    height: 200px;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+.searchbar-content.expand {
+    width: 100%;
+    height: 200px;
+}
+
+.searchbar-content.shrink {
+    width: 47px;
+    height: 47px;
+}
+
+.route-container.expand {
+    visibility: visible;
+    opacity: 1;
+    transition: 1s;
+}
+.route-container.shrink {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0s;
+}
+
+.searchbar-btn, .delete-waypoint, .resultbar-btn {
+    background-color: transparent; 
+    transition: background-color 0.2s linear;
+    border-color: #fff; 
+    border-radius: 20%; 
+}
+
+.searchbar-btn:hover, .delete-waypoint:hover, .resultbar-btn:hover {
+    color: inherit; /* ホバー時の色を親要素の色に継承 */
+    background-color: #f0f3f4;
+    transition: background-color 0.2s linear;
+}
+
+.geocoders {
+    width: 100%;
+}
+
+#input-start-point, #input-goal-point {
+    margin: 5px auto;
+    width: 230px;
+    border:none;
+    border-bottom: 1px black solid;
+}
+
+#custom-distance {
+    margin: 5px auto;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#input-distance {
+    width: 50%;
+    border:none;
+    border-bottom: 1px black solid;
+}
+
+#input-start-point:focus, #input-goal-point:focus, #input-distance:focus {
+    border:none;
+    outline: none;
+    border-bottom: 1.7px black solid;
+}
+
+.leaflet-marker-icon.leaflet-div-icon.leaflet-zoom-animated.leaflet-interactive {
+    background-color: transparent;
+    border: none;
+}
+
+.autocomplete-list {
+    font-size: smaller;
+}
+
+.resultbar-container {
+    position: fixed;
+    z-index: 1000; /* 必要に応じてZインデックスを設定 */
+    background-color: #fff; /* サイドバーの背景色 */
+    padding: 10px; /* 必要に応じてパディングを調整 */
+    max-width: 300px; /* 必要に応じて最大幅を設定 */
+    height: 280px;
+    width: 600px;
+    margin-top: 170px;
+    margin-right: -10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), /* 右下は少し太めに */
+                2px -2px 5px rgba(0, 0, 0, 0.3), /* 右上 */
+                -2px 2px 5px rgba(0, 0, 0, 0.3), /* 左下 */
+                -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
+    transition: right 0.3s ease;
+}
+
+.resultbar-container.show {
+    right: 7px;
+}
+
+.resultbar-container.none {
+    right: -500px;
+}
+
+.resultbar-container.hidden {
+    right: -290px;
+}
+
+.resultbar-content {
+    padding: 10px;
+    position: relative;
+    top: -50px;
+    margin: 0 auto; 
+    text-align: center;    
+  }
+
+.resultbar-handle {
+    position: relative;
+    top: 10%;
+    left: -30.257px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 50px;
+    background-color: #ffffff;
+    cursor: pointer;
+    border-radius: 5px 0 0 5px; /* 左上の角のみを丸く */
+    transition: left 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3), /* 左下 */
+                -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
+}
+
+.register-course-btns-container {
+    padding:10px;
+}
+
+.btn-register-course {
+    font-size: 13.4px;
+    border: 1px solid black;
+    margin: auto;
+    width: 100%;
+}
+
+.fa-solid.fa-chevron-left,.fa-solid.fa-chevron-right {
+    width: 30px; 
+    width: 35px; 
+    border-radius: 50%; 
+    padding: 10px 10px 10px 11px; 
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color .1s linear;
+}
+
+.fa-solid.fa-chevron-left:hover,.fa-solid.fa-chevron-right:hover {
+    background-color: rgb(228, 228, 228);
+    transition: background-color .1s linear;
+}
+
+.fa-solid.fa-chevron-left.disabled,.fa-solid.fa-chevron-right.disabled {
+    width: 30px; 
+    width: 35px; 
+    border-radius: 50%; 
+    padding: 10px 10px 10px 11px; 
+    background-color: transparent;
+    color:#c2c2c2;
+}
+

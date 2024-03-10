@@ -22,8 +22,10 @@ def login():
             login_user(user)
             next_ = request.args.get('next')
             if next_ is None or not next_.startswith("/"):
-                next_ = url_for("route_map.home")
+                next_ = url_for("home.index")
             return redirect(next_)
+        else:
+            flash("メールアドレスまたはパスワードが違います。")
     return render_template("login.html", form=form)
 
 @auth.route("/signup", methods=["GET","POST"])
@@ -46,7 +48,7 @@ def signup():
         login_user(user)
         next_ = request.args.get('next')
         if next_ is None or not next_.startswith("/"):
-            next_ = url_for("route_map.home")
+            next_ = url_for("home.index")
         return redirect(next_)
     
     else:

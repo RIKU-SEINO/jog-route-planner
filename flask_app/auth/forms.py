@@ -50,8 +50,3 @@ class LoginForm(FlaskForm):
         ],
     )
     submit = SubmitField("ログイン")
-
-    def validate_password(self, password):
-        pattern = re.compile(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$')
-        if not pattern.match(password.data):
-            raise ValidationError("正しい形式で入力してください。")
