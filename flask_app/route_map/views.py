@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, send_from_directory
+from flask import Blueprint, render_template, request, jsonify
 import requests
 
 route_map = Blueprint(
