@@ -41,13 +41,24 @@
         </div>
     </header>
 
-    <div class="email-login-container">
-        <form class="email-login-form" action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST" novalidate="novalidate">
+    <div class="email-signup-container">
+        <form class="email-signup-form" action="{{ url_for('auth.signup', next=request.args.get('next')) }}" method="POST" novalidate="novalidate">
             {% for message in get_flashed_messages() %}
             <p style="color: red;">{{ message }}</p>
             {% endfor %}
-            <div class="title" style="text-align: center; font-size: 25px;">ログイン</div>
+            <div class="title" style="text-align: center; font-size: 25px;">新規登録</div>
             {{ form.hidden_tag() }}
+            <div class="username-area">
+                {{ form.username.label(class="username-input-label") }}
+                <div class="username-input-area">
+                    {{ form.username(class="username-input") }}
+                </div>
+                <div class="username-error-area" style="color: red">
+                    {% for error in form.username.errors %}
+                    <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="email-area">
                 {{ form.email.label(class="email-input-label") }}
                 <div class="email-input-area">
@@ -70,11 +81,8 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="login-btn-container">
+            <div class="signup-btn-container">
                 {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-signup") }}
-                <div class="for-create-user">アカウントをお持ちでない場合は
-                    <a data-rtui-link="next" href="/auth/signup" class="create-user-btn">新規登録</a>
-                </div>
             </div>
         </form>
     </div>

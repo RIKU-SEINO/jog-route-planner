@@ -77,17 +77,17 @@ td:hover {
     border: 1px solid black;
 }
 
-.email-login-container {
+.email-login-container, .email-signup-container {
     margin-left: auto;
     margin-right: auto;
     margin-top: 70px;
 }
 
-.email-area, .password-area, .login-btn-container {
+.username-area, .email-area, .password-area, .login-btn-container {
     padding: 10px;
 }
 
-.email-input-label,.password-input-label {
+.username-input-label, .email-input-label, .password-input-label {
     padding-bottom: 10px
 }
 
@@ -103,9 +103,9 @@ input:focus {
     outline: none;
 }
 
-#submit-login {
+#submit-login, #submit-signup {
     display: block;
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 20px;
     width: 500px;
     height: 40px;
