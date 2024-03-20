@@ -17,6 +17,18 @@ button {
     box-shadow: none; /* 影を削除 */
 }
 
+ul {
+    list-style: none;
+}
+
+a {
+    color: black;
+}
+
+a:hover{
+    color:black
+}
+
 header {
     padding: 5px 5px 5px 5px;
     background-color: none;
@@ -119,24 +131,54 @@ nav a:hover {
 
 .search-icon {
     position: absolute;
-    left: 10px; /* アイコンを左端に配置する位置を調整します */
+    right: 20px; /* アイコンを左端に配置する位置を調整します */
     top: 50%; /* アイコンを垂直方向にセンタリング */
     transform: translateY(-50%); /* アイコンを垂直方向にセンタリング */
     color: #888; /* アイコンの色を調整します */
 }
+
+.search-icon:hover {
+    cursor: pointer;
+}
   
 .top-visual-search-input {
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
     width: calc(100% - 30px); /* アイコンの幅と左の余白を考慮して、inputの幅を調整 */
     height: 50px;
-    padding-left: 30px; /* アイコンの幅と左の余白を考慮して、入力フィールド内のテキストの位置を調整 */
+    padding-left: 15px; /* アイコンの幅と左の余白を考慮して、入力フィールド内のテキストの位置を調整 */
     padding-top: 5px;
     padding-bottom: 5px;
     width: 500px;
 }
 
 .top-visual-search-input:focus {
-    border: 1px solid rgb(0, 162, 250);
     outline: none;
+}
+
+.selection-wrapper {
+    margin: 0 5vw;
+    margin-top: 8vh;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.selection-container {
+    background-color: rgb(238, 238, 238);
+    padding: 10vh;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.selection-container:hover {
+    background-color: #ccc; /* ホバー時の色 */
+}
+
+.selection-container .i-top-visual__inner-title {
+    text-align: center;
+}
+
+.selection-container .i-top-visual__inner-title i {
+    margin-left: 5px;
 }
