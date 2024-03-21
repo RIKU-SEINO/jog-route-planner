@@ -6,7 +6,7 @@ from flask_login import current_user
 route_map = Blueprint(
     'route_map',
     __name__,
-    static_folder='static',
+    static_folder='./static/',
     template_folder='templates',
     url_prefix='/map',
 )
