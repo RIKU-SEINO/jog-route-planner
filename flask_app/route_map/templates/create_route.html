@@ -41,10 +41,8 @@
                     </button>
                 </a>
                 {% else %}
-                <a href="/profile">
-                    <button type="button" class="btn-profile">
-                        <span>マイページ</span>
-                    </button> 
+                <a href="/profile/{{ current_user.id }}">
+                    <img class="profile-icon" src="{{ url_for('static', filename='profile-image/'+profile_image.filename) }}" alt="Profile Image">
                 </a>
                 {% endif %}
             </div>
