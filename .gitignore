@@ -4,6 +4,7 @@ __pycache__/
 # Flask stuff:
 instance
 migrations
+static
 
 # Environments
 .env
