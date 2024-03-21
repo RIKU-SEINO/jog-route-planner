@@ -2,13 +2,13 @@ from flask import Blueprint, render_template, request, redirect, session, url_fo
 from flask_app.app import db
 from flask_app.auth.models import User, ProfileImage
 from flask_app.auth.forms import SignUpForm, LoginForm
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from werkzeug.utils import secure_filename
 import os
 import uuid
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-UPLOAD_FOLDER = os.path.join('flask_app', 'static', 'profile-image', 'custom')
+UPLOAD_FOLDER = os.path.join('flask_app', 'static', 'profile-image')
 
 
 auth = Blueprint(
@@ -25,6 +25,8 @@ def allowed_file(filename):
 @auth.route("/login", methods=["GET","POST"])
 def login():
     form = LoginForm()
+    if current_user.is_authenticated:
+        return redirect(url_for("profile.index", userid=current_user.id))
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
 
@@ -41,6 +43,8 @@ def login():
 @auth.route("/signup", methods=["GET","POST"])
 def signup():
     form = SignUpForm()
+    if current_user.is_authenticated:
+        return redirect(url_for("profile.index", userid=current_user.id))
     if form.validate_on_submit():
         username = form.username.data
         email = form.email.data
@@ -67,7 +71,7 @@ def signup():
             flash("png, jpg, jpeg以外のファイルはサポートしておりません。")
             return redirect(url_for('auth.signup'))
         else:
-            default_image_filename = '/flask_app/static/profile-image/default/default-user.svg'
+            default_image_filename = 'default-user.png'
             image = ProfileImage(filename=default_image_filename, user_id=user.id)
 
         db.session.add(image)
