@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError
+from wtforms import PasswordField, StringField, SubmitField, FileField, ValidationError
 from wtforms.validators import DataRequired, Email, Length
 import re
 
@@ -26,13 +26,15 @@ class SignUpForm(FlaskForm):
 
         ],
     )
+    profile_image = FileField(
+        "プロフィール画像(任意)"
+    )
     submit = SubmitField("新規登録")
 
     def validate_password(self, password):
         pattern = re.compile(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$')
         if not pattern.match(password.data):
             raise ValidationError("英大文字・英小文字・数字の全てを1つ以上含む必要があります。")
-        
 
 class LoginForm(FlaskForm):
     email = StringField(

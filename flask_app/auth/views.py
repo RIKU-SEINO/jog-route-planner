@@ -1,8 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for, flash
 from flask_app.app import db
-from flask_app.auth.models import User
+from flask_app.auth.models import User, ProfileImage
 from flask_app.auth.forms import SignUpForm, LoginForm
 from flask_login import login_user, logout_user
+from werkzeug.utils import secure_filename
+import os
+import uuid
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+UPLOAD_FOLDER = os.path.join('flask_app', 'static', 'profile-image', 'custom')
+
 
 auth = Blueprint(
     'auth',
@@ -11,6 +18,9 @@ auth = Blueprint(
     template_folder='templates',
     url_prefix='/auth',
 )
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @auth.route("/login", methods=["GET","POST"])
 def login():
@@ -32,17 +42,35 @@ def login():
 def signup():
     form = SignUpForm()
     if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        profile_image = request.files['profile_image']
+        profile_image_filename = profile_image.filename
         user = User(
-            username = form.username.data,
-            email = form.email.data,
-            password = form.password.data
+            username = username,
+            email = email,
+            password = password
         )
-
         if user.is_duplicated_email():
             flash("そのメールアドレスはすでにご登録いただいております。")
             return redirect(url_for('auth.signup'))
-
+        
         db.session.add(user)
+        db.session.commit()
+        
+        if profile_image and allowed_file(profile_image_filename):
+            filename = f"{str(uuid.uuid4())}_{secure_filename(profile_image_filename)}"
+            profile_image.save(os.path.join(UPLOAD_FOLDER, filename))
+            image = ProfileImage(filename=filename, user_id=user.id)
+        elif profile_image and not allowed_file(profile_image_filename):
+            flash("png, jpg, jpeg以外のファイルはサポートしておりません。")
+            return redirect(url_for('auth.signup'))
+        else:
+            default_image_filename = '/flask_app/static/profile-image/default/default-user.svg'
+            image = ProfileImage(filename=default_image_filename, user_id=user.id)
+
+        db.session.add(image)
         db.session.commit()
 
         login_user(user)

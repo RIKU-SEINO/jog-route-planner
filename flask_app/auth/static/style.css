@@ -83,11 +83,11 @@ td:hover {
     margin-top: 70px;
 }
 
-.username-area, .email-area, .password-area, .login-btn-container, .signup-btn-container {
+.username-area, .email-area, .password-area, .profile_image-area, .login-btn-container, .signup-btn-container {
     padding: 10px;
 }
 
-.username-input-label, .email-input-label, .password-input-label {
+.username-input-label, .email-input-label, .password-input-label, .profile_image-input-label {
     padding-bottom: 10px
 }
 
@@ -96,6 +96,11 @@ input {
     height: 40px;
     border-radius: 10px;
     border: 1.5px solid rgb(177, 177, 177);
+}
+
+.profile_image-input {
+    border: none;
+    border-radius: 0px;
 }
 
 input:focus {
