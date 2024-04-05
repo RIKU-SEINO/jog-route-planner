@@ -129,3 +129,15 @@ nav a:hover {
     transition: border-bottom 0.3s ease;
     border-bottom: 2px solid rgba(72, 75, 76, 0.738);
 }
+
+.profile-container {
+    padding: 30px;
+}
+
+.public-profile-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid black;
+    padding: 3px;
+}

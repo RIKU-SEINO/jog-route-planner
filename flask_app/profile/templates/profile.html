@@ -68,12 +68,12 @@
     </nav>
     <div class="profile-container">
         <div class="style-1m5be6d">
-            <div class="style-1jy4oqq">
-                <img alt="" height="72" loading="lazy" src="{{ url_for('static', filename='profile-image/'+public_profile_image.filename) }}" width="72" class="style-nr0z5m">
+            <div class="public-profile-image-container">
+                <img class="public-profile-image" alt="Profile Image" src="{{ url_for('static', filename='profile-image/'+public_profile_image.filename) }}">
             </div>
-            <h1 class="style-s8ei2s">Riku Seino</h1>
+            <h1>{{ user.username }}</h1>
         </div>
-        <div class="style-oxylxi">
+        <div class="profile-detail-container">
             <a href="/riku2264/contributions" class="style-whort5">
                 <span class="style-1snuvpu">0</span>
                 <span class="style-1hpkjug">Contributions</span>
