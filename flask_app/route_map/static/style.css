@@ -70,10 +70,10 @@ td:hover {
     padding: 10px;
     border: 1px solid transparent;
     border-radius: 10px;
-    transition: filter 0.15s linear;
 }
 
-.btn-login:hover, .btn-signup:hover {
+.btn-login:hover, .btn-signup:hover, .btn-profile:hover {
+    transition: border 0.5s linear;
     border: 1px solid black;
 }
 
