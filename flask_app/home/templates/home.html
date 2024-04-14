@@ -1,122 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share Jog</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@600&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('home.static', filename='style.css') }}">
-    <!-- Leaflet JavaScript -->
-    <!-- Your map initialization script -->
-</head>
-<body>
-    <header>
-        <div class="header-container">
-            <a href="/home">
-                <button id="icon" class="btn btn-light logo" style="font-size: 25px; background-color: transparent; border: none">
-                    <img src="{{ url_for('static', filename='image/logo.png') }}" style="width: 45px; height: 45px; background-color: transparent; padding: 3px; border-radius: 10px;">
-                    <span>Share Jog</span>
-                </button>
-            </a>
-            <div class="login-signup-btns">
-                {% if not current_user.is_authenticated %}
-                <a href="/auth/login" class="login-btn">
-                    <button type="button" class="btn-login">
-                        <span>ログイン</span>
-                    </button>
-                </a>
-                <a href="/auth/signup" class="signup-btn">
-                    <button type="button" class="btn-signup">
-                        <span>新規登録</span>
-                    </button>
-                </a>
-                {% else %}
-                <div class="profile-btn">
-                    <img class="profile-icon" src="{{ url_for('static', filename='profile-image/'+profile_image.filename) }}" alt="Profile Image">
-                    <div id="user-setting" class="user-menu__popup">
-                    R    
-                    </div>
-                </div>
-                {% endif %}
-            </div>
+{% extends "base.html" %}
+{% block title %}Home - {{ super() }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('home.static', filename='style.css') }}">
+{% endblock %}
+{% block content %}
+<section>
+    <div class="top-visual-container" style="position: relative">
+        <div class="top-visual-image">
+            <img src="./static/road_image.png" style="width: 100%; transform: scale(-1, 1);">
         </div>
-    </header>
-    <section>
-        <div class="top-visual-container" style="position: relative">
-            <div class="top-visual-image">
-                <img src="./static/road_image.png" style="width: 100%; transform: scale(-1, 1);">
-            </div>
-            <div class="top-visual-title" style="position: absolute; top:20px; left: 20px; color:white;">
-                <h1>新たな景色を探し求めて、</h1>
-                <h1>走り出そう。</h1>
-            </div>
-            <div class="top-visual-search-container" style="position: absolute; 
-            top: 65%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            -webkit-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);">
-                <input class="top-visual-search-input" type="text" placeholder="&nbsp;キーワードでコースを検索">
-                <i class="fa fa-search search-icon"></i>
-            </div>
+        <div class="top-visual-title" style="position: absolute; top:20px; left: 20px; color:white;">
+            <h1>新たな景色を探し求めて、</h1>
+            <h1>走り出そう。</h1>
         </div>
-    </section>
-    
-    <div class="selection-wrapper">
-        <a href="/courses" class="selection-container">
-            <div class="i-top-visual__inner-icon">
-                <h2 class="i-top-visual__inner-title">
-                    <i class="fa fa-search"></i>&nbsp;コースを探す
-                </h2>
-            </div>
-        </a>
-        <a href="/map" class="selection-container">
+        <div class="top-visual-search-container" style="position: absolute; 
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);">
+            <input class="top-visual-search-input" type="text" placeholder="&nbsp;キーワードでコースを検索">
+            <i class="fa fa-search search-icon"></i>
+        </div>
+    </div>
+</section>
+
+<div class="selection-wrapper">
+    <a href="/courses" class="selection-container">
+        <div class="i-top-visual__inner-icon">
             <h2 class="i-top-visual__inner-title">
-                <i class="fa fa-map"></i>&nbsp;コースを作る
+                <i class="fa fa-search"></i>&nbsp;コースを探す
             </h2>
+        </div>
+    </a>
+    <a href="/map" class="selection-container">
+        <h2 class="i-top-visual__inner-title">
+            <i class="fa fa-map"></i>&nbsp;コースを作る
+        </h2>
+    </a>
+</div>
+<div class="new-courses-wrapper">
+    <div class="new-courses-title">
+        <h2>新着ランニングコース</h2>
+        <a href="/courses/">
+            もっと見る&nbsp;<i class="fa-solid fa-chevron-right"></i>
         </a>
     </div>
-    <div class="new-courses-wrapper">
-        <div class="new-courses-title">
-            <h2>新着ランニングコース</h2>
-            <a href="/courses/">
-                もっと見る&nbsp;<i class="fa-solid fa-chevron-right"></i>
-            </a>
+    <div class="new-courses-container">
+        <div class="course-item">
+            <h3>スポット1</h3>
+            <p>住所: 〒123-4567 東京都渋谷区1-1-1</p>
+            <p>投稿者: User1</p>
         </div>
-        <div class="new-courses-container">
-            <div class="course-item">
-                <h3>スポット1</h3>
-                <p>住所: 〒123-4567 東京都渋谷区1-1-1</p>
-                <p>投稿者: User1</p>
-            </div>
-            <div class="course-item">
-                <h3>スポット2</h3>
-                <p>住所: 〒234-5678 東京都新宿区2-2-2</p>
-                <p>投稿者: User2</p>
-            </div>
-            <div class="course-item">
-                <h3>スポット3</h3>
-                <p>住所: 〒345-6789 東京都中央区3-3-3</p>
-                <p>投稿者: User3</p>
-            </div>
-            <div class="course-item">
-                <h3>スポット4</h3>
-                <p>住所: 〒456-7890 東京都港区4-4-4</p>
-                <p>投稿者: User4</p>
-            </div>
-            <div class="course-item">
-                <h3>スポット5</h3>
-                <p>住所: 〒567-8901 東京都目黒区5-5-5</p>
-                <p>投稿者: User5</p>
-            </div>
+        <div class="course-item">
+            <h3>スポット2</h3>
+            <p>住所: 〒234-5678 東京都新宿区2-2-2</p>
+            <p>投稿者: User2</p>
+        </div>
+        <div class="course-item">
+            <h3>スポット3</h3>
+            <p>住所: 〒345-6789 東京都中央区3-3-3</p>
+            <p>投稿者: User3</p>
+        </div>
+        <div class="course-item">
+            <h3>スポット4</h3>
+            <p>住所: 〒456-7890 東京都港区4-4-4</p>
+            <p>投稿者: User4</p>
+        </div>
+        <div class="course-item">
+            <h3>スポット5</h3>
+            <p>住所: 〒567-8901 東京都目黒区5-5-5</p>
+            <p>投稿者: User5</p>
         </div>
     </div>
-</body>
+</div>
+{% endblock %}
 </html>
