@@ -8,6 +8,10 @@ a {
     color: black;
 }
 
+a:hover {
+    color: black;
+}
+
 body {
     background-color: #fff;
     font-family: "Noto Sans JP", sans-serif;
