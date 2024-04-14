@@ -77,6 +77,46 @@ td:hover {
     border: 1px solid black;
 }
 
+.profile-btn {
+    position: relative;
+}
+
+.profile-icon {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%;
+    margin: 3px;
+    border: 1px solid black;
+    transition: filter 0.15s linear;
+}
+
+.profile-icon:hover {
+    filter: brightness(80%);
+}
+
+.user-menu__popup {
+    position: absolute;
+    z-index: 2;
+    top: 110%; /* 要素の下に表示されるようにする */
+    left: -120px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    color: white; /* ポップアップ内のテキストの色 */
+    width: 150px;
+    height: 300px;
+    padding: 10px; /* コンテンツの余白 */
+    visibility: visible; /* 初期状態では非表示 */
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.profile-btn:hover .user-menu__popup {
+    visibility: visible; 
+    opacity: 1;
+    transition: opacity 0.15s;
+}
+
 .email-login-container, .email-signup-container {
     margin-left: auto;
     margin-right: auto;

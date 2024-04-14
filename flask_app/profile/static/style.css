@@ -70,11 +70,15 @@ td:hover {
     padding: 10px;
     border: 1px solid transparent;
     border-radius: 10px;
-    transition: filter 0.15s linear;
 }
 
-.btn-login:hover, .btn-signup:hover {
+.btn-login:hover, .btn-signup:hover, .btn-profile:hover {
+    transition: border 0.5s linear;
     border: 1px solid black;
+}
+
+.profile-btn {
+    position: relative;
 }
 
 .profile-icon {
@@ -88,6 +92,29 @@ td:hover {
 
 .profile-icon:hover {
     filter: brightness(80%);
+}
+
+.user-menu__popup {
+    position: absolute;
+    z-index: 2;
+    top: 110%; /* 要素の下に表示されるようにする */
+    left: -120px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    color: white; /* ポップアップ内のテキストの色 */
+    width: 150px;
+    height: 300px;
+    padding: 10px; /* コンテンツの余白 */
+    visibility: visible; /* 初期状態では非表示 */
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.profile-btn:hover .user-menu__popup {
+    visibility: visible; 
+    opacity: 1;
+    transition: opacity 0.15s;
 }
 
 nav {

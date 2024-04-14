@@ -26,20 +26,23 @@
             </a>
             <div class="login-signup-btns">
                 {% if not current_user.is_authenticated %}
-                <a href="/auth/login">
+                <a href="/auth/login" class="login-btn">
                     <button type="button" class="btn-login">
                         <span>ログイン</span>
                     </button>
                 </a>
-                <a href="/auth/signup">
+                <a href="/auth/signup" class="signup-btn">
                     <button type="button" class="btn-signup">
                         <span>新規登録</span>
                     </button>
                 </a>
                 {% else %}
-                <a href="/profile/{{ current_user.id }}">
+                <div class="profile-btn">
                     <img class="profile-icon" src="{{ url_for('static', filename='profile-image/'+profile_image.filename) }}" alt="Profile Image">
-                </a>
+                    <div id="user-setting" class="user-menu__popup">
+                    R    
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
