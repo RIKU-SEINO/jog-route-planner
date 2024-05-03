@@ -1,6 +1,6 @@
 Flask
 Flask-Login
-Flask-Bcrypto
+Flask-Bcrypt
 Flask-Migrate
 Flask-SQLAlchemy
 Flask-WTF
