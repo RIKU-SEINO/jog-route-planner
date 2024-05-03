@@ -104,7 +104,7 @@ td:hover {
 
 .user-menu__popup {
     position: absolute;
-    z-index: 2;
+    z-index: 1000;
     top: 110%; /* 要素の下に表示されるようにする */
     left: -120px;
     border-radius: 5px;
@@ -112,7 +112,7 @@ td:hover {
     background-color: #fff;
     color: black; /* ポップアップ内のテキストの色 */
     width: 150px;
-    height: 300px;
+    height: 5px;
     padding: 10px; /* コンテンツの余白 */
     visibility: visible; /* 初期状態では非表示 */
     opacity: 0;
@@ -124,4 +124,5 @@ td:hover {
     opacity: 1;
     transition: opacity 0.15s;
     cursor: pointer;
+    height: 300px;
 }
