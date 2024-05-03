@@ -119,7 +119,7 @@ td:hover {
     transition: opacity 0.15s;
 }
 
-.profile-btn:hover .user-menu__popup {
+.profile-icon:hover ~ .user-menu__popup {
     visibility: visible; 
     opacity: 1;
     transition: opacity 0.15s;
