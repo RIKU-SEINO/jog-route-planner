@@ -67,24 +67,23 @@
         </ul>
     </nav>
     <div class="profile-container">
-        <div class="style-1m5be6d">
-            <div class="public-profile-image-container">
-                <img class="public-profile-image" alt="Profile Image" src="{{ url_for('static', filename='profile-image/'+public_profile_image.filename) }}">
-            </div>
-            <h1>{{ user.username }}</h1>
+        <div class="public-profile-image-container">
+            <img class="public-profile-image" alt="Profile Image" src="{{ url_for('static', filename='profile-image/'+public_profile_image.filename) }}">
         </div>
+        <h1>{{ user.username }}</h1>
         <div class="profile-detail-container">
-            <a href="/riku2264/contributions" class="style-whort5">
-                <span class="style-1snuvpu">0</span>
-                <span class="style-1hpkjug">Contributions</span>
-            </a>
-            <div class="style-80q3hi">
-                <a href="/riku2264" class="style-1ljjbul">
-                    0<br>投稿したコース
-                </a>
+            <div class="profile-detail-item bio">
+                <span>ここにbioを書くよ</span>
+            </div>
+            <div class="profile-detail-item location">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>神奈川県</span>
             </div>
         </div>
-        <a href="/settings/profile" class="style-7p38h8">プロフィールを編集する</a>
+        <button onclick="location.href='/settings'" class="btn btn-outline-dark btn-sm" id="profile-edit">プロフィールを編集する</a>
+    </div>
+    <div class="my-courses">
+        
     </div>
 </body>
 </html>
