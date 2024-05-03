@@ -119,9 +119,9 @@ td:hover {
 
 .profile-btn:hover .user-menu__popup {
     top: 100%; /* 要素の下に表示されるようにする */
-    left: -100px;
-    width: 150px;
-    height: 120px;
+    left: -150px;
+    width: 210px;
+    height: auto;
     padding: 10px; /* コンテンツの余白 */
     visibility: visible; 
     opacity: 1;

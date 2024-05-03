@@ -157,8 +157,12 @@ nav a:hover {
     border-bottom: 2px solid rgba(72, 75, 76, 0.738);
 }
 
+.profile-wrapper {
+    display: flex;    
+}
+
 .profile-container {
-    padding: 30px;
+    padding: 50px;
     width: 300px;
 }
 
@@ -179,4 +183,48 @@ nav a:hover {
 #profile-edit {
     margin-top: 30px;
     width: 100%;
+}
+
+.my-courses-container {
+    width: 100%;
+    padding: 50px;
+}
+
+.my-courses-container h3 {
+    margin-bottom: 20px;
+}
+
+.new-courses-title {
+    background-color: rgb(234, 255, 221);
+    padding: 10px 10px 6px 10px;
+    border-radius: 10px;
+    display: flex;
+    a {
+        margin: auto 0 0 auto;
+    }
+}
+
+.new-courses-container {
+    margin-top: 5vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.course-item {
+    width: calc(33.33% - 10px);
+    margin-bottom: 20px;
+}
+.course-item img {
+    width: 100%;
+    height: auto;
+}
+@media (max-width: 768px) {
+    .course-item {
+      width: calc(50% - 10px);
+    }
+}
+@media (max-width: 480px) {
+    .course-item {
+      width: 100%;
+    }
 }

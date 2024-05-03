@@ -66,24 +66,67 @@
             </li>
         </ul>
     </nav>
-    <div class="profile-container">
-        <div class="public-profile-image-container">
-            <img class="public-profile-image" alt="Profile Image" src="{{ url_for('static', filename='profile-image/'+public_profile_image.filename) }}">
-        </div>
-        <h1>{{ user.username }}</h1>
-        <div class="profile-detail-container">
-            <div class="profile-detail-item bio">
-                <span>ここにbioを書くよ</span>
+    <div class="profile-wrapper">
+        <div class="profile-container">
+            <div class="public-profile-image-container">
+                <img class="public-profile-image" alt="Profile Image" src="{{ url_for('static', filename='profile-image/'+public_profile_image.filename) }}">
             </div>
-            <div class="profile-detail-item location">
-                <i class="fa-solid fa-location-dot"></i>
-                <span>神奈川県</span>
+            <h1>{{ user.username }}</h1>
+            <div class="profile-detail-container">
+                <div class="profile-detail-item bio">
+                    <span>ここにbioを書くよ</span>
+                </div>
+                <div class="profile-detail-item location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>神奈川県</span>
+                </div>
+            </div>
+            <button onclick="location.href='/settings'" class="btn btn-outline-dark btn-sm" id="profile-edit">プロフィールを編集する</a>
+        </div>
+        <div class="my-courses-container">
+            <div class="new-courses-title">
+                <h2>マイコース</h2>
+                <a href="#" id="moreMyCoursesLink">
+                    もっと見る&nbsp;<i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+            <script>
+                // 現在のURLを取得
+                var currentUrl = window.location.href;
+                // /c を追加して新しいURLを生成
+                var newUrl = currentUrl + "/my-courses";
+                // リンク先を新しいURLに設定
+                document.getElementById("moreMyCoursesLink").href = newUrl;
+            </script>
+            <div class="new-courses-container">
+                <div class="course-item">
+                    <h3>スポット1</h3>
+                    <p>住所: 〒123-4567 東京都渋谷区1-1-1</p>
+                    <p>投稿者: User1</p>
+                </div>
+                <div class="course-item">
+                    <h3>スポット2</h3>
+                    <p>住所: 〒234-5678 東京都新宿区2-2-2</p>
+                    <p>投稿者: User2</p>
+                </div>
+                <div class="course-item">
+                    <h3>スポット3</h3>
+                    <p>住所: 〒345-6789 東京都中央区3-3-3</p>
+                    <p>投稿者: User3</p>
+                </div>
+                <div class="course-item">
+                    <h3>スポット4</h3>
+                    <p>住所: 〒456-7890 東京都港区4-4-4</p>
+                    <p>投稿者: User4</p>
+                </div>
+                <div class="course-item">
+                    <h3>スポット5</h3>
+                    <p>住所: 〒567-8901 東京都目黒区5-5-5</p>
+                    <p>投稿者: User5</p>
+                </div>
             </div>
         </div>
-        <button onclick="location.href='/settings'" class="btn btn-outline-dark btn-sm" id="profile-edit">プロフィールを編集する</a>
     </div>
-    <div class="my-courses">
-        
-    </div>
+    
 </body>
 </html>
