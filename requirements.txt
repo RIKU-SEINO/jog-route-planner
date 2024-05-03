@@ -1,0 +1,8 @@
+flask
+Flask-Login
+Flask-Bcrypto
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-WTF
+requests
+python-dotenv
