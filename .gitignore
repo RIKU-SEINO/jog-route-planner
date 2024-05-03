@@ -5,6 +5,7 @@ __pycache__/
 instance
 migrations
 flask_app/static/profile-image/*
+!flask_app/static/profile-image/default-user.png
 
 # Environments
 .env
