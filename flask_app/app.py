@@ -21,12 +21,14 @@ def create_app():
 
     login_manager.init_app(app)
 
+    from flask_app.welcome import views as welcome_views
     from flask_app.route_map import views as map_views
     from flask_app.auth import views as auth_views
     from flask_app.home import views as home_views
     from flask_app.profile import views as profile_views
     from flask_app.error import views as error_views
     
+    app.register_blueprint(welcome_views.welcome, url_prefix='/')
     app.register_blueprint(map_views.route_map, url_prefix='/map')
     app.register_blueprint(auth_views.auth, url_prefix='/auth')
     app.register_blueprint(home_views.home, url_prefix='/home')
