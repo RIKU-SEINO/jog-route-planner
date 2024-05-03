@@ -112,17 +112,16 @@ td:hover {
     background-color: #fff;
     color: black; /* ポップアップ内のテキストの色 */
     width: 150px;
-    height: 5px;
+    height: 300px;
     padding: 10px; /* コンテンツの余白 */
-    visibility: visible; /* 初期状態では非表示 */
+    visibility: hidden; /* 初期状態では非表示 */
     opacity: 0;
     transition: opacity 0.15s;
 }
 
-.profile-icon:hover ~ .user-menu__popup {
+.profile-btn:hover .user-menu__popup {
     visibility: visible; 
     opacity: 1;
     transition: opacity 0.15s;
     cursor: pointer;
-    height: 300px;
 }
