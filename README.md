@@ -18,6 +18,9 @@
 ### ジョギングコース検索画面
 <img width="1438" alt="スクリーンショット 2024-04-14 19 50 15" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/d459d971-9e58-47f8-87ed-a4bb781328e0">
 
+### マイページ画面
+<img width="1253" alt="スクリーンショット 2024-05-03 20 04 35" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/796e8dbc-8f3e-4bb2-8b60-459cfc7c4cc0">
+
 ## 使用技術
 - Python 3.9.6
     - Flask
