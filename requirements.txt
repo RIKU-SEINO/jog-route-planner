@@ -7,3 +7,4 @@ Flask-WTF
 requests
 python-dotenv
 Gunicorn
+email-validator
