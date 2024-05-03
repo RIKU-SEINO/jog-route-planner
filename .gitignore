@@ -4,7 +4,7 @@ __pycache__/
 # Flask stuff:
 instance
 migrations
-flask_app/static/profile-image/
+flask_app/static/profile-image/*
 
 # Environments
 .env
