@@ -85,4 +85,8 @@ def signup():
     
     else:
         return render_template("signup.html", form=form)
-
+    
+@auth.route("/logout", methods=["GET","POST"])
+def logout():
+    logout_user()
+    return redirect(url_for("home.index"))
