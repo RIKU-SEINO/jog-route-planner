@@ -23,12 +23,6 @@
                 -2px 2px 5px rgba(0, 0, 0, 0.3), /* 左下 */
                 -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
     width: 100%;
-    max-height: 200px;
-    transition: width 0.3s ease-in-out, max-height 0.3s ease-in-out;
-}
-
-.searchbar-content.expand {
-    width: 100%;
     max-height: 9999px;
 }
 
@@ -40,7 +34,7 @@
 .route-container.expand {
     visibility: visible;
     opacity: 1;
-    transition: 1s;
+    transition: 0.5s;
 }
 .route-container.shrink {
     visibility: hidden;
