@@ -8,6 +8,6 @@ error = Blueprint(
     url_prefix='/error'
 )
 
-@error.route("/404", methods=["GET"])
+@error.route("/404", methods=["GET","POST"])
 def index():
-    return render_template("index.html")
+    return render_template("404.html")
