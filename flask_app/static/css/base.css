@@ -19,6 +19,10 @@ body {
     flex-direction: column;
 }
 
+ul {
+    list-style: none;
+}
+
 button {
     border: none; /* ボーダーを削除 */
     outline: none; /* フォーカス時の枠線を削除 */
