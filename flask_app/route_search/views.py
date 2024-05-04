@@ -11,4 +11,4 @@ route_search = Blueprint(
 
 @route_search.route("/",methods=["GET","POST"])
 def index():
-    return "コース検索画面一覧"
+    return render_template("index.html")
