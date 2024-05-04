@@ -64,4 +64,4 @@ https://share-jog.onrender.com/home/
         - エリア
         - 走行距離
 - フォロー機能
-
+- エラーハンドリング

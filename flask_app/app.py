@@ -1,5 +1,5 @@
 from flask_app.config import Config
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -34,6 +34,10 @@ def create_app():
     app.register_blueprint(home_views.home, url_prefix='/home')
     app.register_blueprint(profile_views.profile, url_prefix='/profile')
     app.register_blueprint(error_views.error, url_prefix='/error')
+
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return redirect(url_for('error.index'), code=302)
 
     return app
 
