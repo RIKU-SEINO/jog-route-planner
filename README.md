@@ -19,11 +19,15 @@ https://share-jog.onrender.com/home/
 ### ユーザー新規登録画面
 <img width="1436" alt="スクリーンショット 2024-04-14 19 54 20" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/456abd9e-6bdb-4095-938e-fd813fd478bf">
 
-### ジョギングコース検索画面
+### ジョギングコース作成画面
 <img width="1438" alt="スクリーンショット 2024-04-14 19 50 15" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/d459d971-9e58-47f8-87ed-a4bb781328e0">
 
+### ジョギングコース検索画面
+<img width="1191" alt="スクリーンショット 2024-05-05 11 12 03" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/dd37cf30-e8d0-40e7-818f-cc33a551640d">
+
 ### マイページ画面
-<img width="1253" alt="スクリーンショット 2024-05-03 20 04 35" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/796e8dbc-8f3e-4bb2-8b60-459cfc7c4cc0">
+<img width="1186" alt="スクリーンショット 2024-05-05 11 11 41" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/cfff0224-2d4c-42f6-bb83-26b6024c43c4">
+
 
 ## 使用技術
 - Python 3.9.6
