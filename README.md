@@ -22,10 +22,10 @@ https://share-jog.onrender.com/home/
 ### ジョギングコース作成画面
 <img width="1438" alt="スクリーンショット 2024-04-14 19 50 15" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/d459d971-9e58-47f8-87ed-a4bb781328e0">
 
-### ジョギングコース検索画面
+### ジョギングコース検索画面（作成中）
 <img width="1191" alt="スクリーンショット 2024-05-05 11 12 03" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/dd37cf30-e8d0-40e7-818f-cc33a551640d">
 
-### マイページ画面
+### マイページ画面（作成中）
 <img width="1186" alt="スクリーンショット 2024-05-05 11 11 41" src="https://github.com/RIKU-SEINO/share-jog/assets/102781001/cfff0224-2d4c-42f6-bb83-26b6024c43c4">
 
 
