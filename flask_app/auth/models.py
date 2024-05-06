@@ -4,14 +4,18 @@ from flask_bcrypt import bcrypt
 from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
-    __tablename__ = "users"
+    __tablename__ = "data_models_users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, index=True)
     email = db.Column(db.String, index=True, unique=True)
     password_hashed = db.Column(db.String, index=True)
-    profile_image = db.relationship('ProfileImage', backref='user', uselist=False)
+    address = db.Column(db.String(50), index=True)
+    bio = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+
+    profile_image = db.relationship('ProfileImage', backref='user', uselist=False)
+    courses = db.relationship('Course', backref='user', lazy=True)
 
     @property
     def password(self):
@@ -28,9 +32,12 @@ class User(db.Model, UserMixin):
         return User.query.filter_by(email=self.email).first() is not None
 
 class ProfileImage(db.Model):
+    __tablename__ = "data_models_profile_images"
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('data_models_users.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
 
 @login_manager.user_loader
