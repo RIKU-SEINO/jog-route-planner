@@ -145,7 +145,7 @@
   flex-direction: column; /* コンテンツを縦方向に配置 */
 }
 
-.sc-e775e080-3 img {
+.course-image-container img {
   object-fit: cover; /* 画像のアスペクト比を保持したまま親要素にフィットさせる */
   width: 100%; /* 幅を100%に設定 */
   height: 200px; /* 高さを固定値に設定 */
@@ -176,12 +176,25 @@
   text-decoration: underline; /* マウスオーバー時に下線を表示 */
 }
 
-.text-span p {
+.text-container {
   margin: 0; /* マージンをリセット */
 }
 
 .course-area {
   margin-left: 20px
+}
+
+.user-container {
+  margin-top: 10px;
+  display: flex;
+}
+
+.profile-link img {
+  object-fit: cover; /* 画像のアスペクト比を保持したまま親要素にフィットさせる */
+  width: 25px; /* 幅を100%に設定 */
+  height: 25px; /* 高さを固定値に設定 */
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 
