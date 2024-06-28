@@ -34,17 +34,17 @@
                 </a>
                 {% else %}
                 <div class="profile-btn">
-                    <img class="profile-icon" src="{{ url_for('static', filename='profile-image/'+profile_image.filename) }}" alt="Profile Image">
+                    <img class="profile-icon" src="{{ url_for('static', filename='images/user-icon/default-user.png') }}" alt="Profile Image">
                     <div id="user-setting" class="user-menu__popup">
                         <table class="user-menu_panel__popup">
                             <tr>
                                 <td>
-                                    <a href="/profile/{{ current_user.id }}"><i class="fa-solid fa-user"></i>&nbsp;マイページ</a>
+                                    <a href="/user/{{ current_user.id }}"><i class="fa-solid fa-user"></i>&nbsp;マイページ</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="/profile/{{ current_user.id }}/my-courses"><i class="fa-solid fa-route"></i>&nbsp;保存したマイコース</a>
+                                    <a href="/user/{{ current_user.id }}/my-courses"><i class="fa-solid fa-route"></i>&nbsp;保存したマイコース</a>
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +67,7 @@
     <nav id="navigation">
         <ul>
             <li>
-                <a href="/home">
+                <a href="/">
                     <i class="fa fa-home"></i>
                     <span>ホーム</span>
                 </a>

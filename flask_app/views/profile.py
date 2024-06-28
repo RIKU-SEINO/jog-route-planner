@@ -18,7 +18,4 @@ def index(userid):
     else:
         profile_image = None
     public_profile_image = None
-    if public_profile_image is not None:
-        return render_template("profile.html", user=user, public_profile_image=public_profile_image, profile_image=profile_image)
-    else:
-        return redirect(url_for("error.index"))
+    return render_template("user.html", user=user, public_profile_image=public_profile_image, profile_image=profile_image)
