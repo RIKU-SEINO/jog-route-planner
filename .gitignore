@@ -10,6 +10,7 @@ flask_app/static/profile-image/*
 # Environments
 .env
 venv/
+.python
 
 # .DS_Store
 .DS_Store
