@@ -1,4 +1,4 @@
-from instance.config import Config
+from flask_app.config import Config
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
