@@ -1,18 +1,17 @@
-from flask_app import db, login_manager
-from datetime import datetime
-from flask_bcrypt import bcrypt
-from flask_login import UserMixin
+from flask_app.models import *
 
 class User(db.Model, UserMixin):
     __tablename__ = "data_models_users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, index=True)
     email = db.Column(db.String, index=True, unique=True)
-    password_hashed = db.Column(db.String, index=True)
-    address = db.Column(db.String(50), index=True)
+    password_hashed = db.Column(db.String)
+    address = db.Column(db.String(50))
     bio = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+
+    courses = db.relationship('Course', backref='author', lazy=True)
 
     @property
     def password(self):
