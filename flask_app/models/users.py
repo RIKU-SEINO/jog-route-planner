@@ -30,16 +30,7 @@ class User(db.Model, UserMixin):
     
     def is_duplicated_email(self):
         return User.query.filter_by(email=self.email).first() is not None
-
-class ProfileImage(db.Model):
-    __tablename__ = "data_models_profile_images"
-    id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('data_models_users.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-
-
+    
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

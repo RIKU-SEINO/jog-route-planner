@@ -7,7 +7,7 @@ home = Blueprint(
     __name__,
     static_folder='static',
     template_folder='templates',
-    url_prefix='/home',
+    url_prefix='/',
 )
 
 @home.route("/", methods=["GET","POST"])
