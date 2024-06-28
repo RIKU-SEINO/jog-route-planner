@@ -15,7 +15,7 @@ class Course(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
-    prefecture_id = db.Column(db.Integer, db.ForeignKey('prefectures.id'), nullable=False)
-    city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable=True)
+    prefecture_id = db.Column(db.Integer, db.ForeignKey('data_models_prefectures.id'), nullable=False)
+    city_id = db.Column(db.Integer, db.ForeignKey('data_models_cities.id'), nullable=True)
     facilities = db.relationship('Facility', secondary=course_facility, lazy='subquery',
                                  backref=db.backref('courses', lazy=True))

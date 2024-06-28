@@ -1,5 +1,5 @@
 from flask_app.config import Config
-from flask import Flask, redirect, url_for
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -7,7 +7,7 @@ import secrets
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-login_manager.login_view = "auth.login"
+login_manager.login_view = "views.auth"
 login_manager.login_message = ""
 
 def create_app():
