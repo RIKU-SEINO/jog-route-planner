@@ -21,14 +21,16 @@ def create_app():
 
     login_manager.init_app(app)
 
-    from flask_app.views import index as index_bp
+    from flask_app.views import home as home_bp
     from flask_app.views import auth as auth_bp
     from flask_app.views import map as map_bp
     from flask_app.views import search as search_bp
-    from flask_app.views import user as user_bp
+    from flask_app.views import profile as profile_bp
     
-    app.register_blueprint(index_bp.index, url_prefix='/')
+    app.register_blueprint(home_bp.home, url_prefix='/')
     app.register_blueprint(auth_bp.auth, url_prefix='/auth')
-    app.register_blueprint(auth_bp.auth, url_prefix='/auth')
+    app.register_blueprint(map_bp.route_map, url_prefix='/map')
+    app.register_blueprint(search_bp.route_search, url_prefix='/search')
+    app.register_blueprint(profile_bp.profile, url_prefix='/user')
 
     return app

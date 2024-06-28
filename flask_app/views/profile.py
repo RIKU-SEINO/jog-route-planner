@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from flask_app.auth.models import User, ProfileImage
+from flask_app.models.users import User
 
 profile = Blueprint(
     'profile',
     __name__,
     static_folder='static',
     template_folder='templates',
-    url_prefix='/profile',
+    url_prefix='/user',
 )
 
 @profile.route("/<userid>", methods=["GET","POST"])

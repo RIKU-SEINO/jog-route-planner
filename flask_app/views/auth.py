@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for, flash
-from flask_app.app import db
-from flask_app.auth.models import User, ProfileImage
-from flask_app.auth.forms import SignUpForm, LoginForm
+from flask_app.models.users import User
+from flask_app.forms.auth_forms import SignUpForm, LoginForm
 from flask_login import login_user, logout_user, current_user
 from werkzeug.utils import secure_filename
 import os

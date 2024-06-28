@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
 import requests
-from flask_app.auth.models import ProfileImage
 from flask_login import current_user
 
 route_map = Blueprint(
@@ -49,7 +48,7 @@ def home():
             return jsonify({'error': str(e)})
         
     if current_user.is_authenticated:
-        profile_image = ProfileImage.query.filter_by(user_id=current_user.id).first()
+        profile_image = None
     else:
         profile_image = None
     return render_template("create_route.html", profile_image=profile_image)
