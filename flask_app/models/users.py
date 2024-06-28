@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
-    courses = db.relationship('Course', backref='author', lazy=True)
+    courses = db.relationship('Course', backref='user', lazy=True)
 
     @property
     def password(self):
