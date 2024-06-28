@@ -12,17 +12,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     <link rel="stylesheet" href="./static/style.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"
-    <!-- Leaflet JavaScript -->
-    <!-- Your map initialization script -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 </head>
 <body>
     <header>
         <div class="header-container">
             <a href="/home">
                 <button id="icon" class="btn btn-light logo" style="font-size: 25px; background-color: transparent; border: none">
-                    <img src="{{ url_for('static', filename='image/logo.png') }}" style="width: 45px; height: 45px; background-color: transparent; padding: 3px; border-radius: 10px;">
-                    <span>Share Jog</span>
+                    <img src="{{ url_for('static',filename='images/service-logo/service-logo.jpg') }}" style="width: 200px; height: 60px; background-color: transparent; padding: 3px; border-radius: 10px;">
                 </button>
             </a>
             <div class="login-signup-btns">
@@ -38,7 +35,7 @@
                     </button>
                 </a>
                 {% else %}
-                <a href="/profile/{{ current_user.id }}">
+                <a href="/user/{{ current_user.id }}">
                     <img class="profile-icon" src="{{ url_for('static', filename='profile-image/'+profile_image.filename) }}" alt="Profile Image">
                 </a>
                 {% endif %}
