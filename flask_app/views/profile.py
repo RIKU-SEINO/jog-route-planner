@@ -14,10 +14,10 @@ profile = Blueprint(
 def index(userid):
     user = User.query.filter_by(id=userid).first()
     if current_user.is_authenticated:
-        profile_image = ProfileImage.query.filter_by(user_id=current_user.id).first()
+        profile_image = None
     else:
         profile_image = None
-    public_profile_image = ProfileImage.query.filter_by(user_id=userid).first()
+    public_profile_image = None
     if public_profile_image is not None:
         return render_template("profile.html", user=user, public_profile_image=public_profile_image, profile_image=profile_image)
     else:
