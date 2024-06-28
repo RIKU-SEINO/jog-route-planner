@@ -9,16 +9,15 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@600&display=swap">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <header>
         <div class="header-container">
-            <a href="/home">
+            <a href="/">
                 <button id="icon" class="btn btn-light logo" style="font-size: 25px; background-color: transparent; border: none">
-                    <img src="{{ url_for('static',filename='image/logo.png') }}" style="width: 45px; height: 45px; background-color: transparent; padding: 3px; border-radius: 10px;">
-                    <span>Share Jog</span>
+                    <img src="{{ url_for('static',filename='images/service-logo/service-logo.jpg') }}" style="width: 200px; height: 60px; background-color: transparent; padding: 3px; border-radius: 10px;">
                 </button>
             </a>
             <div class="login-signup-btns">

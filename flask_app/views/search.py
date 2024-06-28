@@ -20,7 +20,7 @@ def course_list():
 @route_search.route("/<course_id>", methods=["GET","POST"])
 def course_detail(course_id):
     if current_user.is_authenticated:
-        profile_image = ProfileImage.query.filter_by(user_id=current_user.id).first()
+        profile_image = None
     else:
         profile_image = None
     return render_template("course_detail.html", profile_image=profile_image)

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Home - {{ super() }}{% endblock %}
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('home.static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock %}
 {% block content %}
 <section>
     <div class="top-visual-container" style="position: relative">
         <div class="top-visual-image">
-            <img src="{{ url_for('static', filename='image/road_image.png') }}" style="width: 100%; transform: scale(-1, 1);">
+            <img src="{{ url_for('static', filename='images/cover-image/cover-image1.png') }}" style="width: 100%; transform: scale(-1, 1);">
         </div>
         <div class="top-visual-title" style="position: absolute; top:20px; left: 20px; color:white;">
             <h1>新たな景色を探し求めて、</h1>

@@ -30,7 +30,7 @@ def create_app():
     app.register_blueprint(home_bp.home, url_prefix='/')
     app.register_blueprint(auth_bp.auth, url_prefix='/auth')
     app.register_blueprint(map_bp.route_map, url_prefix='/map')
-    app.register_blueprint(search_bp.route_search, url_prefix='/search')
+    app.register_blueprint(search_bp.route_search, url_prefix='/courses')
     app.register_blueprint(profile_bp.profile, url_prefix='/user')
 
     return app

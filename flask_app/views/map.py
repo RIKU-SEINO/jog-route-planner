@@ -51,4 +51,4 @@ def home():
         profile_image = None
     else:
         profile_image = None
-    return render_template("create_route.html", profile_image=profile_image)
+    return render_template("map.html", profile_image=profile_image)
