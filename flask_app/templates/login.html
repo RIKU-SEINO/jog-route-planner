@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 <div class="email-login-container">
-    <form class="email-login-form" action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST" novalidate="novalidate">
+    <form class="email-login-form" action="{{ url_for('auth', next=request.args.get('next')) }}" method="POST" novalidate="novalidate">
         {% for message in get_flashed_messages() %}
         <p style="color: red;">{{ message }}</p>
         {% endfor %}

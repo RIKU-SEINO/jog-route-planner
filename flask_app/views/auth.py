@@ -1,3 +1,4 @@
+from flask_app import db
 from flask import Blueprint, render_template, request, redirect, session, url_for, flash
 from flask_app.models.users import User
 from flask_app.forms.auth_forms import SignUpForm, LoginForm
@@ -48,8 +49,6 @@ def signup():
         username = form.username.data
         email = form.email.data
         password = form.password.data
-        profile_image = request.files['profile_image']
-        profile_image_filename = profile_image.filename
         user = User(
             username = username,
             email = email,
@@ -60,20 +59,6 @@ def signup():
             return redirect(url_for('auth.signup'))
         
         db.session.add(user)
-        db.session.commit()
-        
-        if profile_image and allowed_file(profile_image_filename):
-            filename = f"{str(uuid.uuid4())}_{secure_filename(profile_image_filename)}"
-            profile_image.save(os.path.join(UPLOAD_FOLDER, filename))
-            image = ProfileImage(filename=filename, user_id=user.id)
-        elif profile_image and not allowed_file(profile_image_filename):
-            flash("png, jpg, jpeg以外のファイルはサポートしておりません。")
-            return redirect(url_for('auth.signup'))
-        else:
-            default_image_filename = 'default-user.png'
-            image = ProfileImage(filename=default_image_filename, user_id=user.id)
-
-        db.session.add(image)
         db.session.commit()
 
         login_user(user)

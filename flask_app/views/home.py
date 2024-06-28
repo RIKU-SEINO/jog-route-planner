@@ -12,7 +12,6 @@ home = Blueprint(
 @home.route("/", methods=["GET","POST"])
 def index():
     if current_user.is_authenticated:
-        #profile_image = ProfileImage.query.filter_by(user_id=current_user.id).first()
         profile_image = None
     else:
         profile_image = None
