@@ -13,6 +13,20 @@ courses = Blueprint(
     url_prefix='/courses'
 )
 
+@courses.route('/get_cities', methods=['POST'])
+def get_cities():
+    prefecture_id = request.json.get('prefecture_id')
+
+    if prefecture_id is None:
+        return jsonify({'error': 'No prefecture_id provided'}), 400
+
+    # prefecture_idに一致する市区町村をデータベースからクエリします
+    cities = City.query.filter_by(prefecture_id=prefecture_id).all()
+    
+    # 市区町村のリストをJSON形式で返します
+    city_list = [{'id': city.id, 'name': city.name} for city in cities]
+    return jsonify(city_list)
+
 @courses.route("/", methods=["GET","POST"])
 def course_list():
     if current_user.is_authenticated:

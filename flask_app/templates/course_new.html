@@ -72,6 +72,32 @@
             {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-create") }}
         </div>
     </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#prefecture').change(function() {
+            var prefectureId = $(this).val();
+            if (prefectureId) {
+                $.ajax({
+                    url: '/courses/get_cities',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ prefecture_id: prefectureId }),
+                    success: function(data) {
+                        $('#city').empty();
+                        $('#city').append('<option value="">選択してください</option>');
+                        $.each(data, function(key, city) {
+                            $('#city').append('<option value="' + city.id + '">' + city.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#city').empty();
+                $('#city').append('<option value="">選択してください</option>');
+            }
+        });
+    });
+</script>
 </div>
 {% endblock %}
 </html>
