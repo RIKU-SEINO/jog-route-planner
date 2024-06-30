@@ -1,0 +1,94 @@
+/* course_new.css */
+
+/* コース登録フォーム全体のスタイル */
+.course-create-container {
+  margin: 0 auto;
+  width: 80%;
+  padding: 70px;
+}
+
+/* 各入力エリアのスタイル */
+.title-area,
+.description-area,
+.prefecture-area,
+.city-area,
+.facilities-area {
+  margin-bottom: 20px;
+}
+
+/* 入力ラベルのスタイル */
+.title-input-label,
+.description-input-label,
+.prefecture-input-label,
+.city-input-label,
+.facilities-input-label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+/* 入力フィールドのスタイル */
+.title-input,
+.description-input,
+.prefecture-input,
+.city-input,
+.facilities-input {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: 1.5px solid rgb(177, 177, 177);
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.description-input {
+  height: 100px;
+  resize: none;
+}
+
+
+/* エラーメッセージのスタイル */
+.title-error-area,
+.description-error-area,
+.prefecture-error-area,
+.city-error-area,
+.facilities-error-area {
+  color: red;
+  margin-top: 5px;
+}
+
+/* 送信ボタンのスタイル */
+.submit-btn-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#submit-create {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+}
+
+/* Select2コンテナのスタイル */
+.select2-container--default .select2-selection--single {
+  height: 40px;
+  line-height: 40px;
+  border-radius: 10px;
+  border: 1.5px solid rgb(177, 177, 177);
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 38px;
+}
+
+.select2-container--default .select2-selection--single:focus {
+  border-color: rgb(0, 162, 250);
+  outline: none;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  font-size: 16px;
+}
+
