@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}" />
 {% endblock %}
 {% block content %}
-<div class="email-signup-container">
-    <form class="course-create-form" action="{{ url_for('auth.signup', next=request.args.get('next')) }}" method="POST" enctype="multipart/form-data">
+<div class="course-create-container">
+    <form class="course-create-form" action="{{ url_for('courses.new', next=request.args.get('next')) }}" method="POST" enctype="multipart/form-data">
         {% for message in get_flashed_messages() %}
         <p style="color: red;">{{ message }}</p>
         {% endfor %}
@@ -33,7 +33,42 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="signup-btn-container">
+        <div class="prefecture-area">
+            {{ form.prefecture.label(class="prefecture-input-label") }}
+            <div class="prefecture-input-area">
+                {{ form.prefecture(class="prefecture-input", id="prefecture") }}
+            </div>
+            <div class="prefecture-error-area" style="color: red">
+                {% for error in form.prefecture.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="city-area">
+            {{ form.city.label(class="city-input-label") }}
+            <div class="city-input-area">
+                {{ form.city(class="city-input", id="city") }}
+            </div>
+            <div class="city-error-area" style="color: red">
+                {% for error in form.city.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="facilities-area">
+            {{ form.facilities.label(class="facilities-input-label") }}
+            <div class="facilities-input-area">
+                {% for facility in form.facilities %}
+                <div>{{ facility }} {{ facility.label }}</div>
+                {% endfor %}
+            </div>
+            <div class="facilities-error-area" style="color: red">
+                {% for error in form.facilities.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="submit-btn-container">
             {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-create") }}
         </div>
     </form>
