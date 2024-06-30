@@ -4,6 +4,7 @@ Flask-Bcrypt
 Flask-Migrate
 Flask-SQLAlchemy
 Flask-WTF
+WTForms-SQLAlchemy
 requests
 python-dotenv
 Gunicorn
