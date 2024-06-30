@@ -17,8 +17,7 @@ class CreateCourseForm(FlaskForm):
     description = TextAreaField(
         "コースの説明",
         validators=[
-            DataRequired("コースの説明は必須です。"),
-            Length(1, 200, "200文字以内で入力してください。")
+            Length(0, 200, "200文字以内で入力してください。")
         ]
     )
     prefecture = QuerySelectField(

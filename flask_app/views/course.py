@@ -48,7 +48,7 @@ def course_detail(course_id):
 @courses.route("/new", methods=["GET", "POST"])
 def new():
     if not current_user.is_authenticated:
-        return redirect(url_for("home.index"))
+        return redirect(url_for("auth.login"))
     form = CreateCourseForm()
     if form.validate_on_submit():
         title = form.title.data
@@ -79,12 +79,7 @@ def new():
 
         return render_template("course_detail.html")
 
-    if current_user.is_authenticated:
-        profile_image = None
-
-    else:
-        profile_image = None
-    return render_template("course_new.html", profile_image=profile_image, form=form)
+    return render_template("course_new.html", profile_image=None, form=form)
 
     
 

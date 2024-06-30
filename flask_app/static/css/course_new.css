@@ -2,9 +2,9 @@
 
 /* コース登録フォーム全体のスタイル */
 .course-create-container {
-  margin: 0 auto;
-  width: 80%;
-  padding: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
 }
 
 /* 各入力エリアのスタイル */
@@ -33,28 +33,16 @@
 .prefecture-input,
 .city-input,
 .facilities-input {
-  width: 100%;
+  width: 500px;
   height: 40px;
   border-radius: 10px;
   border: 1.5px solid rgb(177, 177, 177);
   padding: 8px;
-  box-sizing: border-box;
 }
 
 .description-input {
   height: 100px;
   resize: none;
-}
-
-
-/* エラーメッセージのスタイル */
-.title-error-area,
-.description-error-area,
-.prefecture-error-area,
-.city-error-area,
-.facilities-error-area {
-  color: red;
-  margin-top: 5px;
 }
 
 /* 送信ボタンのスタイル */
@@ -64,9 +52,12 @@
 }
 
 #submit-create {
-  width: 100%;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 500px;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 50px;
 }
 
 /* Select2コンテナのスタイル */

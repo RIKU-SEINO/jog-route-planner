@@ -136,6 +136,7 @@ td:hover {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 .user-menu_panel__popup td {

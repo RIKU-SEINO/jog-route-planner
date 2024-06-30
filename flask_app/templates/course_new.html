@@ -74,6 +74,7 @@
     </form>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $('#prefecture').prepend('<option value="" selected disabled>選択してください</option>');
     $(document).ready(function() {
         $('#prefecture').change(function() {
             var prefectureId = $(this).val();

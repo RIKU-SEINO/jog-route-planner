@@ -19,11 +19,6 @@ input {
   border: 1.5px solid rgb(177, 177, 177);
 }
 
-.profile_image-input {
-  border: none;
-  border-radius: 0px;
-}
-
 input:focus {
   border: 1.5px solid rgb(0, 162, 250);
   outline: none;
