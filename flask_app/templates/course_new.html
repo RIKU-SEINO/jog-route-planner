@@ -24,6 +24,7 @@
             <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
         </div>
         {{ form.hidden_tag() }}
+        <input type="hidden" name="route_latlng" id="route_latlng">
         <div class="title-area">
             {{ form.title.label(class="title-input-label") }}
             <div class="title-input-area">
@@ -42,6 +43,18 @@
             </div>
             <div class="description-error-area" style="color: red">
                 {% for error in form.description.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="distance-area">
+            {{ form.distance.label(class="distance-input-label") }}
+            <div class="distance-input-area">
+                {{ form.distance(class="distance-input") }}
+            </div>
+            <span style="font-size: 12px;">※ 必要があれば編集してください。</span>
+            <div class="distance-error-area" style="color: red">
+                {% for error in form.distance.errors %}
                 <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
                 {% endfor %}
             </div>
@@ -68,7 +81,6 @@
                 {% endfor %}
             </div>
         </div>
-        <input type="hidden" name="route_data" id="route_data">
         <div class="facilities-area">
             {{ form.facilities.label(class="facilities-input-label") }}
             <div class="facilities-input-area">

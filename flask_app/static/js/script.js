@@ -455,8 +455,7 @@ function newCourseUrl(routeData, routeIndex) {
     let route = routeData["route"][routeIndex];
     let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
     let wayPointIndices = routeData["wayPointIndices"][routeIndex];
-    let routeLength = routeData["routeLength"][routeIndex];
-    Math.floor((routeLength/1e3) * 100) / 100
+    let routeLength = Math.floor((routeData["routeLength"][routeIndex]/1e3) * 100) / 100;
 
     let params = {
         routeLatLng: JSON.stringify(routeLatLng), // routeをJSON文字列に変換して渡す

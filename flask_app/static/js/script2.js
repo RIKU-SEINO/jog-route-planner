@@ -43,6 +43,11 @@ window.onload = function() {
   let wayPointIndices = JSON.parse(wayPointIndicesStr);
   let routeLength = JSON.parse(routeLengthStr);
 
+  let distanceInputElement = document.getElementById("distance");
+  distanceInputElement.value = routeLength;
+  let routeLatLngInputElement = document.getElementById("route_latlng");
+  routeLatLngInputElement.value = routeLatLngStr;
+
   // 例：取得した情報をコンソールに出力して確認
   console.log('Route LatLng:', routeLatLng);
   console.log('Waypoint Indices:', wayPointIndices);

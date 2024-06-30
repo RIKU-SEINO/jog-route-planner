@@ -7,6 +7,12 @@ def facility_query():
     return Facility.query
 
 class CreateCourseForm(FlaskForm):
+    route_latlng = StringField(
+        "経路の緯度経度情報",
+        validators=[
+            DataRequired("経路の緯度経度情報は必須です。"),
+        ],
+    )
     title = StringField(
         "コースのタイトル",
         validators=[
@@ -19,6 +25,13 @@ class CreateCourseForm(FlaskForm):
         validators=[
             Length(0, 200, "200文字以内で入力してください。")
         ]
+    )
+    distance = FloatField(
+        "距離(km)",
+        validators=[
+            DataRequired("距離は必須です。"),
+            NumberRange(min=0, message="距離は0以上の数を入力してください。")
+        ],
     )
     prefecture = QuerySelectField(
         "都道府県",

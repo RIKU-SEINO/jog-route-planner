@@ -11,6 +11,7 @@
 .map-area,
 .title-area,
 .description-area,
+.distance-area,
 .prefecture-area,
 .city-area,
 .facilities-area {
@@ -22,6 +23,7 @@
 .map-label,
 .title-input-label,
 .description-input-label,
+.distance-input-label,
 .prefecture-input-label,
 .city-input-label,
 .facilities-input-label {
@@ -34,6 +36,7 @@
 /* 入力フィールドのスタイル */
 .title-input,
 .description-input,
+.distance-input,
 .prefecture-input,
 .city-input,
 .facilities-input {

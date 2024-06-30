@@ -53,8 +53,8 @@ def new():
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
-        route = "sample_route"
-        distance = 10.0
+        route = form.route_latlng.data
+        distance = form.distance.data
         prefecture = form.prefecture.data
         city_id = form.city.data
         facilities = form.facilities.data
