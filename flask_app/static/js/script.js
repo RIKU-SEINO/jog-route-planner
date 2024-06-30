@@ -14,7 +14,7 @@ let startlatLng = null;
 let goallatLng = null;
 
 let startIcon = L.divIcon({
-    html: `<div style="background-color: #3085d6; height:30px; width:30px; border-radius: 50%; padding: 5px; display: flex; justify-content: center; align-items: center;">
+    html: `<div style="background-color: #3085d6; height:30px; width:30px; border-radius: 50%; padding: 6px 7px 10px 9px; display: block;">
             <i class="fa-solid fa-s fa-xl" style="color: #fff; width: 58%;"></i>
         </div>`,
     iconSize: [24, 24], // アイコンのサイズ
@@ -22,7 +22,7 @@ let startIcon = L.divIcon({
 });
 
 let goalIcon = L.divIcon({
-    html: `<div style="background-color: green; height:30px; width:30px; border-radius: 50%; padding: 5px; display: flex; justify-content: center; align-items: center;">
+    html: `<div style="background-color: green; height:30px; width:30px; border-radius: 50%; padding: 6px 7px 10px 7px; display: block;">
             <i class="fa-solid fa-g fa-xl" style="color: #fff; width: 78%;"></i>
         </div>`,
     iconSize: [24, 24], // アイコンのサイズ
