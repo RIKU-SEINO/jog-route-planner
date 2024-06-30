@@ -17,5 +17,6 @@ class Course(db.Model):
 
     prefecture_id = db.Column(db.Integer, db.ForeignKey('data_models_prefectures.id'), nullable=False)
     city_id = db.Column(db.Integer, db.ForeignKey('data_models_cities.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('data_models_users.id'), nullable=False) 
     facilities = db.relationship('Facility', secondary=course_facility, lazy='subquery',
                                  backref=db.backref('courses', lazy=True))
