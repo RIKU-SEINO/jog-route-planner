@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Home - {{ super() }}{% endblock %}
 {% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/course_new.css') }}" />
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+	crossorigin=""></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/script2.js') }}"></script>
 {% endblock %}
 {% block content %}
 <div class="course-create-container">
@@ -9,7 +18,11 @@
         {% for message in get_flashed_messages() %}
         <p style="color: red;">{{ message }}</p>
         {% endfor %}
-        <div class="title" style="text-align: center; font-size: 25px;">コース登録</div>
+        <div class="title" style="text-align: center; font-size: 25px;">コース投稿フォーム</div>
+        <div id="map-area">
+            <label class="map-label"></label>
+            <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
+        </div>
         {{ form.hidden_tag() }}
         <div class="title-area">
             {{ form.title.label(class="title-input-label") }}
@@ -55,6 +68,7 @@
                 {% endfor %}
             </div>
         </div>
+        <input type="hidden" name="route_data" id="route_data">
         <div class="facilities-area">
             {{ form.facilities.label(class="facilities-input-label") }}
             <div class="facilities-input-area">
@@ -72,33 +86,6 @@
             {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-create") }}
         </div>
     </form>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $('#prefecture').prepend('<option value="" selected disabled>選択してください</option>');
-    $(document).ready(function() {
-        $('#prefecture').change(function() {
-            var prefectureId = $(this).val();
-            if (prefectureId) {
-                $.ajax({
-                    url: '/courses/get_cities',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ prefecture_id: prefectureId }),
-                    success: function(data) {
-                        $('#city').empty();
-                        $('#city').append('<option value="">選択してください</option>');
-                        $.each(data, function(key, city) {
-                            $('#city').append('<option value="' + city.id + '">' + city.name + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('#city').empty();
-                $('#city').append('<option value="">選択してください</option>');
-            }
-        });
-    });
-</script>
 </div>
 {% endblock %}
 </html>

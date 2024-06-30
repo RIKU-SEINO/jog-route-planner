@@ -8,15 +8,18 @@
 }
 
 /* 各入力エリアのスタイル */
+.map-area,
 .title-area,
 .description-area,
 .prefecture-area,
 .city-area,
 .facilities-area {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
 /* 入力ラベルのスタイル */
+.map-label,
 .title-input-label,
 .description-input-label,
 .prefecture-input-label,
@@ -25,6 +28,7 @@
   display: block;
   font-size: 16px;
   margin-bottom: 5px;
+  margin-top: 30px;
 }
 
 /* 入力フィールドのスタイル */
@@ -83,3 +87,11 @@
   font-size: 16px;
 }
 
+.leaflet-marker-icon.leaflet-div-icon.leaflet-zoom-animated.leaflet-interactive {
+  background-color: transparent;
+  border: none;
+}
+
+#mapid {
+  margin: auto;
+}

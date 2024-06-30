@@ -98,7 +98,7 @@ routeSearchButton.addEventListener('click', function() {
         })
     }
 })
-
+let registerCourseLink = document.getElementById('post-course-link');
 let showPrevRouteButton = document.getElementById('prev-course');
 let showNextRouteButton = document.getElementById('next-course');
 let routeTitleElem = document.querySelector('.course-title');
@@ -126,6 +126,8 @@ showPrevRouteButton.addEventListener('click',function () {
         routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
         routeLengthElem.innerHTML = `${Math.floor((routeLength/1e3) * 100) / 100}&nbsp;km`
         createElevationChart(route);
+        let urlPath = newCourseUrl(_routeData, _routeIndex);
+        registerCourseLink.href = urlPath;
     }
 });
 showNextRouteButton.addEventListener('click',function () {
@@ -152,6 +154,8 @@ showNextRouteButton.addEventListener('click',function () {
         routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
         routeLengthElem.innerHTML = `${Math.floor((routeLength/1e3) * 100) / 100}&nbsp;km`
         createElevationChart(route);
+        let urlPath = newCourseUrl(_routeData, _routeIndex);
+        registerCourseLink.href = urlPath;
     }
 });
 
@@ -220,6 +224,8 @@ function fetchRoute(startlatLng, goallatLng) {
             let routeLength = routeData["routeLength"][routeIndex];
             document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
             createElevationChart(route);
+            let urlPath = newCourseUrl(_routeData, _routeIndex);
+            registerCourseLink.href = urlPath;
             openResultBar()
         }
     )
@@ -443,6 +449,29 @@ function deletePoint(deleteBtn) {
             goalMarker = null;
         }
     })
+}
+
+function newCourseUrl(routeData, routeIndex) {
+    let route = routeData["route"][routeIndex];
+    let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
+    let wayPointIndices = routeData["wayPointIndices"][routeIndex];
+    let routeLength = routeData["routeLength"][routeIndex];
+    Math.floor((routeLength/1e3) * 100) / 100
+
+    let params = {
+        routeLatLng: JSON.stringify(routeLatLng), // routeをJSON文字列に変換して渡す
+        wayPointIndices: JSON.stringify(wayPointIndices), // wayPointIndicesもJSON文字列に変換して渡す
+        routeLength: JSON.stringify(routeLength)
+    };
+
+    // URLエンコードされたクエリパラメータを作成
+    let queryString = Object.keys(params)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .join('&');
+
+    let urlPath = '/courses/new?' + queryString;
+
+    return urlPath
 }
 
 function showChoicePopup() {
