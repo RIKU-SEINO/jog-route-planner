@@ -40,3 +40,4 @@ class CreateCourseForm(FlaskForm):
         widget=widgets.ListWidget(prefix_label=False),
         option_widget=widgets.CheckboxInput()
     )
+    submit = SubmitField("投稿する")
