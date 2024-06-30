@@ -457,7 +457,7 @@ function newCourseUrl(routeData, routeIndex) {
     let wayPointIndices = routeData["wayPointIndices"][routeIndex];
     let routeLength = Math.floor((routeData["routeLength"][routeIndex]/1e3) * 100) / 100;
 
-    let params = {
+    let params = {//ここを修正する。routeIndexだけをparamsに渡し、routeLatLngなどはview側に処理する？
         routeLatLng: JSON.stringify(routeLatLng), // routeをJSON文字列に変換して渡す
         wayPointIndices: JSON.stringify(wayPointIndices), // wayPointIndicesもJSON文字列に変換して渡す
         routeLength: JSON.stringify(routeLength)
