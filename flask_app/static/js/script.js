@@ -75,6 +75,10 @@ for (var i=0; i<deleteWaypointBtns.length; i++){
 
 var _routeData = null;
 let routeIndex = 0;
+let targetLength = document.getElementById('input-distance').value
+if (!targetLength) {
+    targetLength = 0
+}
 routeSearchButton.addEventListener('click', function() {
     clearAllMarker();
     clearAllPolyline();
@@ -126,7 +130,9 @@ showPrevRouteButton.addEventListener('click',function () {
         routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
         routeLengthElem.innerHTML = `${Math.floor((routeLength/1e3) * 100) / 100}&nbsp;km`
         createElevationChart(route);
-        let urlPath = newCourseUrl(_routeData, _routeIndex);
+        let startLatLng = routeLatLng[0];
+        let goalLatLng = routeLatLng[routeLatLng.length-1];
+        let urlPath = newCourseUrl(startLatLng, goalLatLng, targetLength, _routeIndex);
         registerCourseLink.href = urlPath;
     }
 });
@@ -154,7 +160,9 @@ showNextRouteButton.addEventListener('click',function () {
         routeTitleElem.innerHTML = `&nbsp;&nbsp;ルート${_routeIndex+1}&nbsp;&nbsp;`;
         routeLengthElem.innerHTML = `${Math.floor((routeLength/1e3) * 100) / 100}&nbsp;km`
         createElevationChart(route);
-        let urlPath = newCourseUrl(_routeData, _routeIndex);
+        let startLatLng = routeLatLng[0];
+        let goalLatLng = routeLatLng[routeLatLng.length-1];
+        let urlPath = newCourseUrl(startLatLng, goalLatLng, targetLength, _routeIndex);
         registerCourseLink.href = urlPath;
     }
 });
@@ -176,10 +184,6 @@ function clearAllPolyline() {
 }
 
 function fetchRoute(startlatLng, goallatLng) {
-    let targetLength = document.getElementById('input-distance').value
-    if (!targetLength) {
-        targetLength = 0
-    }
     fetch('/map',{
         method: 'POST',
         headers: {
@@ -221,10 +225,14 @@ function fetchRoute(startlatLng, goallatLng) {
     }).then(
         routeData => {
             let route = routeData["route"][routeIndex];
+            let wayPointIndices = _routeData["wayPointIndices"][_routeIndex];
+            let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
             let routeLength = routeData["routeLength"][routeIndex];
             document.querySelector('.course-distance').innerHTML = Math.floor((routeLength/1e3) * 100) / 100 + "&nbsp;km"
             createElevationChart(route);
-            let urlPath = newCourseUrl(_routeData, _routeIndex);
+            let startLatLng = routeLatLng[0];
+            let goalLatLng = routeLatLng[routeLatLng.length-1];
+            let urlPath = newCourseUrl(startLatLng, goalLatLng, targetLength, _routeIndex);
             registerCourseLink.href = urlPath;
             openResultBar()
         }
@@ -451,16 +459,13 @@ function deletePoint(deleteBtn) {
     })
 }
 
-function newCourseUrl(routeData, routeIndex) {
-    let route = routeData["route"][routeIndex];
-    let routeLatLng = route.map(coord => L.latLng(coord[1], coord[0]));
-    let wayPointIndices = routeData["wayPointIndices"][routeIndex];
-    let routeLength = Math.floor((routeData["routeLength"][routeIndex]/1e3) * 100) / 100;
+function newCourseUrl(startLatLng, goalLatLng, targetLength, routeIndex) {
 
-    let params = {//ここを修正する。routeIndexとstartLatLng/goalLatLngとユーザーから入力された任意項目のdistanceをparamsに渡し、routeLatLngなどはview側で処理する？
-        routeLatLng: JSON.stringify(routeLatLng), // routeをJSON文字列に変換して渡す
-        wayPointIndices: JSON.stringify(wayPointIndices), // wayPointIndicesもJSON文字列に変換して渡す
-        routeLength: JSON.stringify(routeLength)
+    let params = {
+        startLatLng: JSON.stringify(startLatLng),
+        goalLatLng: JSON.stringify(goalLatLng),
+        targetLength: targetLength,
+        routeIndex: routeIndex
     };
 
     // URLエンコードされたクエリパラメータを作成
