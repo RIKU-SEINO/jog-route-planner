@@ -75,15 +75,15 @@ for (var i=0; i<deleteWaypointBtns.length; i++){
 
 var _routeData = null;
 let routeIndex = 0;
-let targetLength = document.getElementById('input-distance').value
-if (!targetLength) {
-    targetLength = 0
-}
 routeSearchButton.addEventListener('click', function() {
     clearAllMarker();
     clearAllPolyline();
+    let targetLength = document.getElementById('input-distance').value
+    if (!targetLength) {
+        targetLength = 0
+    }
     if ((startMarker) && (goalMarker)){
-        fetchRoute(startlatLng, goallatLng)
+        fetchRoute(startlatLng, goallatLng, targetLength)
     }else{
         let alertMessage = "が登録されていません。";
         let lackedItem;
@@ -108,6 +108,10 @@ let showNextRouteButton = document.getElementById('next-course');
 let routeTitleElem = document.querySelector('.course-title');
 let routeLengthElem = document.querySelector('.course-distance');
 showPrevRouteButton.addEventListener('click',function () {
+    let targetLength = document.getElementById('input-distance').value
+    if (!targetLength) {
+        targetLength = 0
+    }
     if (_routeIndex > 0) {
         clearAllMarker();
         clearAllPolyline();
@@ -137,6 +141,10 @@ showPrevRouteButton.addEventListener('click',function () {
     }
 });
 showNextRouteButton.addEventListener('click',function () {
+    let targetLength = document.getElementById('input-distance').value
+    if (!targetLength) {
+        targetLength = 0
+    }
     if (_routeIndex < _routeData["route"].length-2) {//last route data is shortest path, so must eliminate
         clearAllMarker();
         clearAllPolyline();
@@ -183,7 +191,7 @@ function clearAllPolyline() {
     });
 }
 
-function fetchRoute(startlatLng, goallatLng) {
+function fetchRoute(startlatLng, goallatLng, targetLength) {
     fetch('/map',{
         method: 'POST',
         headers: {
