@@ -37,7 +37,8 @@ class CreateCourseForm(FlaskForm):
         "都道府県",
         query_factory=prefecture_query,
         get_label='name',
-        allow_blank=False,
+        allow_blank=True,
+        blank_text="全ての都道府県",
         validators=[DataRequired("都道府県は必須です。")]
     )
     city = SelectField(
@@ -61,6 +62,7 @@ class SearchCourseForm(CreateCourseForm):
     distance_min = SelectField(
         "最小距離",
         choices=[
+            ('', '選択してください'),
             (1, '1km'),
             (2, '2km'),
             (3, '3km'),
@@ -70,12 +72,12 @@ class SearchCourseForm(CreateCourseForm):
             (20, '20km'),
             (30, '30km'),
             (50, '50km'),
-        ],
-        coerce=float
+        ]
     )
     distance_max = SelectField(
         "最大距離",
         choices=[
+            ('', '選択してください'),
             (1, '1km'),
             (2, '2km'),
             (3, '3km'),
@@ -85,6 +87,5 @@ class SearchCourseForm(CreateCourseForm):
             (20, '20km'),
             (30, '30km'),
             (50, '50km'),
-        ],
-        coerce=float
+        ]
     )

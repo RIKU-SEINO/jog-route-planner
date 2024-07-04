@@ -18,19 +18,19 @@
 
         <label for="length-selection">距離</label>
         <div class="list-sidebar__length" id="length-selection">
-            {{ form.distance_min.label(class="list-sidebar__select-wrap list-sidebar__select-wrap--length c-select") }}
             {{ form.distance_min(class="js-running-length-min-selector js-running-length-selector list-sidebar__select")}}
             <div class="list-sidebar__length-between">
-              〜
+            &nbsp;&nbsp;&nbsp;〜&nbsp;
             </div>
-            {{ form.distance_max.label(for="distance_max", class="list-sidebar__select-wrap list-sidebar__select-wrap--length c-select") }}
             {{ form.distance_max(class="js-running-length-max-input js-running-length-selector list-sidebar__select")}}
         </div>
         <div class="checkbox-container">
           <label for="running-amenity-facility">近くの施設</label>
-          {{ form.facilities.label(class="facilities-input-label") }}
           {% for facility in form.facilities %}
-          <div>{{ facility }} {{ facility.label }}</div>
+          <label class="my-checkbox">
+            {{ facility }}
+            <span>{{  facility.label }}</span>
+          </label>
           {% endfor %}
         </div>
         {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-create") }}

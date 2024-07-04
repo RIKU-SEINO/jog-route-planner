@@ -64,7 +64,7 @@ display: none;
 }
 
 /* □ */
-.checkmark {
+input[type="checkbox"] {
 position: absolute;
 top: 3px; /* 上からの位置 */
 left: 0;
@@ -75,7 +75,7 @@ border-radius: 4px;
 box-sizing: border-box;
 }
 /* ✓ */
-.checkmark:after {
+input[type="checkbox"]:after {
 content: "";
 position: absolute;
 left: 6px; /* チェックの位置 */
@@ -89,7 +89,7 @@ opacity: 0; /* 透明にしておく */
 }
 
 /* チェックが入ったときの□ */
-.my-checkbox input:checked + .checkmark {
+.my-checkbox input:checked + input[type="checkbox"] {
 background: #2e80ff; /* チェック時の色 */
 border-color: #2e80ff; /* チェック時の色 */
 }
