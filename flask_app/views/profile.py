@@ -13,9 +13,5 @@ profile = Blueprint(
 @profile.route("/<userid>", methods=["GET","POST"])
 def index(userid):
     user = User.query.filter_by(id=userid).first()
-    if current_user.is_authenticated:
-        profile_image = None
-    else:
-        profile_image = None
     public_profile_image = None
-    return render_template("user.html", user=user, public_profile_image=public_profile_image, profile_image=profile_image)
+    return render_template("user.html", user=user, public_profile_image=public_profile_image)

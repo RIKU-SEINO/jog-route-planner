@@ -23,10 +23,6 @@ class SignUpForm(FlaskForm):
 
         ],
     )
-    profile_image = FileField(
-        "プロフィール画像(任意)"
-    )
-    submit = SubmitField("新規登録")
 
     def validate_password(self, password):
         pattern = re.compile(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$')

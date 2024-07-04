@@ -11,8 +11,4 @@ home = Blueprint(
 
 @home.route("/", methods=["GET","POST"])
 def index():
-    if current_user.is_authenticated:
-        profile_image = None
-    else:
-        profile_image = None
-    return render_template("home.html", profile_image=profile_image)
+    return render_template("home.html")

@@ -42,12 +42,12 @@ def course_list():
         print(f"都道府県: {prefecture}")
         print(f"最大距離: {distance_max}")
         print(f"施設: {facilities}")
-        return render_template("course_list.html", profile_image=None, form=form)
-    return render_template("course_list.html", profile_image=None, form=form)
+        return render_template("course_list.html", form=form)
+    return render_template("course_list.html", form=form)
 
 @courses.route("/<course_id>", methods=["GET"])
 def course_detail(course_id):
-    return render_template("course_detail.html", profile_image=None, course_id=course_id)
+    return render_template("course_detail.html", course_id=course_id)
 
 
 @courses.route("/new", methods=["GET", "POST"])
@@ -84,7 +84,7 @@ def new():
 
         return render_template("course_detail.html")
 
-    return render_template("course_new.html", profile_image=None, form=form)
+    return render_template("course_new.html", form=form)
 
     
 

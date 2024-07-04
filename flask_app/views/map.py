@@ -46,9 +46,4 @@ def home():
                             'wayPointIndices': way_point_indices_list})
         except Exception as e:
             return jsonify({'error': str(e)})
-        
-    if current_user.is_authenticated:
-        profile_image = None
-    else:
-        profile_image = None
-    return render_template("map.html", profile_image=profile_image)
+    return render_template("map.html")
