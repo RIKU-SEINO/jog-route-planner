@@ -1,10 +1,10 @@
 from flask_app import db
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, request
 from flask_login import login_required, current_user
 from flask_app.models.facilities import Facility
 from flask_app.models.courses import Course
 from flask_app.models.address import Prefecture, City
-from flask_app.forms.course_forms import CreateCourseForm
+from flask_app.forms.course_forms import CreateCourseForm, SearchCourseForm
 
 courses = Blueprint(
     'courses',
@@ -30,19 +30,24 @@ def get_cities():
 
 @courses.route("/", methods=["GET","POST"])
 def course_list():
-    if current_user.is_authenticated:
-        profile_image = None
-    else:
-        profile_image = None
-    return render_template("course_list.html", profile_image=profile_image)
+    form = SearchCourseForm()
+    if request.method == "POST":
+        freeword = form.freeword.data
+        prefecture = form.prefecture.data
+        distance_min = form.distance_min.data
+        distance_max = form.distance_max.data
+        facilities = form.facilities.data
+        print(f"フリーワード: {freeword}")
+        print(f"最小距離: {distance_min}")
+        print(f"都道府県: {prefecture}")
+        print(f"最大距離: {distance_max}")
+        print(f"施設: {facilities}")
+        return render_template("course_list.html", profile_image=None, form=form)
+    return render_template("course_list.html", profile_image=None, form=form)
 
 @courses.route("/<course_id>", methods=["GET"])
 def course_detail(course_id):
-    if current_user.is_authenticated:
-        profile_image = None
-    else:
-        profile_image = None
-    return render_template("course_detail.html", profile_image=profile_image, course_id=course_id)
+    return render_template("course_detail.html", profile_image=None, course_id=course_id)
 
 
 @courses.route("/new", methods=["GET", "POST"])

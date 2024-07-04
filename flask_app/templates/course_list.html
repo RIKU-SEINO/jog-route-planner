@@ -8,155 +8,32 @@
 <div class="search-sidebar-container">
     <div class="sidebar">
 
-      <form action="#">
-        <label for="free-word">フリーワード</label>
-        <input id="free-word" placeholder="気になる言葉で検索">
+      <form action="{{ url_for('courses.course_list') }}" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.freeword.label(class="freeword-input-label")}}
+        {{ form.freeword(class="freeword-input") }}
 
-        <label for="prefecture">都道府県</label>
-        <select id="prefecture" name="prefecture">
-            <option value="0">すべて</option>
-            <option value="1">北海道</option>
-            <option value="2">青森県</option>
-            <option value="3">岩手県</option>
-            <option value="4">宮城県</option>
-            <option value="5">秋田県</option>
-            <option value="6">山形県</option>
-            <option value="7">福島県</option>
-            <option value="8">茨城県</option>
-            <option value="9">栃木県</option>
-            <option value="10">群馬県</option>
-            <option value="11">埼玉県</option>
-            <option value="12">千葉県</option>
-            <option value="13">東京都</option>
-            <option value="14">神奈川県</option>
-            <option value="15">新潟県</option>
-            <option value="16">富山県</option>
-            <option value="17">石川県</option>
-            <option value="18">福井県</option>
-            <option value="19">山梨県</option>
-            <option value="20">長野県</option>
-            <option value="21">岐阜県</option>
-            <option value="22">静岡県</option>
-            <option value="23">愛知県</option>
-            <option value="24">三重県</option>
-            <option value="25">滋賀県</option>
-            <option value="26">京都府</option>
-            <option value="27">大阪府</option>
-            <option value="28">兵庫県</option>
-            <option value="29">奈良県</option>
-            <option value="30">和歌山県</option>
-            <option value="31">鳥取県</option>
-            <option value="32">島根県</option>
-            <option value="33">岡山県</option>
-            <option value="34">広島県</option>
-            <option value="35">山口県</option>
-            <option value="36">徳島県</option>
-            <option value="37">香川県</option>
-            <option value="38">愛媛県</option>
-            <option value="39">高知県</option>
-            <option value="40">福岡県</option>
-            <option value="41">佐賀県</option>
-            <option value="42">長崎県</option>
-            <option value="43">熊本県</option>
-            <option value="44">大分県</option>
-            <option value="45">宮崎県</option>
-            <option value="46">鹿児島県</option>
-            <option value="47">沖縄県</option>
-        </select>
+        {{ form.prefecture.label(class="prefecture-input-label") }}
+        {{ form.prefecture(class="prefecture-input") }}
 
         <label for="length-selection">距離</label>
         <div class="list-sidebar__length" id="length-selection">
-            <label for="running-length-min" class="list-sidebar__select-wrap list-sidebar__select-wrap--length c-select">
-                <select name="running-length-min" id="running-length-min" class="js-running-length-min-selector js-running-length-selector list-sidebar__select">
-                    <option selected="selected" value="0">下限なし</option>
-                    <option value="1">1km</option>
-                    <option value="2">3km</option>
-                    <option value="3">5km</option>
-                    <option value="4">10km</option>
-                    <option value="5">15km</option>
-                    <option value="6">20km</option>
-                    <option value="7">30km</option>
-                    <option value="8">40km</option>
-                    <option value="9">40km</option>
-                    <option value="9">50km</option>
-                </select>
-            </label>
+            {{ form.distance_min.label(class="list-sidebar__select-wrap list-sidebar__select-wrap--length c-select") }}
+            {{ form.distance_min(class="js-running-length-min-selector js-running-length-selector list-sidebar__select")}}
             <div class="list-sidebar__length-between">
               〜
             </div>
-            <label for="running-length-max" class="list-sidebar__select-wrap list-sidebar__select-wrap--length c-select">
-                <select name="running-length-max" id="running-length-max" class="js-running-length-max-selector js-running-length-selector list-sidebar__select">
-                    <option selected="selected" value="0">上限なし</option>
-                    <option value="1">1km</option>
-                    <option value="2">3km</option>
-                    <option value="3">5km</option>
-                    <option value="4">10km</option>
-                    <option value="5">15km</option>
-                    <option value="6">20km</option>
-                    <option value="7">30km</option>
-                    <option value="8">40km</option>
-                    <option value="9">40km</option>
-                    <option value="9">50km</option>
-                </select>
-            </label>
+            {{ form.distance_max.label(for="distance_max", class="list-sidebar__select-wrap list-sidebar__select-wrap--length c-select") }}
+            {{ form.distance_max(class="js-running-length-max-input js-running-length-selector list-sidebar__select")}}
         </div>
         <div class="checkbox-container">
           <label for="running-amenity-facility">近くの施設</label>
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            ランニングステーション
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            宿泊施設
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            温浴施設
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            ロッカー
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            シャワー
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            トイレ
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            水飲み場
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            コンビニ
-          </label>
-
-          <label class="my-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            駐車場
-          </label>
+          {{ form.facilities.label(class="facilities-input-label") }}
+          {% for facility in form.facilities %}
+          <div>{{ facility }} {{ facility.label }}</div>
+          {% endfor %}
         </div>
-        <button type="submit" class="btn btn-outline-dark btn-sm">検 索</button>
+        {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-create") }}
       </form>
     </div>
 
