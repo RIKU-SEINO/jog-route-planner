@@ -13,15 +13,19 @@
             <h1>新たな景色を探し求めて、</h1>
             <h1>走り出そう。</h1>
         </div>
-        <div class="top-visual-search-container" style="position: absolute; 
+        <form action="{{ url_for('courses.course_list') }}" method="POST" enctype="multipart/form-data">
+            <div class="top-visual-search-container" style="position: absolute; 
         top: 65%;
         left: 50%;
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);">
-            <input class="top-visual-search-input" type="text" placeholder="&nbsp;キーワードでコースを検索">
-            <i class="fa fa-search search-icon"></i>
-        </div>
+            {{ form.freeword(class="top-visual-search-input", type="text", placeholder=" キーワードでコースを検索") }}
+            <button type="submit">
+                <i class="fa fa-search search-icon"></i>
+            </button>
+            </div>
+        </form>
     </div>
 </section>
 

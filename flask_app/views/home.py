@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from flask_login import current_user
+from flask_app.forms.course_forms import SearchCourseForm
 
 home = Blueprint(
     'home',
@@ -11,4 +12,5 @@ home = Blueprint(
 
 @home.route("/", methods=["GET","POST"])
 def index():
-    return render_template("home.html")
+    form = SearchCourseForm()
+    return render_template("home.html", form=form)
