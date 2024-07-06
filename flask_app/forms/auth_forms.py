@@ -23,6 +23,7 @@ class SignUpForm(FlaskForm):
 
         ],
     )
+    submit = SubmitField("新規登録")
 
     def validate_password(self, password):
         pattern = re.compile(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$')

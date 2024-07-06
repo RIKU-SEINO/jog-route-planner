@@ -69,7 +69,8 @@ def course_list():
 
 @courses.route("/<course_id>", methods=["GET"])
 def course_detail(course_id):
-    return render_template("course_detail.html", course_id=course_id)
+    course = Course.query.filter_by(id=course_id).first()
+    return render_template("course_detail.html", course=course)
 
 
 @courses.route("/new", methods=["GET", "POST"])
@@ -104,7 +105,7 @@ def new():
         db.session.add(new_course)
         db.session.commit()
 
-        return render_template("course_detail.html")
+        return render_template("course_detail.html",course=new_course)
 
     return render_template("course_new.html", form=form)
 
