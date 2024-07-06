@@ -31,6 +31,7 @@ def get_cities():
 @courses.route("/", methods=["GET","POST"])
 def course_list():
     form = SearchCourseForm()
+    query = Course.query
     if request.method == "POST":
         freeword = form.freeword.data
         prefecture = form.prefecture.data
@@ -42,8 +43,29 @@ def course_list():
         print(f"都道府県: {prefecture}")
         print(f"最大距離: {distance_max}")
         print(f"施設: {facilities}")
-        return render_template("course_list.html", form=form)
-    return render_template("course_list.html", form=form)
+
+        if freeword:
+            query = query.filter((Course.title.ilike(f'%{freeword}%')) | (Course.description.ilike(f'%{freeword}%')))
+        if prefecture:
+            query = query.filter_by(prefecture_id=prefecture.id)
+
+        if distance_min:
+            query = query.filter(Course.distance >= float(distance_min))
+        
+        if distance_max:
+            query = query.filter(Course.distance <= float(distance_max))
+        
+        if facilities:
+            facility_ids = [facility.id for facility in facilities]
+            for facility_id in facility_ids:
+                query = query.filter(Course.facilities.any(Facility.id == facility_id))
+
+        courses = query.all()
+        
+        return render_template("course_list.html", form=form, courses=courses)
+
+    courses = query.all()
+    return render_template("course_list.html", form=form, courses=courses)
 
 @courses.route("/<course_id>", methods=["GET"])
 def course_detail(course_id):

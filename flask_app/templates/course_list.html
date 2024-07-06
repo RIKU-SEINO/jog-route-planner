@@ -39,13 +39,15 @@
 
     <div class="results-container">
       <h2>検索結果</h2>
-      <h6>10件のコースがヒットしました</h6>
+      {% if courses %}
+      <h6>{{ courses|length }}件のコースがヒットしました</h6>
       <ul>
+        {% for course in courses %}
         <li class="course-item">
           <article width="100%" direction="column" class="course-article">
             <a data-rtui-link="next" href="/courses/1" class="course-link-1">
               <div direction="column" width="100%" class="course-image-container">
-                <img alt="月崎トンネル" loading="lazy" decoding="async" data-nimg="fill" src="https://d3304ij6n73kfg.cloudfront.net/prod/thumb/course_main/24931/1000_500">
+                <img alt="{{ course.title }}" loading="lazy" decoding="async" data-nimg="fill" src="https://d3304ij6n73kfg.cloudfront.net/prod/thumb/course_main/24931/1000_500">
               </div>
             </a>
             <div direction="column" class="course-title">
@@ -53,19 +55,19 @@
               <span class="text-span">
                 <a data-rtui-link="next" href="/courses/1" class="course-link-2">
                   <h4 class="text-container">
-                    月崎トンネル1
+                    {{ course.title }}
                   </h4>
                 </a>
               </span>
               <span class="text-span">
                 <div direction="column" class="course-area">
-                  千葉県市原市 (2.5km)
+                  {{ course.prefecture }}{{ course.city }} ({{ course.distance }}km)
                 </div>
               </span>
               </header>
               <p class="text-container">
               <span class="text-span">
-                ぽっかり穴の空いたトンネル 月崎トンネルまでのルートです。 林道月崎1号線の終点を目指してください。 林道は終点ですが、クォードの森きのこコースに接続しています。そのままクォードの森を走るのも楽しいかも。
+                {{  course.description }}
               </span>
               </p>
               <div class="user-container">
@@ -77,7 +79,7 @@
                 <span class="text-span">
                   <a data-rtui-link="next" href="/profile/1" class="profile-link">
                     <div direction="column" class="username-container">
-                      ユーザー1
+                      {{ course.user_id }}
                     </div>
                   </a>
                 </span>
@@ -85,51 +87,11 @@
             </div>
           </article>
         </li>
-        <li class="course-item">
-          <article width="100%" direction="column" class="course-article">
-            <a data-rtui-link="next" href="/courses/1" class="course-link-1">
-              <div direction="column" width="100%" class="course-image-container">
-                <img alt="月崎トンネル" loading="lazy" decoding="async" data-nimg="fill" src="https://d3304ij6n73kfg.cloudfront.net/prod/thumb/course_main/24931/1000_500">
-              </div>
-            </a>
-            <div direction="column" class="course-title">
-              <header direction="column" class="course-title-column">
-              <span class="text-span">
-                <a data-rtui-link="next" href="/courses/1" class="course-link-2">
-                  <h4 class="text-container">
-                    月崎トンネル1
-                  </h4>
-                </a>
-              </span>
-              <span class="text-span">
-                <div direction="column" class="course-area">
-                  千葉県市原市 (2.5km)
-                </div>
-              </span>
-              </header>
-              <p class="text-container">
-              <span class="text-span">
-                ぽっかり穴の空いたトンネル 月崎トンネルまでのルートです。 林道月崎1号線の終点を目指してください。 林道は終点ですが、クォードの森きのこコースに接続しています。そのままクォードの森を走るのも楽しいかも。
-              </span>
-              </p>
-              <div class="user-container">
-                <span class="text-span">
-                  <a data-rtui-link="next" href="/profile/2" class="profile-link">
-                    <img alt="user-icon" loading="lazy" decoding="async" data-nimg="fill" src="https://d3304ij6n73kfg.cloudfront.net/prod/thumb/course_main/24931/1000_500">
-                  </a>
-                </span>  
-                <span class="text-span">
-                  <a data-rtui-link="next" href="/profile/2" class="profile-link">
-                    <div direction="column" class="username-container">
-                      ユーザー2
-                    </div>
-                  </a>
-                </span>
-              </div>
-            </div>
-          </article>
-        </li>
+        {% endfor %}
       </ul>
+      {% else %}
+      <p>検索結果が見つかりませんでした。</p>
+      {% endif %}
     </div>
   </div>
 
