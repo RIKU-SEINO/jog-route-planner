@@ -38,11 +38,6 @@ def course_list():
         distance_min = form.distance_min.data
         distance_max = form.distance_max.data
         facilities = form.facilities.data
-        print(f"フリーワード: {freeword}")
-        print(f"最小距離: {distance_min}")
-        print(f"都道府県: {prefecture}")
-        print(f"最大距離: {distance_max}")
-        print(f"施設: {facilities}")
 
         if freeword:
             query = query.filter((Course.title.ilike(f'%{freeword}%')) | (Course.description.ilike(f'%{freeword}%')))
