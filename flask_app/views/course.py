@@ -1,5 +1,6 @@
 from flask_app import db
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, request
+from sqlalchemy import or_
 from flask_login import login_required, current_user
 from flask_app.models.facilities import Facility
 from flask_app.models.courses import Course
@@ -58,8 +59,10 @@ def course_list():
         courses = query.filter_by(is_public=True).all()
         
         return render_template("course_list.html", form=form, courses=courses)
-
-    courses = query.filter_by(is_public=True).all()
+    if current_user.is_authenticated:
+        courses = query.filter(or_(Course.is_public == True, Course.user_id == current_user.id)).all()
+    else:
+        courses = query.filter_by(is_public=True).all()
     return render_template("course_list.html", form=form, courses=courses)
 
 @courses.route("/<course_id>", methods=["GET"])
@@ -123,6 +126,7 @@ def course_to_dict(course):
         city_name = ""
     return {
         'id': course.id,
+        'title':course.title,
         'description': course.description,
         'distance': course.distance,
         'route': course.route,

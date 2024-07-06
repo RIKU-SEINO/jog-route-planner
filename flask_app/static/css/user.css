@@ -28,7 +28,7 @@
 
 .my-courses-container {
   width: 100%;
-  padding: 50px 30px 0px 0px;
+  padding: 30px 30px 0px 0px;
 }
 
 .my-courses-container h3 {
@@ -43,8 +43,10 @@
 
 .course-item {
   list-style: none; /* リストのマーカーを削除 */
-  padding: 0; /* パディングをリセット */
-  }
+  padding: 10px; /* パディングをリセット */
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
   
 .course-article {
   width: 100%; /* 幅を100%に設定 */

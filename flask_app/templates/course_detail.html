@@ -21,23 +21,25 @@
     <label class="map-label"></label>
     <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
   </div>
-  <div class="description-area">
+  <div class="course-info-container">
     <p>コースの説明</p>
-    <span>{{ course_dict.description }}</span>
-  </div>
-  <div class="distance-area">
+    <div class="description-area">
+      <span>{{ course_dict.description }}</span>
+    </div>
     <p>距離</p>
-    <span>{{ course_dict.distance }}km</span>
-  </div>
-  <div class="address-area">
+    <div class="distance-area">
+      <span>{{ course_dict.distance }}km</span>
+    </div>
     <p>場所</p>
-    <span>{{ course_dict.prefecture_name }}{{ course_dict.city_name }}</span>
-  </div>
-  <div class="facility-area">
+    <div class="address-area">
+      <span>{{ course_dict.prefecture_name }}{{ course_dict.city_name }}</span>
+    </div>
     <p>近くにある施設</p>
-    {% for facility in course_dict.facilities %}
-      <span>{{ facility.name }}</span>
-    {% endfor %}
+    <div class="facility-area">
+      {% for facility in course_dict.facilities %}
+        <span>{{ facility.name }}</span>
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

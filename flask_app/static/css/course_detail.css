@@ -4,6 +4,10 @@
   margin-top: 70px;
 }
 
+.course-info-container {
+  margin-top: 30px;
+}
+
 .leaflet-marker-icon.leaflet-div-icon.leaflet-zoom-animated.leaflet-interactive {
   background-color: transparent;
   border: none;
@@ -12,7 +16,7 @@
 .description-area, .distance-area, .address-area, .facility-area {
   border: 1px solid #ccc;
   padding: 15px;
-  margin: 30px 0;
+  margin: 15px 0;
   border-radius: 5px;
 }
 
