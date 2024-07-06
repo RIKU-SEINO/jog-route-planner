@@ -60,7 +60,7 @@ user-select: none; /* テキストの選択を防ぐ */
 
 /* inputは非表示にする */
 .my-checkbox input {
-display: none;
+display: block;
 }
 
 /* □ */
@@ -68,8 +68,8 @@ input[type="checkbox"] {
 position: absolute;
 top: 3px; /* 上からの位置 */
 left: 0;
-height: 22px; /* 大きさ */
-width: 22px; /* 大きさ */
+height: 18px; /* 大きさ */
+width: 18px; /* 大きさ */
 border: solid 2px #d4dae2; /* 線 */
 border-radius: 4px;
 box-sizing: border-box;

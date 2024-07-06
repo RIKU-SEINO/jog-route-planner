@@ -53,7 +53,7 @@ class CreateCourseForm(FlaskForm):
         widget=widgets.ListWidget(prefix_label=False),
         option_widget=widgets.CheckboxInput()
     )
-    submit = SubmitField("投稿する")
+    submit = SubmitField("検索")
 
 class SearchCourseForm(CreateCourseForm):
     freeword = StringField(
@@ -62,7 +62,7 @@ class SearchCourseForm(CreateCourseForm):
     distance_min = SelectField(
         "最小距離",
         choices=[
-            ('', '選択してください'),
+            ('', '指定なし'),
             (1, '1km'),
             (2, '2km'),
             (3, '3km'),
@@ -77,7 +77,7 @@ class SearchCourseForm(CreateCourseForm):
     distance_max = SelectField(
         "最大距離",
         choices=[
-            ('', '選択してください'),
+            ('', '指定なし'),
             (1, '1km'),
             (2, '2km'),
             (3, '3km'),
