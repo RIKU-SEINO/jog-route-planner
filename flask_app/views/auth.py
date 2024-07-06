@@ -52,7 +52,9 @@ def signup():
         user = User(
             username = username,
             email = email,
-            password = password
+            password = password,
+            bio = "",
+            address = "設定なし",
         )
         if user.is_duplicated_email():
             flash("そのメールアドレスはすでにご登録いただいております。")

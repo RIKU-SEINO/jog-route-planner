@@ -9,14 +9,14 @@
         <div class="public-profile-image-container">
             <img class="public-profile-image" alt="Profile Image" src="{{ url_for('static', filename='images/user-icon/default-user.png') }}">
         </div>
-        <h1>{{ user.username }}</h1>
+        <h3>{{ user.username }}</h3>
         <div class="profile-detail-container">
             <div class="profile-detail-item bio">
-                <span>ここにbioを書くよ</span>
+                <span>{{ user.bio }}</span>
             </div>
             <div class="profile-detail-item location">
                 <i class="fa-solid fa-location-dot"></i>
-                <span>神奈川県</span>
+                <span>{{ user.address }}</span>
             </div>
         </div>
         {% if current_user.is_authenticated and current_user.id == user.id%}
@@ -78,7 +78,14 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <p>検索結果が見つかりませんでした。</p>
+            <p class="course-item">
+                {% if current_user.is_authenticated and (current_user.id == user.id)%}
+                まだコースを保存していません。
+                <a href="/map" style="color: rgb(0, 162, 255); font-weight: bold;">こちら</a>からコースを作成してみましょう！
+                {% else %}
+                このユーザーが公開しているコースはありません。
+                {% endif %}
+            </p>
             {% endif %}
         </div>
     </div>
