@@ -67,7 +67,8 @@ def course_detail(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if course:
         if course.is_public or (current_user.is_authenticated and current_user.id == course.user_id):
-            return render_template("course_detail.html", course=course)
+            course_dict = course_to_dict(course)
+            return render_template("course_detail.html", course_dict=course_dict)
         else:
             return "このコースは非公開です"
     else:
@@ -83,6 +84,7 @@ def new():
         title = form.title.data
         description = form.description.data
         route = form.route_latlng.data
+        waypoint_indices = form.waypoint_indices.data
         distance = form.distance.data
         prefecture = form.prefecture.data
         city_id = form.city.data
@@ -91,6 +93,7 @@ def new():
         new_course = Course(title=title, 
                             description=description,
                             route=route,
+                            waypoint_indices=waypoint_indices,
                             distance=distance,
                             prefecture_id=prefecture.id,
                             city_id=city_id,
@@ -105,9 +108,29 @@ def new():
         db.session.add(new_course)
         db.session.commit()
 
-        return render_template("course_detail.html",course=new_course)
+        new_course_dict = course_to_dict(new_course)
+
+        return render_template("course_detail.html",course_dict=new_course_dict)
 
     return render_template("course_new.html", form=form)
+
+# courseモデルをdictに変換し、jsでjsonに変換することができるようにする
+def course_to_dict(course):
+    city = course.city
+    if city:
+        city_name = city.name
+    else:
+        city_name = ""
+    return {
+        'id': course.id,
+        'description': course.description,
+        'distance': course.distance,
+        'route': course.route,
+        'waypoint_indices': course.waypoint_indices,
+        'prefecture_name': course.prefecture.name,
+        'city_name': city_name,
+        'facilities': [{'id': facility.id, 'name': facility.name} for facility in course.facilities]
+    }
 
     
 

@@ -11,6 +11,7 @@ class Course(db.Model):
     title = db.Column(db.String(50), index=True, nullable=False)
     description = db.Column(db.String(200), index=True)
     route = db.Column(db.String, nullable=False)
+    waypoint_indices = db.Column(db.String, nullable=False)
     distance = db.Column(db.Float, nullable=False)
     is_public = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.now)

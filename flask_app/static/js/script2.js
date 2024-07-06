@@ -54,7 +54,7 @@ $(document).ready(function() {
               data: JSON.stringify({ prefecture_id: prefectureId }),
               success: function(data) {
                   $('#city').empty();
-                  $('#city').append('<option value="">選択してください</option>');
+                  $('#city').append('<option value="">全域</option>');
                   $.each(data, function(key, city) {
                       $('#city').append('<option value="' + city.id + '">' + city.name + '</option>');
                   });
@@ -62,7 +62,7 @@ $(document).ready(function() {
           });
       } else {
           $('#city').empty();
-          $('#city').append('<option value="">選択してください</option>');
+          $('#city').append('<option value="">全域</option>');
       }
   });
 });
@@ -102,6 +102,8 @@ function fetchRoute(startlatLng, goallatLng, targetLength, routeIndex, map) {
         distanceInputElement.value = routeLength;
         let routeLatLngInputElement = document.getElementById("route_latlng");
         routeLatLngInputElement.value = JSON.stringify(routeLatLng);
+        let wayPointIndicesElement = document.getElementById("waypoint_indices");
+        wayPointIndicesElement.value = JSON.stringify(wayPointIndices);
     
         let routePolyline = L.polyline(routeLatLng, { color: 'red' })
         routePolyline.addTo(map);

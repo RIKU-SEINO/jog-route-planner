@@ -13,6 +13,12 @@ class CreateCourseForm(FlaskForm):
             DataRequired("経路の緯度経度情報は必須です。"),
         ],
     )
+    waypoint_indices = StringField(
+        "経路の主要経由地点情報",
+        validators=[
+            DataRequired("経路の主要経由地点情報は必須です。")
+        ]
+    )
     title = StringField(
         "コースのタイトル",
         validators=[

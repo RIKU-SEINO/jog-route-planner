@@ -1,1 +1,44 @@
-コース{{ course.id }}の詳細ページ
+{% extends "base.html" %}
+{% block title %}Home - {{ super() }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/course_detail.css') }}" />
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+	crossorigin=""></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/script3.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="course-detail-container">
+  <div id="course-info-route" data-course="{{ course_dict.route }}" type="hidden"></div>
+  <div id="course-info-waypoint_indices" data-course="{{ course_dict.waypoint_indices }}" type="hidden"></div>
+  <div class="title" style="text-align: center; font-size: 25px;">{{ course_dict.title }}</div>
+  <div id="map-area">
+    <label class="map-label"></label>
+    <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
+  </div>
+  <div class="description-area">
+    <p>コースの説明</p>
+    <span>{{ course_dict.description }}</span>
+  </div>
+  <div class="distance-area">
+    <p>距離</p>
+    <span>{{ course_dict.distance }}km</span>
+  </div>
+  <div class="address-area">
+    <p>場所</p>
+    <span>{{ course_dict.prefecture_name }}{{ course_dict.city_name }}</span>
+  </div>
+  <div class="facility-area">
+    <p>近くにある施設</p>
+    {% for facility in course_dict.facilities %}
+      <span>{{ facility.name }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+</html>
