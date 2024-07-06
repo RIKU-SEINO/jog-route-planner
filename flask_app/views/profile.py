@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for
 from flask_login import login_required, current_user
 from flask_app.models.users import User
+from flask_app.models.courses import Course
 
 profile = Blueprint(
     'profile',
@@ -13,5 +14,11 @@ profile = Blueprint(
 @profile.route("/<userid>", methods=["GET","POST"])
 def index(userid):
     user = User.query.filter_by(id=userid).first()
-    public_profile_image = None
-    return render_template("user.html", user=user, public_profile_image=public_profile_image)
+    if user:
+        if current_user.is_authenticated and str(current_user.id) == str(userid):
+            courses = Course.query.filter_by(user_id=userid).all()
+        else:
+            courses = Course.query.filter_by(user_id=user.id, is_public=True).all()
+        return render_template("user.html", user=user, courses=courses)
+    else:
+        return "ユーザーは存在しません"

@@ -133,6 +133,8 @@ padding: 10px;
 margin-right: 20px;
 }
 
+/* コース一覧 */
+
 .course-item {
 list-style: none; /* リストのマーカーを削除 */
 padding: 0; /* パディングをリセット */

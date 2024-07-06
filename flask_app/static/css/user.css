@@ -1,123 +1,3 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: #fff;
-  font-family: "Noto Sans JP", sans-serif;
-  display: flex;
-  flex-direction: column;
-}
-
-button {
-  border: none; /* ボーダーを削除 */
-  outline: none; /* フォーカス時の枠線を削除 */
-  box-shadow: none; /* 影を削除 */
-}
-
-header {
-  padding: 5px 5px 5px 5px;
-  background-color: none;
-  top: 0;
-  width: 100%;
-  font-family: "Noto Sans JP", sans-serif;
-  box-shadow: 0 2px 0px rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-td {
-  cursor: pointer;
-}
-
-td:hover {
-  background-color: #cdc8c8;
-}
-
-#icon {
-  float: left;
-  border-radius: 20px;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px; /* Adjust padding as needed */
-  width: 100%;
-}
-
-.login-signup-btns {
-  display: flex;
-  gap: 10px;
-}
-
-.btn.btn-light:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.btn-login, .btn-signup, .btn-profile, .btn-register-course, .btn-cancel-course {
-  font-size: 15px; 
-  background-color: transparent; 
-  display: block;
-  padding: 10px;
-  border: 1px solid transparent;
-  border-radius: 10px;
-}
-
-.btn-login:hover, .btn-signup:hover, .btn-profile:hover {
-  transition: border 0.5s linear;
-  border: 1px solid black;
-}
-
-.profile-btn {
-  position: relative;
-}
-
-.profile-icon {
-  width: 50px; 
-  height: 50px; 
-  border-radius: 50%;
-  margin: 3px;
-  border: 1px solid black;
-  transition: filter 0.15s linear;
-}
-
-.profile-icon:hover {
-  filter: brightness(80%);
-}
-
-.user-menu__popup {
-  position: absolute;
-  z-index: 2;
-  top: 110%; /* 要素の下に表示されるようにする */
-  left: -120px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
-  color: white; /* ポップアップ内のテキストの色 */
-  width: 150px;
-  height: 300px;
-  padding: 10px; /* コンテンツの余白 */
-  visibility: visible; /* 初期状態では非表示 */
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-
-.profile-btn:hover .user-menu__popup {
-  visibility: visible; 
-  opacity: 1;
-  transition: opacity 0.15s;
-}
-
 .profile-wrapper {
   display: flex;    
 }
@@ -148,44 +28,82 @@ td:hover {
 
 .my-courses-container {
   width: 100%;
-  padding: 50px;
+  padding: 50px 30px 0px 0px;
 }
 
 .my-courses-container h3 {
   margin-bottom: 20px;
 }
 
-.new-courses-title {
-  background-color: rgb(234, 255, 221);
+.my-courses-title {
   padding: 10px 10px 6px 10px;
   border-radius: 10px;
   display: flex;
-  a {
-      margin: auto 0 0 auto;
-  }
 }
 
-.new-courses-container {
-  margin-top: 5vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
 .course-item {
-  width: calc(33.33% - 10px);
-  margin-bottom: 20px;
-}
-.course-item img {
-  width: 100%;
-  height: auto;
-}
-@media (max-width: 768px) {
-  .course-item {
-    width: calc(50% - 10px);
+  list-style: none; /* リストのマーカーを削除 */
+  padding: 0; /* パディングをリセット */
   }
+  
+.course-article {
+  width: 100%; /* 幅を100%に設定 */
+  display: flex; /* フレックスコンテナにする */
+  flex-direction: column; /* コンテンツを縦方向に配置 */
 }
-@media (max-width: 480px) {
-  .course-item {
-    width: 100%;
-  }
+  
+.course-image-container img {
+  object-fit: cover; /* 画像のアスペクト比を保持したまま親要素にフィットさせる */
+  width: 100%; /* 幅を100%に設定 */
+  height: 200px; /* 高さを固定値に設定 */
 }
+  
+.course-title {
+  padding: 10px; /* 内側のパディングを追加 */
+}
+  
+.course-title-column {
+  margin-bottom: 10px; /* ヘッダーと本文の間にマージンを追加 */
+}
+  
+.text-span {
+  margin: 0; /* マージンをリセット */
+}
+  
+.text-span h4 {
+  margin: 0; /* マージンをリセット */
+}
+  
+.text-span a {
+  color: inherit; /* リンクの色を親要素と同じに設定 */
+  text-decoration: none; /* 下線を削除 */
+}
+  
+.text-span a:hover {
+  text-decoration: underline; /* マウスオーバー時に下線を表示 */
+}
+  
+.text-container {
+  margin: 0; /* マージンをリセット */
+}
+  
+.course-area {
+  margin-left: 20px
+}
+  
+.user-container {
+  margin-top: 10px;
+  display: flex;
+}
+  
+.profile-link img {
+  object-fit: cover; /* 画像のアスペクト比を保持したまま親要素にフィットさせる */
+  width: 25px; /* 幅を100%に設定 */
+  height: 25px; /* 高さを固定値に設定 */
+  border-radius: 50%;
+  margin-right: 10px;
+}
+  
+  
+  
+  

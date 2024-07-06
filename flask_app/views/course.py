@@ -55,17 +55,23 @@ def course_list():
             for facility_id in facility_ids:
                 query = query.filter(Course.facilities.any(Facility.id == facility_id))
 
-        courses = query.all()
+        courses = query.filter_by(is_public=True).all()
         
         return render_template("course_list.html", form=form, courses=courses)
 
-    courses = query.all()
+    courses = query.filter_by(is_public=True).all()
     return render_template("course_list.html", form=form, courses=courses)
 
 @courses.route("/<course_id>", methods=["GET"])
 def course_detail(course_id):
     course = Course.query.filter_by(id=course_id).first()
-    return render_template("course_detail.html", course=course)
+    if course:
+        if course.is_public or (current_user.is_authenticated and current_user.id == course.user_id):
+            return render_template("course_detail.html", course=course)
+        else:
+            return "このコースは非公開です"
+    else:
+        return "このコースは存在しません。"
 
 
 @courses.route("/new", methods=["GET", "POST"])
@@ -82,7 +88,6 @@ def new():
         city_id = form.city.data
         facilities = form.facilities.data
 
-        # ポストの作成
         new_course = Course(title=title, 
                             description=description,
                             route=route,

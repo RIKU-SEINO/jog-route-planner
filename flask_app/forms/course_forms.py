@@ -53,7 +53,10 @@ class CreateCourseForm(FlaskForm):
         widget=widgets.ListWidget(prefix_label=False),
         option_widget=widgets.CheckboxInput()
     )
-    submit = SubmitField("検索")
+    submit = SubmitField("保存")
+
+class EditCourseForm(CreateCourseForm):
+    is_public = BooleanField('このコースを公開する', default=False)
 
 class SearchCourseForm(CreateCourseForm):
     freeword = StringField(
