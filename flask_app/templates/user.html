@@ -20,7 +20,7 @@
             </div>
         </div>
         {% if current_user.is_authenticated and current_user.id == user.id%}
-            <button onclick="location.href='/settings'" class="btn btn-outline-dark btn-sm" id="profile-edit">プロフィールを編集する</button>
+            <a href="{{ url_for('profile.settings', user_id=user.id) }}" class="btn btn-outline-dark btn-sm" id="profile-edit">プロフィールを編集する</a>
         {% endif %}
     </div>
     <div class="my-courses-container">

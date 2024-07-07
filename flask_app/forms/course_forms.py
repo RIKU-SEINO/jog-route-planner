@@ -1,11 +1,5 @@
 from flask_app.forms import *
 
-def prefecture_query():
-    return Prefecture.query
-
-def facility_query():
-    return Facility.query
-
 class CreateCourseForm(FlaskForm):
     route_latlng = StringField(
         "経路の緯度経度情報",

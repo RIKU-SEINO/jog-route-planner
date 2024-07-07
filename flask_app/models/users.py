@@ -6,8 +6,9 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, index=True)
     email = db.Column(db.String, index=True, unique=True)
     password_hashed = db.Column(db.String)
-    address = db.Column(db.String(50))
-    bio = db.Column(db.String)
+    address = db.Column(db.String(10))
+    bio = db.Column(db.String(100))
+    profile_picture_filename = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 

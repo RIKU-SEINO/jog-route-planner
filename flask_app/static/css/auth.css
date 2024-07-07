@@ -4,24 +4,29 @@
   margin-top: 70px;
 }
 
-.username-area, .email-area, .password-area, .profile_image-area, .login-btn-container, .signup-btn-container {
-  padding: 10px;
+.username-area, .email-area, .password-area, .bio-area, .address-area, .login-btn-container, .signup-btn-container {
+  padding: 20px;
 }
 
-.username-input-label, .email-input-label, .password-input-label, .profile_image-input-label {
+.username-input-label, .email-input-label, .password-input-label, .bio-input-label, .address-input-label {
   padding-bottom: 10px
 }
 
-input {
+input, .bio-input, .address-input {
   width: 500px;
   height: 40px;
   border-radius: 10px;
   border: 1.5px solid rgb(177, 177, 177);
 }
 
-input:focus {
+input:focus, .bio-input:focus {
   border: 1.5px solid rgb(0, 162, 250);
   outline: none;
+}
+
+.bio-input {
+  height: 100px;
+  resize: none;
 }
 
 #submit-login, #submit-signup {

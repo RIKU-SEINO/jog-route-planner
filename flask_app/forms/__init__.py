@@ -5,3 +5,9 @@ from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from flask_app.models.address import Prefecture
 from flask_app.models.facilities import Facility
 import re
+
+def prefecture_query():
+    return Prefecture.query
+
+def facility_query():
+    return Facility.query

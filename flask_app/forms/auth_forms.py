@@ -46,3 +46,46 @@ class LoginForm(FlaskForm):
         ],
     )
     submit = SubmitField("ログイン")
+
+class EditUserForm(SignUpForm):
+    username = StringField(
+        "変更後のユーザー名",
+        validators=[
+            DataRequired("ユーザー名は必須です。"),
+            Length(1, 30, "30文字以内で入力してください。")
+        ],
+    )
+    email = StringField(
+        "変更後のメールアドレス",
+        validators=[
+            DataRequired("メールアドレスは必須です。"),
+            Email("メールアドレスの形式で入力してください。")
+        ],
+    )
+    password = PasswordField(
+        "変更後のパスワード",
+        validators=[
+            DataRequired("パスワードは必須です。"),
+
+        ],
+    )
+    bio = TextAreaField(
+        "あなたの紹介文",
+        validators=[
+            Length(0, 100, "100文字以内で入力してください。")
+        ]
+    )
+    address =  QuerySelectField(
+        "お住まいの地域",
+        query_factory=prefecture_query,
+        get_label='name',
+    )
+    profile_image = FileField(
+        'プロフィール画像',
+        validators=[
+            Length(max=255, message='ファイル名は255文字以下で入力してください。')
+        ]
+        
+    )
+    submit = SubmitField("更新")
+

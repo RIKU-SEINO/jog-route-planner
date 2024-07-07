@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}プロフィール変更 - {{ super() }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}" />
+<script>
+  $(document).ready(function() {
+    $('#address').prepend('<option value="" selected>設定なし</option>');
+});
+</script>
+{% endblock %}
+{% block content %}
+<div class="email-signup-container">
+    <form class="email-signup-form" action="{{ url_for('profile.settings', next=request.args.get('next'), user_id=current_user.id) }}" method="POST" enctype="multipart/form-data">
+        {% for message in get_flashed_messages() %}
+        <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+        <div class="title" style="text-align: center; font-size: 25px;">プロフィール変更フォーム</div>
+        {{ form.hidden_tag() }}
+        <div class="username-area">
+            {{ form.username.label(class="username-input-label") }}
+            <div class="username-input-area">
+                {{ form.username(class="username-input") }}
+            </div>
+            <div class="username-error-area" style="color: red">
+                {% for error in form.username.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="email-area">
+            {{ form.email.label(class="email-input-label") }}
+            <div class="email-input-area">
+                {{ form.email(class="email-input") }}
+            </div>
+            <div class="email-error-area" style="color: red">
+                {% for error in form.email.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="password-area">
+            {{ form.password.label(class="password-input-label") }}
+            <div class="password">
+                {{ form.password(class="password-input") }}
+            </div>
+            <div class="password-error-area" style="color: red">
+                {% for error in form.password.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="bio-area">
+          {{ form.bio.label(class="bio-input-label") }}
+          <div class="bio">
+              {{ form.bio(class="bio-input") }}
+          </div>
+          <div class="bio-error-area" style="color: red">
+              {% for error in form.bio.errors %}
+              <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+              {% endfor %}
+          </div>
+        </div>
+        <div class="address-area">
+          {{ form.address.label(class="address-input-label") }}
+          <div class="address">
+              {{ form.address(class="address-input") }}
+          </div>
+          <div class="address-error-area" style="color: red">
+              {% for error in form.address.errors %}
+              <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+              {% endfor %}
+          </div>
+        </div>
+        <div class="signup-btn-container">
+          {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-signup") }}
+      </div>
+    </form>
+</div>
+{% endblock %}
+</html>

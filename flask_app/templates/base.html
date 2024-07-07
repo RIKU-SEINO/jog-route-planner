@@ -62,7 +62,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="/settings"><i class="fa-solid fa-gear"></i>&nbsp;プロフィール編集</a>
+                                    <a href="{{ url_for('profile.settings', user_id=current_user.id) }}"><i class="fa-solid fa-gear"></i>&nbsp;プロフィール編集</a>
                                 </td>
                             </tr>
                             <tr>
