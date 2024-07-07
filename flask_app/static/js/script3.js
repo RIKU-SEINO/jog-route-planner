@@ -53,3 +53,44 @@ function fetchRoute(routeLatLng, wayPointIndices, map) {
         }
     }
 }
+
+function handleDownload() {
+    let routeFilename = document.getElementById("download").getAttribute("download");
+    let routeLatLng = JSON.parse(document.getElementById('course-info-route').getAttribute('data-course'));
+
+    let content = generateRouteKML(routeLatLng);
+    let blob = new Blob([ content ], {type: 'application/vnd.google-earth.kml+xml'});
+
+    if (window.navigator.msSaveBlob) { 
+        window.navigator.msSaveBlob(blob, routeFilename); 
+
+        // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+        window.navigator.msSaveOrOpenBlob(blob, routeFilename); 
+    } else {
+        document.getElementById("download").href = window.URL.createObjectURL(blob);
+    }
+}
+
+function generateRouteKML(routeLatLng) {
+    var kmlString = '<?xml version="1.0" encoding="UTF-8"?>';
+    kmlString += '<kml xmlns="http://www.opengis.net/kml/2.2">';
+    kmlString += '<Document>';
+    kmlString += '<name>Route.kml</name>';
+    kmlString += '<Placemark>';
+    kmlString += '<name>Route</name>';
+    kmlString += '<LineString>';
+    kmlString += '<coordinates>';
+
+    // 緯度経度データをKMLに追加
+    routeLatLng.forEach(function(point) {
+        kmlString += point.lng + ',' + point.lat + ' ';
+    });
+
+    kmlString += '</coordinates>';
+    kmlString += '</LineString>';
+    kmlString += '</Placemark>';
+    kmlString += '</Document>';
+    kmlString += '</kml>';
+
+    return kmlString;
+} 
