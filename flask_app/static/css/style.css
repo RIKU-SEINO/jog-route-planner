@@ -198,3 +198,20 @@ nav a:hover {
     transition: border-bottom 0.3s ease;
     border-bottom: 2px solid rgba(72, 75, 76, 0.738);
 }
+
+/* flash メッセージ */
+.flash-message.success {
+    position: fixed; /* 画面固定位置 */
+    top: 0; /* 画面上部に配置 */
+    left: 50%; /* 中央揃えのために左端を50%に設定 */
+    transform: translateX(-50%); /* 中央揃え */
+    background-color: #b3edb5; /* 緑色の背景 */
+    color: rgb(0, 0, 0);
+    padding: 15px;
+    margin-top: 20px;
+    text-align: center;
+    width: 80%; /* 画面幅の80%に設定 */
+    border-radius: 10px;
+    z-index: 1000; /* メッセージが他の要素の上に表示されるように */
+}
+

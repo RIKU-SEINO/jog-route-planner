@@ -101,3 +101,4 @@ class SearchCourseForm(CreateCourseForm):
             (50, '50km'),
         ]
     )
+    submit = SubmitField("検索")

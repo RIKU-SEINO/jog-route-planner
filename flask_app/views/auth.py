@@ -35,6 +35,7 @@ def login():
             next_ = request.args.get('next')
             if next_ is None or not next_.startswith("/"):
                 next_ = url_for("profile.index", userid=user.id)
+            flash('ログインに成功しました。', 'success')
             return redirect(next_)
         else:
             flash("メールアドレスまたはパスワードが違います。")
@@ -67,6 +68,7 @@ def signup():
         next_ = request.args.get('next')
         if next_ is None or not next_.startswith("/"):
             next_ = url_for("profile.index", userid=user.id)
+        flash('新規登録に成功しました。', 'success')
         return redirect(next_)
     
     else:

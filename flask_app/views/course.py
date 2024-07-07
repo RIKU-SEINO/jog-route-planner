@@ -1,5 +1,5 @@
 from flask_app import db
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, request
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, request, flash
 from sqlalchemy import or_
 from flask_login import login_required, current_user
 from flask_app.models.facilities import Facility
@@ -94,6 +94,10 @@ def edit(course_id):
 
                 db.session.commit()
 
+                if form.is_public.data:
+                    flash('コースを公開して保存しました。', 'success')
+                else:
+                    flash('コースを非公開で保存しました。', 'success')
                 return redirect(url_for("courses.course_detail", course_id=course_id))
 
             return render_template("course_edit.html", form=form, course_dict=course_dict)
@@ -139,6 +143,7 @@ def new():
         db.session.add(new_course)
         db.session.commit()
 
+        flash('コースを非公開で保存しました。', 'success')
         new_course_dict = course_to_dict(new_course)
 
         return render_template("course_detail.html",course_dict=new_course_dict)

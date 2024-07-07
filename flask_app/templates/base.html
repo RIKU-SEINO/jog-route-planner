@@ -11,9 +11,26 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var message = document.querySelector('.flash-message.success');
+            if (message) {
+                setTimeout(function() {
+                    message.style.display = 'none';
+                }, 3000); // 3秒後にメッセージを非表示にする
+            }
+        });
+    </script>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-message success">
+            {{ messages[0] }} <!-- メッセージの内容 -->
+        </div>
+    {% endif %}
+    {% endwith %}
     <header>
         <div class="header-container">
             <a href="/">
