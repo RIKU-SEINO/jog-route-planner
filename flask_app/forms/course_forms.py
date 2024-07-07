@@ -66,6 +66,11 @@ class SearchCourseForm(CreateCourseForm):
     freeword = StringField(
         "フリーワード"
     )
+    prefecture = QuerySelectField(
+        "都道府県",
+        query_factory=prefecture_query,
+        get_label='name',
+    )
     distance_min = SelectField(
         "最小距離",
         choices=[

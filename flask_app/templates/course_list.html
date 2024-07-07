@@ -2,6 +2,11 @@
 {% block title %}Home - {{ super() }}{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/course_list.css') }}">
+<script>
+  $(document).ready(function() {
+    $('#prefecture').prepend('<option value="" selected>選択してください</option>');
+});
+</script>
 {% endblock %}
 {% block content %}
     
