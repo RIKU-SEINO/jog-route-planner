@@ -58,7 +58,6 @@ def course_list():
 
         courses = query.filter_by(is_public=True).all()
         
-        return render_template("course_list.html", form=form, courses=courses)
     if current_user.is_authenticated:
         courses = query.filter(or_(Course.is_public == True, Course.user_id == current_user.id)).all()
     else:
