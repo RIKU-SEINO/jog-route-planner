@@ -52,7 +52,7 @@
                 </a>
                 {% else %}
                 <div class="profile-btn">
-                    <img class="profile-icon" src="{{ url_for('static', filename='images/user-icon/default-user.png') }}" alt="Profile Image">
+                    <img class="profile-icon" src="{{ url_for('static', filename='images/user-icon/'+current_user.profile_image) }}" alt="Profile Image">
                     <div id="user-setting" class="user-menu__popup">
                         <table class="user-menu_panel__popup">
                             <tr>

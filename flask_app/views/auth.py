@@ -3,13 +3,6 @@ from flask import Blueprint, render_template, request, redirect, session, url_fo
 from flask_app.models.users import User
 from flask_app.forms.auth_forms import SignUpForm, LoginForm
 from flask_login import login_user, logout_user, current_user
-from werkzeug.utils import secure_filename
-import os
-import uuid
-
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-UPLOAD_FOLDER = os.path.join('flask_app', 'static', 'profile-image')
-
 
 auth = Blueprint(
     'auth',
@@ -18,9 +11,6 @@ auth = Blueprint(
     template_folder='templates',
     url_prefix='/auth',
 )
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @auth.route("/login", methods=["GET","POST"])
 def login():
@@ -55,7 +45,7 @@ def signup():
             email = email,
             password = password,
             bio = "",
-            address = "設定なし",
+            address = "設定なし"
         )
         if user.is_duplicated_email():
             flash("そのメールアドレスはすでにご登録いただいております。")

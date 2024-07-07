@@ -6,9 +6,25 @@
 {% block content %}
 <div class="profile-wrapper">
     <div class="profile-container">
-        <div class="public-profile-image-container">
-            <img class="public-profile-image" alt="Profile Image" src="{{ url_for('static', filename='images/user-icon/default-user.png') }}">
-        </div>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="public-profile-image-container">
+                <img class="public-profile-image" 
+                     alt="Profile Image"
+                     src="{{ url_for('static', filename='images/user-icon/'+user.profile_image) }}" 
+                     {% if current_user.is_authenticated and user.id == current_user.id %}
+                     onclick="document.getElementById('profile_image').click()"
+                     onmouseover="this.style.transform = 'scale(1.05)'; this.style.cursor = 'pointer';"
+                     onmouseout="this.style.transform = 'scale(1)'; this.style.cursor = 'auto';"
+                     {% endif %}
+                >
+                {% if current_user.is_authenticated and user.id == current_user.id %}
+                {{ form.profile_image(id='profile_image', style='display: none;') }}
+                {% endif %}
+            </div>
+            <div>
+                <input type="submit" style="display: none;">
+            </div>
+        </form>
         <h3>{{ user.username }}</h3>
         <div class="profile-detail-container">
             <div class="profile-detail-item bio">
@@ -90,6 +106,10 @@
         </div>
     </div>
 </div>
-    
+<script>
+    document.getElementById('profile_image').addEventListener('change', function() {
+      this.form.submit();
+    });
+</script>
 {% endblock %}
 </html>

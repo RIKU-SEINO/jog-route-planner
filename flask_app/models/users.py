@@ -8,7 +8,7 @@ class User(db.Model, UserMixin):
     password_hashed = db.Column(db.String)
     address = db.Column(db.String(10))
     bio = db.Column(db.String(100))
-    profile_picture_filename = db.Column(db.String(255))
+    profile_image = db.Column(db.String(255), default='default-user.png')
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 

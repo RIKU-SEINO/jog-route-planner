@@ -1,9 +1,19 @@
 from flask_app import db
+from flask_app.config import Config
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flask_app.models.users import User
 from flask_app.models.courses import Course
 from flask_app.forms.auth_forms import EditUserForm
+from werkzeug.utils import secure_filename
+import os
+
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+UPLOAD_FOLDER = os.path.join('flask_app', 'static', 'profile-image')
 
 profile = Blueprint(
     'profile',
@@ -17,11 +27,25 @@ profile = Blueprint(
 def index(userid):
     user = User.query.filter_by(id=userid).first()
     if user:
+        form = EditUserForm()
         if current_user.is_authenticated and str(current_user.id) == str(userid):
             courses = Course.query.filter_by(user_id=userid).all()
+            if request.method == "POST":
+                filename = secure_filename(form.profile_image.data.filename)
+                if allowed_file(filename):
+                    form.profile_image.data.save(os.path.join(Config.USER_PROFILE_IMAGE_UPLOAD_FOLDER, filename))
+                    user.profile_image = filename
+                    db.session.commit()
+
+                    flash("プロフィール画像を変更しました。")
+                    return redirect(url_for('profile.index', userid=current_user.id))
+                else:
+                    flash("jpg, jpeg, png以外のファイルは対応しておりません。", "success")
+                    return redirect(url_for('profile.index', userid=current_user.id))
+
         else:
             courses = Course.query.filter_by(user_id=user.id, is_public=True).all()
-        return render_template("user.html", user=user, courses=courses)
+        return render_template("user.html", user=user, courses=courses, form=form)
     else:
         return "ユーザーは存在しません"
     

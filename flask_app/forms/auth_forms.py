@@ -83,7 +83,8 @@ class EditUserForm(SignUpForm):
     profile_image = FileField(
         'プロフィール画像',
         validators=[
-            Length(max=255, message='ファイル名は255文字以下で入力してください。')
+            Length(max=255, message='ファイル名は255文字以下で入力してください。'),
+            FileAllowed(['jpg', 'jpeg', 'png'], "jpgn jpeg, pngのみサポートしております。")
         ]
         
     )

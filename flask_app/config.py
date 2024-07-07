@@ -10,3 +10,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS")
     WTF_CSRF_SECRET_KEY = secrets.token_hex(16)
     TEMPLATES_AUTO_RELOAD = True
+    USER_PROFILE_IMAGE_UPLOAD_FOLDER = "flask_app/static/images/user-icon"
