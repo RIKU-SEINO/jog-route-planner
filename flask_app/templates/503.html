@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}503エラー - {{ super() }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="content">
+      <h2>502 - Service Unavailable</h2>
+      <p>Share Jogのサービスが一時的に利用できません。時間を置いてから再度アクセスしてください。</p>
+      <a href="/" class="button">ホームに戻る</a>
+  </div>
+</div>
+{% endblock %}
+</html>

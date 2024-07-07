@@ -67,44 +67,38 @@ def course_list():
 @courses.route("/<course_id>", methods=["GET"])
 def course_detail(course_id):
     course = Course.query.filter_by(id=course_id).first()
-    if course:
-        if course.is_public or (current_user.is_authenticated and current_user.id == course.user_id):
-            course_dict = course_to_dict(course)
-            return render_template("course_detail.html", course_dict=course_dict)
-        else:
-            return "このコースは非公開です。"
+    if course and (course.is_public or (current_user.is_authenticated and current_user.id == course.user_id)):
+        course_dict = course_to_dict(course)
+        return render_template("course_detail.html", course_dict=course_dict)
     else:
-        return "このコースは存在しません。"
+        return render_template("404.html")
 
 @courses.route("/<course_id>/edit", methods=["GET", "POST"])
 def edit(course_id):
     course = Course.query.filter_by(id=course_id).first()
-    if course:
-        if current_user.is_authenticated and current_user.id == course.user_id:
-            form = EditCourseForm(obj=course)
-            course_dict = course_to_dict(course)
-            if request.method == "POST":
-                course.title = form.title.data
-                course.description = form.description.data
-                course.distance = form.distance.data
-                course.prefecture_id = form.prefecture.data.id
-                course.city_id = form.city.data
-                course.facilities = [facility for facility in form.facilities.data]
-                course.is_public = form.is_public.data
+    if course and (current_user.is_authenticated and current_user.id == course.user_id):
+        form = EditCourseForm(obj=course)
+        course_dict = course_to_dict(course)
+        if request.method == "POST":
+            course.title = form.title.data
+            course.description = form.description.data
+            course.distance = form.distance.data
+            course.prefecture_id = form.prefecture.data.id
+            course.city_id = form.city.data
+            course.facilities = [facility for facility in form.facilities.data]
+            course.is_public = form.is_public.data
 
-                db.session.commit()
+            db.session.commit()
 
-                if form.is_public.data:
-                    flash('コースを公開して保存しました。', 'success')
-                else:
-                    flash('コースを非公開で保存しました。', 'success')
-                return redirect(url_for("courses.course_detail", course_id=course_id))
+            if form.is_public.data:
+                flash('コースを公開して保存しました。', 'success')
+            else:
+                flash('コースを非公開で保存しました。', 'success')
+            return redirect(url_for("courses.course_detail", course_id=course_id))
 
-            return render_template("course_edit.html", form=form, course_dict=course_dict)
-        else:
-            return "このコースの編集権限がありません"
+        return render_template("course_edit.html", form=form, course_dict=course_dict)
     else:
-        return "このコースは存在しません。"
+        return render_template("404.html")
 
 
 

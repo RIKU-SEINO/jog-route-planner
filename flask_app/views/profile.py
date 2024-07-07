@@ -47,33 +47,31 @@ def index(userid):
             courses = Course.query.filter_by(user_id=user.id, is_public=True).all()
         return render_template("user.html", user=user, courses=courses, form=form)
     else:
-        return "ユーザーは存在しません"
+        return render_template("404.html")
     
 @profile.route("/<user_id>/edit", methods=["GET","POST"])
 def settings(user_id):
     user = User.query.filter_by(id=user_id).first()
-    if user:
-        if current_user.is_authenticated and str(current_user.id) == str(user_id):
-            form = EditUserForm(obj=user)
-            if request.method == "POST":
-                user.username = form.username.data
-                previous_email = user.email
-                user.email = form.email.data
-                user.password = form.password.data
-                user.bio = form.bio.data
-                if form.address.data:
-                    user.address = form.address.data.name
-                else:
-                    user.address = "設定なし"
-                if user.is_duplicated_email() and user.email != previous_email:
-                    flash("そのメールアドレスはすでにご登録いただいております。", "failure")
-                    return redirect(url_for('profile.settings', user_id=current_user.id))
-                
-                db.session.commit()
-                flash("プロフィールの変更が完了しました。","success")
-                return redirect(url_for('profile.index', userid=current_user.id))
+    if user and (current_user.is_authenticated and str(current_user.id) == str(user_id)):
+        form = EditUserForm(obj=user)
+        if request.method == "POST":
+            user.username = form.username.data
+            previous_email = user.email
+            user.email = form.email.data
+            user.password = form.password.data
+            user.bio = form.bio.data
+            if form.address.data:
+                user.address = form.address.data.name
+            else:
+                user.address = "設定なし"
+            if user.is_duplicated_email() and user.email != previous_email:
+                flash("そのメールアドレスはすでにご登録いただいております。", "failure")
+                return redirect(url_for('profile.settings', user_id=current_user.id))
             
-            return render_template('user_edit.html',form=form)
-        return "このユーザーの編集権限はありません。"
+            db.session.commit()
+            flash("プロフィールの変更が完了しました。","success")
+            return redirect(url_for('profile.index', userid=current_user.id))
+        
+        return render_template('user_edit.html',form=form)
     else:
-        return "ユーザーは存在しません"
+        return render_template("404.html")

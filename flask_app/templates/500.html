@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}500エラー - {{ super() }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="content">
+      <h2>500 - Server Error</h2>
+      <p>Share Jog内で問題が発生しました。管理者にお問い合わせください。</p>
+      <a href="/" class="button">ホームに戻る</a>
+  </div>
+</div>
+{% endblock %}
+</html>

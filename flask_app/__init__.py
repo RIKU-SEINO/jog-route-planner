@@ -1,5 +1,5 @@
 from flask_app.config import Config
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -15,6 +15,28 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = secrets.token_hex(16)
     app.config.from_object(Config)
+
+    @app.errorhandler(400)
+    def error_400(error):
+        return render_template('400.html')
+    
+    @app.errorhandler(404)
+    def error_404(error):
+        return render_template('404.html')
+
+    @app.errorhandler(500)
+    def error_500(error):
+        return render_template('500.html')
+    
+    @app.errorhandler(502)
+    def error_502(error):
+        return render_template('502.html')
+
+    @app.errorhandler(503)
+    def error_503(error):
+        return render_template('503.html')
+    
+    
 
     db.init_app(app)
     Migrate(app, db)
