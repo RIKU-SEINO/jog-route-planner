@@ -199,19 +199,48 @@ nav a:hover {
     border-bottom: 2px solid rgba(72, 75, 76, 0.738);
 }
 
-/* flash メッセージ */
-.flash-message.success {
-    position: fixed; /* 画面固定位置 */
+/* flash メッセージ *//* Container for the flash message */
+/* Common styles for the flash message */
+.flash-message {
+    position: fixed;
+    display: flex;
+    align-items: center; /* 中央揃え */
+    justify-content: center; /* 中央揃え */
     top: 0; /* 画面上部に配置 */
     left: 50%; /* 中央揃えのために左端を50%に設定 */
     transform: translateX(-50%); /* 中央揃え */
-    background-color: #b3edb5; /* 緑色の背景 */
-    color: rgb(0, 0, 0);
-    padding: 15px;
-    margin-top: 20px;
-    text-align: center;
-    width: 80%; /* 画面幅の80%に設定 */
-    border-radius: 10px;
-    z-index: 1000; /* メッセージが他の要素の上に表示されるように */
+    border: 1px solid; /* Border to be customized per type */
+    border-radius: 10px; /* Adjust as needed */
+    font-family: 'Arial', sans-serif;
+    max-width: 300px; /* Adjust as needed */
+    margin: 20px 0; /* Margin around the message */
+    padding: 10px 20px; /* Padding to adjust spacing */
+    z-index: 1000;
 }
 
+/* Success message styles */
+.flash-message.success {
+    background-color: #E6FFEB; /* Light green background */
+    border-color: #D4EDDA; /* Green border */
+    color: #155724; /* Dark green text */
+}
+
+/* Failure message styles */
+.flash-message.failure {
+    background-color: #F8D7DA; /* Light red background */
+    border-color: #F5C6CB; /* Red border */
+    color: #721C24; /* Dark red text */
+}
+
+/* Checkmark icon */
+.flash-message .icon {
+    margin-right: 10px;
+    font-size: 20px; /* Adjust icon size as needed */
+}
+
+/* Text within the flash message */
+.flash-message .message {
+    flex-grow: 1;
+    display: flex;
+    align-items: center; /* 中央揃え */
+}

@@ -37,10 +37,10 @@ def index(userid):
                     user.profile_image = filename
                     db.session.commit()
 
-                    flash("プロフィール画像を変更しました。")
+                    flash("プロフィール画像を変更しました。", "success")
                     return redirect(url_for('profile.index', userid=current_user.id))
                 else:
-                    flash("jpg, jpeg, png以外のファイルは対応しておりません。", "success")
+                    flash("jpg, jpeg, png以外のファイルは対応しておりません。", "failure")
                     return redirect(url_for('profile.index', userid=current_user.id))
 
         else:
@@ -66,7 +66,7 @@ def settings(user_id):
                 else:
                     user.address = "設定なし"
                 if user.is_duplicated_email() and user.email != previous_email:
-                    flash("そのメールアドレスはすでにご登録いただいております。")
+                    flash("そのメールアドレスはすでにご登録いただいております。", "failure")
                     return redirect(url_for('profile.settings', user_id=current_user.id))
                 
                 db.session.commit()

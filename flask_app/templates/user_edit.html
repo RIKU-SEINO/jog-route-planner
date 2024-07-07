@@ -11,9 +11,6 @@
 {% block content %}
 <div class="email-signup-container">
     <form class="email-signup-form" action="{{ url_for('profile.settings', next=request.args.get('next'), user_id=current_user.id) }}" method="POST" enctype="multipart/form-data">
-        {% for message in get_flashed_messages() %}
-        <p style="color: red;">{{ message }}</p>
-        {% endfor %}
         <div class="title" style="text-align: center; font-size: 25px;">プロフィール変更フォーム</div>
         {{ form.hidden_tag() }}
         <div class="username-area">

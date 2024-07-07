@@ -28,7 +28,7 @@ def login():
             flash('ログインに成功しました。', 'success')
             return redirect(next_)
         else:
-            flash("メールアドレスまたはパスワードが違います。")
+            flash("メールアドレスまたはパスワードが違います。", 'failure')
     return render_template("login.html", form=form)
 
 @auth.route("/signup", methods=["GET","POST"])
@@ -48,7 +48,7 @@ def signup():
             address = "設定なし"
         )
         if user.is_duplicated_email():
-            flash("そのメールアドレスはすでにご登録いただいております。")
+            flash("そのメールアドレスはすでにご登録いただいております。", 'failure')
             return redirect(url_for('auth.signup'))
         
         db.session.add(user)

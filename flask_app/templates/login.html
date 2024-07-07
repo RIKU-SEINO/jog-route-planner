@@ -6,9 +6,6 @@
 {% block content %}
 <div class="email-login-container">
     <form class="email-login-form" action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST" novalidate="novalidate">
-        {% for message in get_flashed_messages() %}
-        <p style="color: red;">{{ message }}</p>
-        {% endfor %}
         <div class="title" style="text-align: center; font-size: 25px;">ログイン</div>
         {{ form.hidden_tag() }}
         <div class="email-area">
