@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Home - {{ super() }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/course_new.css') }}" />
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+	crossorigin=""></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/script3.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="course-create-container">
+    <div id="course-info-route" data-course="{{ course_dict.route }}" type="hidden"></div>
+    <div id="course-info-waypoint_indices" data-course="{{ course_dict.waypoint_indices }}" type="hidden"></div>
+    <div id="course-info-prefecture" data-course="{{ course_dict.prefecture_id }}" type="hidden"></div>
+    <div id="course-info-city" data-course="{{ course_dict.city_id }}" type="hidden"></div>
+    
+    <form class="course-create-form" action="{{ url_for('courses.edit', next=request.args.get('next'), course_id=course_dict.id)}}" method="POST" enctype="multipart/form-data">
+        {% for message in get_flashed_messages() %}
+        <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+        <div class="title" style="text-align: center; font-size: 25px;">コース編集フォーム</div>
+        <div id="map-area">
+            <label class="map-label"></label>
+            <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
+        </div>
+        {{ form.hidden_tag() }}
+        <input type="hidden" name="route_latlng" id="route_latlng">
+        <input type="hidden" name="waypoint_indices" id="waypoint_indices">
+        <div class="title-area">
+            {{ form.title.label(class="title-input-label") }}
+            <div class="title-input-area">
+                {{ form.title(class="title-input") }}
+            </div>
+            <div class="title-error-area" style="color: red">
+                {% for error in form.title.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="description-area">
+            {{ form.description.label(class="description-input-label") }}
+            <div class="description-input-area">
+                {{ form.description(class="description-input") }}
+            </div>
+            <div class="description-error-area" style="color: red">
+                {% for error in form.description.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="distance-area">
+            {{ form.distance.label(class="distance-input-label") }}
+            <div class="distance-input-area">
+                {{ form.distance(class="distance-input") }}
+            </div>
+            <div class="distance-error-area" style="color: red">
+                {% for error in form.distance.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="prefecture-area">
+            {{ form.prefecture.label(class="prefecture-input-label") }}
+            <div class="prefecture-input-area">
+                {{ form.prefecture(class="prefecture-input", id="prefecture") }}
+            </div>
+            <div class="prefecture-error-area" style="color: red">
+                {% for error in form.prefecture.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="city-area">
+            {{ form.city.label(class="city-input-label") }}
+            <div class="city-input-area">
+                {{ form.city(class="city-input", id="city") }}
+            </div>
+            <div class="city-error-area" style="color: red">
+                {% for error in form.city.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="facilities-area">
+            {{ form.facilities.label(class="facilities-input-label") }}
+            <div class="facilities-input-area">
+                {% for facility in form.facilities %}
+                <div>{{ facility }} {{ facility.label }}</div>
+                {% endfor %}
+            </div>
+            <div class="facilities-error-area" style="color: red">
+                {% for error in form.facilities.errors %}
+                <i class="fa-solid fa-circle-exclamation">&nbsp;{{ error }}</i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="is_public-area">
+          {{ form.is_public() }}
+          {{ form.is_public.label }}
+        </div>
+        <div class="submit-btn-container">
+            {{ form.submit(class="btn btn-outline-dark btn-sm", id="submit-create") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+</html>

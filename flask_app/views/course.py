@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from flask_app.models.facilities import Facility
 from flask_app.models.courses import Course
 from flask_app.models.address import Prefecture, City
-from flask_app.forms.course_forms import CreateCourseForm, SearchCourseForm
+from flask_app.forms.course_forms import CreateCourseForm, SearchCourseForm, EditCourseForm
 
 courses = Blueprint(
     'courses',
@@ -72,9 +72,38 @@ def course_detail(course_id):
             course_dict = course_to_dict(course)
             return render_template("course_detail.html", course_dict=course_dict)
         else:
-            return "このコースは非公開です"
+            return "このコースは非公開です。"
     else:
         return "このコースは存在しません。"
+
+@courses.route("/<course_id>/edit", methods=["GET", "POST"])
+def edit(course_id):
+    course = Course.query.filter_by(id=course_id).first()
+    if course:
+        if current_user.is_authenticated and current_user.id == course.user_id:
+            form = EditCourseForm(obj=course)
+            course_dict = course_to_dict(course)
+            if request.method == "POST":
+                course.title = form.title.data
+                course.description = form.description.data
+                course.distance = form.distance.data
+                course.prefecture_id = form.prefecture.data.id
+                course.city_id = form.city.data
+                course.facilities = [facility for facility in form.facilities.data]
+                course.is_public = form.is_public.data
+
+                db.session.commit()
+
+                return redirect(url_for("courses.course_detail", course_id=course_id))
+
+            return render_template("course_edit.html", form=form, course_dict=course_dict)
+        else:
+            return "このコースの編集権限がありません"
+    else:
+        return "このコースは存在しません。"
+
+
+
 
 
 @courses.route("/new", methods=["GET", "POST"])
@@ -121,8 +150,10 @@ def course_to_dict(course):
     city = course.city
     if city:
         city_name = city.name
+        city_id = city.id
     else:
         city_name = ""
+        city_id = ""
     return {
         'id': course.id,
         'title':course.title,
@@ -130,9 +161,12 @@ def course_to_dict(course):
         'distance': course.distance,
         'route': course.route,
         'waypoint_indices': course.waypoint_indices,
+        'prefecture_id': course.prefecture.id,
         'prefecture_name': course.prefecture.name,
+        'city_id': city_id,
         'city_name': city_name,
-        'facilities': [{'id': facility.id, 'name': facility.name} for facility in course.facilities]
+        'facilities': [{'id': facility.id, 'name': facility.name} for facility in course.facilities],
+        'user_id': course.user_id
     }
 
     

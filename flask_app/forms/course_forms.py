@@ -43,8 +43,6 @@ class CreateCourseForm(FlaskForm):
         "都道府県",
         query_factory=prefecture_query,
         get_label='name',
-        allow_blank=True,
-        blank_text="全ての都道府県",
         validators=[DataRequired("都道府県は必須です。")]
     )
     city = SelectField(
@@ -62,7 +60,7 @@ class CreateCourseForm(FlaskForm):
     submit = SubmitField("保存")
 
 class EditCourseForm(CreateCourseForm):
-    is_public = BooleanField('このコースを公開する', default=False)
+    is_public = BooleanField('このコースを公開して保存', default=False)
 
 class SearchCourseForm(CreateCourseForm):
     freeword = StringField(

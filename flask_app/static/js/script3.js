@@ -26,10 +26,35 @@ window.onload = function() {
   }).addTo(map);
   let routeLatLng = JSON.parse(document.getElementById('course-info-route').getAttribute('data-course'));
   let wayPointIndices = JSON.parse(document.getElementById('course-info-waypoint_indices').getAttribute('data-course'));
-
+  
+  $('#prefecture').prepend('<option value="" selected disabled>選択してください</option>');
   //ルート情報を取得
   fetchRoute(routeLatLng, wayPointIndices, map);
 };
+
+$(document).ready(function() {
+    $('#prefecture').change(function() {
+        var prefectureId = $(this).val();
+        if (prefectureId) {
+            $.ajax({
+                url: '/courses/get_cities',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ prefecture_id: prefectureId }),
+                success: function(data) {
+                    $('#city').empty();
+                    $('#city').append('<option value="">全域</option>');
+                    $.each(data, function(key, city) {
+                        $('#city').append('<option value="' + city.id + '">' + city.name + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#city').empty();
+            $('#city').append('<option value="">全域</option>');
+        }
+    });
+  });
 
 function fetchRoute(routeLatLng, wayPointIndices, map) {
     let routePolyline = L.polyline(routeLatLng, { color: 'red' })

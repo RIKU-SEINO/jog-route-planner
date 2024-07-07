@@ -17,6 +17,11 @@
   <div id="course-info-route" data-course="{{ course_dict.route }}" type="hidden"></div>
   <div id="course-info-waypoint_indices" data-course="{{ course_dict.waypoint_indices }}" type="hidden"></div>
   <div class="title" style="text-align: center; font-size: 25px;">{{ course_dict.title }}</div>
+  {% if current_user.is_authenticated and current_user.id == course_dict.user_id %}
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <a class="edit-page" href="/courses/{{ course_dict.id }}/edit" style="display: inline-block; color: rgb(0, 162, 255);">編集ページはこちらから</a>
+  </div>
+  {% endif %}
   <div id="map-area">
     <label class="map-label"></label>
     <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
