@@ -78,7 +78,7 @@
               <div class="user-container">
                 <span class="text-span">
                   <a data-rtui-link="next" href="/user/{{ course.user_id }}" class="profile-link">
-                    <img alt="user-icon" loading="lazy" decoding="async" data-nimg="fill" src="https://d3304ij6n73kfg.cloudfront.net/prod/thumb/course_main/24931/1000_500">
+                    <img alt="user-icon" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/user-icon/'+course.user.profile_image) }}">
                   </a>
                 </span>  
                 <span class="text-span">
