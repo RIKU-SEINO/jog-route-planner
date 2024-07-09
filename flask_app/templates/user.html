@@ -51,7 +51,7 @@
                 <article width="100%" direction="column" class="course-article">
                     <a data-rtui-link="next" href="/courses/{{ course.id }}" class="course-link-1">
                     <div direction="column" width="100%" class="course-image-container">
-                        <img alt="{{ course.title }}" loading="lazy" decoding="async" data-nimg="fill" src="https://d3304ij6n73kfg.cloudfront.net/prod/thumb/course_main/24931/1000_500">
+                        <img alt="{{ course.title }}" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course.course_images[0].course_image) }}">
                     </div>
                     </a>
                     <div direction="column" class="course-title">

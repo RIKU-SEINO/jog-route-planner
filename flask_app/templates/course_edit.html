@@ -24,6 +24,10 @@
         <p style="color: red;">{{ message }}</p>
         {% endfor %}
         <div class="title" style="text-align: center; font-size: 25px;">コース編集フォーム</div>
+        <div class="course-image-area">
+            <img alt="course-images" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course_dict.course_image[0].course_image) }}">
+            {{ form.course_images() }}
+        </div>
         <div id="map-area">
             <label class="map-label"></label>
             <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>

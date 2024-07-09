@@ -1,11 +1,19 @@
 from flask_app import db
+from flask_app.config import Config
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, request, flash
 from sqlalchemy import or_
 from flask_login import login_required, current_user
 from flask_app.models.facilities import Facility
-from flask_app.models.courses import Course
+from flask_app.models.courses import Course, CourseImage
 from flask_app.models.address import Prefecture, City
 from flask_app.forms.course_forms import CreateCourseForm, SearchCourseForm, EditCourseForm
+from werkzeug.utils import secure_filename
+import os
+
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 courses = Blueprint(
     'courses',
@@ -88,6 +96,27 @@ def edit(course_id):
             course.facilities = [facility for facility in form.facilities.data]
             course.is_public = form.is_public.data
 
+            # 既存の画像を削除
+            CourseImage.query.filter_by(course_id=course.id).delete()
+
+            # 新しい画像を追加
+            files_uploaded = False
+            for course_image in request.files.getlist('course_images'):
+                if course_image and allowed_file(course_image.filename):
+                    filename = secure_filename(course_image.filename)
+                    file_path = os.path.join(Config.COURSE_IMAGES_UPLOAD_FOLDER, filename)
+                    course_image.save(file_path)
+
+                    # 新しいCourseImageインスタンスを作成してコースに追加
+                    new_image = CourseImage(course_image=filename, course_id=course.id)
+                    db.session.add(new_image)
+                    files_uploaded = True
+
+            # 画像がアップロードされていない場合、デフォルト画像を追加
+            if not files_uploaded:
+                default_image = CourseImage(course_image='default-course.png', course_id=course.id)
+                db.session.add(default_image)
+
             db.session.commit()
 
             if form.is_public.data:
@@ -99,9 +128,6 @@ def edit(course_id):
         return render_template("course_edit.html", form=form, course_dict=course_dict)
     else:
         return render_template("404.html")
-
-
-
 
 
 @courses.route("/new", methods=["GET", "POST"])
@@ -117,7 +143,7 @@ def new():
         distance = form.distance.data
         prefecture = form.prefecture.data
         city_id = form.city.data
-        facilities = form.facilities.data
+        facilities = form.facilities.data  
 
         new_course = Course(title=title, 
                             description=description,
@@ -135,6 +161,10 @@ def new():
             new_course.facilities.append(facility)
 
         db.session.add(new_course)
+        db.session.commit()
+
+        default_image = CourseImage(course_image='default-course.png', course_id=new_course.id)
+        db.session.add(default_image)
         db.session.commit()
 
         flash('コースを非公開で保存しました。', 'success')
@@ -165,7 +195,8 @@ def course_to_dict(course):
         'city_id': city_id,
         'city_name': city_name,
         'facilities': [{'id': facility.id, 'name': facility.name} for facility in course.facilities],
-        'user_id': course.user_id
+        'user_id': course.user_id,
+        'course_image': course.course_images
     }
 
     

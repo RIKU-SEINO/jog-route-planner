@@ -55,6 +55,13 @@ class CreateCourseForm(FlaskForm):
 
 class EditCourseForm(CreateCourseForm):
     is_public = BooleanField('このコースを公開して保存', default=False)
+    course_images = FileField(
+        "コースの画像",
+        validators=[
+            Length(max=255, message='ファイル名は255文字以下で入力してください。'),
+            FileAllowed(['jpg', 'jpeg', 'png'], "jpgn jpeg, pngのみサポートしております。"),
+        ],render_kw={"multiple": True}
+    )
 
 class SearchCourseForm(CreateCourseForm):
     freeword = StringField(

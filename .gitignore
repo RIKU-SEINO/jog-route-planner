@@ -7,6 +7,9 @@ migrations
 flask_app/static/images/user-icon/*
 !flask_app/static/images/user-icon/default-user.png
 
+flask_app/static/images/course-images/*
+!flask_app/static/images/course-images/default-course.png
+
 # Environments
 .env
 venv/

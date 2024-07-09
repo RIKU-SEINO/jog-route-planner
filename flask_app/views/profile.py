@@ -13,8 +13,6 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-UPLOAD_FOLDER = os.path.join('flask_app', 'static', 'profile-image')
-
 profile = Blueprint(
     'profile',
     __name__,

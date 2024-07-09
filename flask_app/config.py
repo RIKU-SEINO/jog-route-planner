@@ -11,3 +11,4 @@ class Config:
     WTF_CSRF_SECRET_KEY = secrets.token_hex(16)
     TEMPLATES_AUTO_RELOAD = True
     USER_PROFILE_IMAGE_UPLOAD_FOLDER = "flask_app/static/images/user-icon"
+    COURSE_IMAGES_UPLOAD_FOLDER = "flask_app/static/images/course-images"

@@ -22,3 +22,10 @@ class Course(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('data_models_users.id'), nullable=False) 
     facilities = db.relationship('Facility', secondary=course_facility, lazy='subquery',
                                  backref=db.backref('courses', lazy=True))
+    course_images = db.relationship('CourseImage', backref='course', lazy=True)
+
+class CourseImage(db.Model):
+    __tablename__ = "data_models_courseimage"
+    id = db.Column(db.Integer, primary_key=True)
+    course_image = db.Column(db.String(255), default='default-course.png')
+    course_id = db.Column(db.Integer, db.ForeignKey('data_models_courses.id'), nullable=False)
