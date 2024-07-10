@@ -22,14 +22,29 @@
     <a class="edit-page" href="/courses/{{ course_dict.id }}/edit" style="display: inline-block; color: rgb(0, 162, 255);">編集ページはこちらから</a>
   </div>
   {% endif %}
-  <div class="course-image-area">
-    <img alt="course-images" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course_dict.course_image[0].course_image) }}">
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    {% for image in course_dict.course_image %}
+      <div class="carousel-inner">
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <img src="{{ url_for('static', filename='images/course-images/' + image.course_image) }}">
+        </div>
+      </div>
+    {% endfor %}
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
+  <p>コースの地図</p>
   <div id="map-area">
     <label class="map-label"></label>
-    <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
+    <div id="mapid" style="width: 600px; height: 300px; border-radius: 10px;"></div>
+    <a class="map-data" id="download" href="#" download="{{ course_dict.title }}-route-data.kml" style="color: rgb(0, 162, 255); font-weight: bold;" onclick="handleDownload()">&nbsp;&nbsp;コースデータ(KML)をダウンロード</a>
   </div>
-  <a class="map-data" id="download" href="#" download="{{ course_dict.title }}-route-data.kml" style="color: rgb(0, 162, 255); font-weight: bold;" onclick="handleDownload()">コースデータ(KML)をダウンロード</a>
   <div class="course-info-container">
     <p>コースの説明</p>
     <div class="description-area">

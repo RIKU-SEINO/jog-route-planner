@@ -1,3 +1,7 @@
+p {
+  padding: 10px 0px;
+}
+
 .course-detail-container {
   margin-left: auto;
   margin-right: auto;
@@ -18,6 +22,43 @@
   padding: 15px;
   margin: 15px 0;
   border-radius: 5px;
+  text-align: center;
+}
+
+.carousel-item {
+  height: 500px;
+}
+
+.carousel-item-start, .carousel-item-next, .carousel-item-prev {
+  /* 画像が拡大するようなスタイルを削除 */
+  display: none;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #fff; /* 背景色 */
+  border: 2px solid #000; /* 枠線 */
+  border-radius: 50%; /* 丸み */
+  width: 3rem;
+  height: 3rem;
+}
+
+#map-area {
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+}
+
+#mapid {
+  width: 480px;
+  height: 300px;
+  border-radius: 10px;
 }
 
 .description-area p, .distance-area p, .address-area p, .facility-area p {
