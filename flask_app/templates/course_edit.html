@@ -28,9 +28,9 @@
             <img alt="course-images" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course_dict.course_image[0].course_image) }}">
             {{ form.course_images() }}
         </div>
-        <div id="map-area">
-            <label class="map-label"></label>
-            <div id="mapid" style="width: 480px; height: 300px; border-radius: 10px;"></div>
+        <label class="map-label">コースの地図</label>
+        <div class="map-area">
+            <div id="mapid" style="width: 600px; height: 300px; border-radius: 10px;"></div>
         </div>
         {{ form.hidden_tag() }}
         <input type="hidden" name="route_latlng" id="route_latlng">

@@ -5,10 +5,11 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 70px;
+  max-width: 600px;
 }
 
 /* 各入力エリアのスタイル */
-.map-area,
+#map-area,
 .title-area,
 .description-area,
 .distance-area,
@@ -40,11 +41,12 @@
 .prefecture-input,
 .city-input,
 .facilities-input {
-  width: 500px;
+  width: 100%;
   height: 40px;
   border-radius: 10px;
   border: 1.5px solid rgb(177, 177, 177);
   padding: 8px;
+  box-sizing: border-box;
 }
 
 .description-input {
@@ -62,9 +64,12 @@
   display: block;
   margin-top: 30px;
   margin-bottom: 20px;
-  width: 500px;
+  width: 100%;
   height: 40px;
   border-radius: 50px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 /* Select2コンテナのスタイル */
@@ -97,4 +102,7 @@
 
 #mapid {
   margin: auto;
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
 }
