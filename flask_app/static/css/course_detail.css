@@ -17,7 +17,10 @@ p {
   border: none;
 }
 
-.description-area, .distance-area, .address-area, .facility-area {
+.description-area, 
+.distance-area, 
+.address-area, 
+.facility-area {
   border: 1px solid #ccc;
   padding: 15px;
   margin: 15px 0;
@@ -26,7 +29,8 @@ p {
 }
 
 .carousel-item {
-  height: 500px;
+  margin-top: 30px;
+  height: 400px;
 }
 
 .carousel-item-start, .carousel-item-next, .carousel-item-prev {
@@ -42,11 +46,15 @@ p {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: #fff; /* 背景色 */
   border: 2px solid #000; /* 枠線 */
   border-radius: 50%; /* 丸み */
   width: 3rem;
   height: 3rem;
+  outline: black;
+  background-color: rgba(0, 0, 0, 0.3);
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid black;
 }
 
 #map-area {
