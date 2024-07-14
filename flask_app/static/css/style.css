@@ -245,6 +245,68 @@ nav a:hover {
     align-items: center; /* 中央揃え */
 }
 
+/* フッター全体のスタイル */
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    border-top: 1px solid #e9ecef;
+    margin-top: 20px;
+}
+
+/* フッター内のコンテナ */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* フッターロゴのスタイル */
+.footer-logo {
+    width: 150px;
+    height: auto;
+}
+
+/* フッター内のリンク */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links li a {
+    text-decoration: none;
+    color: #343a40;
+    font-weight: bold;
+}
+
+.footer-links li a:hover {
+    color: #007bff;
+}
+
+/* ソーシャルリンクのスタイル */
+.footer-social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social-links li a {
+    text-decoration: none;
+    color: #343a40;
+    font-size: 24px;
+}
+
+.footer-social-links li a:hover {
+    color: #007bff;
+}
+
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
     header {
@@ -285,5 +347,15 @@ nav a:hover {
     .flash-message {
         width: 90%;
         max-width: none;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 }

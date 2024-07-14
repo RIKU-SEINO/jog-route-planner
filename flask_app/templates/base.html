@@ -46,7 +46,7 @@
         <div class="header-container">
             <a href="/">
                 <button id="icon" class="btn btn-light logo" style="font-size: 25px; background-color: transparent; border: none">
-                    <img src="{{ url_for('static',filename='images/service-logo/service-logo.jpg') }}" style="width: 200px; height: 60px; background-color: transparent; padding: 3px; border-radius: 10px;">
+                    <img src="{{ url_for('static',filename='images/service-logo/service-logo.png') }}" style="width: 200px; height: 60px; background-color: transparent; padding: 3px; border-radius: 10px;">
                 </button>
             </a>
             <div class="login-signup-btns">
@@ -112,5 +112,29 @@
     </nav>
     {% block content %}
     {% endblock %}
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <a href="/">
+                    <img src="{{ url_for('static',filename='images/service-logo/service-logo.png') }}" alt="Logo" class="footer-logo">
+                </a>
+            </div>
+            <div class="footer-center">
+                <ul class="footer-links">
+                    <li><a href="/">ホーム</a></li>
+                    <li><a href="https://github.com/RIKU-SEINO/share-jog">サービスについて</a></li>
+                    <li><a href="/contact">お問い合わせ</a></li>
+                </ul>
+            </div>
+            <div class="footer-right">
+                <ul class="footer-social-links">
+                    <li><a href="https://www.facebook.com/profile.php?id=100076601165895"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/riku22490886" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="https://www.linkedin.com/in/riku-seino-5112782a6/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/RIKU-SEINO" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
