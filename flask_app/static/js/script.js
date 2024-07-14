@@ -4,7 +4,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-map.zoomControl.setPosition('bottomleft');
+map.zoomControl.setPosition('bottomright');
 
 let routeSearchButton = document.getElementById("searchBtn")
 

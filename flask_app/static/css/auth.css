@@ -37,3 +37,44 @@ input:focus, .bio-input:focus {
   height: 40px;
   border-radius: 50px;
 }
+
+/* スマホ用メディアクエリ */
+@media (max-width: 768px) {
+  .email-login-container, .email-signup-container {
+    width: 90%; /* スマホ用に幅を調整 */
+    margin-top: 30px; /* スマホ用にマージンを調整 */
+  }
+
+  .username-area, .email-area, .password-area, .bio-area, .address-area, .login-btn-container, .signup-btn-container {
+    padding: 15px; /* スマホ用にパディングを調整 */
+  }
+
+  .username-input-label, .email-input-label, .password-input-label, .bio-input-label, .address-input-label {
+    padding-bottom: 8px; /* スマホ用にラベルのパディングを調整 */
+  }
+
+  input, .bio-input, .address-input {
+    width: 100%; /* スマホ用に幅を100%に調整 */
+    height: 40px;
+    border-radius: 10px;
+    border: 1.5px solid rgb(177, 177, 177);
+  }
+
+  input:focus, .bio-input:focus {
+    border: 1.5px solid rgb(0, 162, 250);
+    outline: none;
+  }
+
+  .bio-input {
+    height: 100px;
+    resize: none;
+  }
+
+  #submit-login, #submit-signup {
+    width: 100%; /* スマホ用に幅を100%に調整 */
+    margin-top: 20px; /* スマホ用にマージンを調整 */
+    margin-bottom: 20px;
+    height: 40px;
+    border-radius: 50px;
+  }
+}

@@ -9,13 +9,13 @@
 }
 
 .searchbar-content {
-  position: fixed;
+  position: absolute;
   left: 0; /* 右端に配置（左端の場合はleft: 0;に変更） */
   z-index: 1000; /* 必要に応じてZインデックスを設定 */
   background-color: #fff; /* サイドバーの背景色 */
   padding: 10px; /* 必要に応じてパディングを調整 */
   max-width: 300px; /* 必要に応じて最大幅を設定 */
-  margin-top: 170px;
+  margin-top: 15px;
   margin-left: 13px;
   border-radius: 8px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), /* 右下は少し太めに */
@@ -95,64 +95,43 @@
 }
 
 .resultbar-container {
-  position: fixed;
+  position: fixed; /* スクロールしても位置が固定される */
+  bottom: 0px; /* 下からの距離 */
+  left: 50%; /* 左からの距離を50%に設定 */
+  transform: translateX(-50%); /* 中心揃えのためにX方向に50%移動 */
   z-index: 1000; /* 必要に応じてZインデックスを設定 */
-  background-color: #fff; /* サイドバーの背景色 */
-  padding: 10px; /* 必要に応じてパディングを調整 */
-  max-width: 300px; /* 必要に応じて最大幅を設定 */
-  height: 280px;
-  width: 600px;
-  margin-top: 170px;
-  margin-right: -10px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), /* 右下は少し太めに */
-              2px -2px 5px rgba(0, 0, 0, 0.3), /* 右上 */
-              -2px 2px 5px rgba(0, 0, 0, 0.3), /* 左下 */
-              -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
-  transition: right 0.3s ease;
+  background-color: #fff; /* 背景色 */
+  padding: 10px; /* パディング調整 */
+  max-width: 300px; /* 最大幅 */
+  height: 280px; /* 高さ */
+  width: 600px; /* 幅 */
+  border-radius: 5px; /* 角を丸める */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), /* シャドウ */
+              2px -2px 5px rgba(0, 0, 0, 0.3), 
+              -2px 2px 5px rgba(0, 0, 0, 0.3), 
+              -2px -2px 5px rgba(0, 0, 0, 0.3);
+  transition: right 0.3s ease; /* 右位置の遷移 */
 }
 
 .resultbar-container.show {
-  right: 7px;
+  /* このクラスがあるときに追加で適用するスタイルがあれば記述 */
 }
 
 .resultbar-container.none {
-  right: -500px;
+  visibility: hidden;
 }
 
 .resultbar-container.hidden {
-  right: -290px;
+  visibility: hidden;
 }
 
 .resultbar-content {
   padding: 10px;
-  position: relative;
-  top: -50px;
-  margin: 0 auto; 
   text-align: center;    
 }
 
-.resultbar-handle {
-  position: relative;
-  top: 10%;
-  left: -30.257px;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 50px;
-  background-color: #ffffff;
-  cursor: pointer;
-  border-radius: 5px 0 0 5px; /* 左上の角のみを丸く */
-  transition: left 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3), /* 左下 */
-              -2px -2px 5px rgba(0, 0, 0, 0.3); /* 左上 */
-}
-
 .register-course-btns-container {
-  padding:10px;
+  padding: 10px;
 }
 
 .btn-register-course {
@@ -162,26 +141,47 @@
   width: 100%;
 }
 
-.fa-solid.fa-chevron-left,.fa-solid.fa-chevron-right {
-  width: 30px; 
+.fa-solid.fa-chevron-left, .fa-solid.fa-chevron-right {
   width: 35px; 
   border-radius: 50%; 
-  padding: 10px 10px 10px 11px; 
+  padding: 10px;
   background-color: transparent;
   cursor: pointer;
   transition: background-color .1s linear;
 }
 
-.fa-solid.fa-chevron-left:hover,.fa-solid.fa-chevron-right:hover {
+.fa-solid.fa-chevron-left:hover, .fa-solid.fa-chevron-right:hover {
   background-color: rgb(228, 228, 228);
   transition: background-color .1s linear;
 }
 
-.fa-solid.fa-chevron-left.disabled,.fa-solid.fa-chevron-right.disabled {
-  width: 30px; 
-  width: 35px; 
-  border-radius: 50%; 
-  padding: 10px 10px 10px 11px; 
-  background-color: transparent;
-  color:#c2c2c2;
+.fa-solid.fa-chevron-left.disabled, .fa-solid.fa-chevron-right.disabled {
+  color: #c2c2c2;
 }
+
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+  .searchbar-content.expand {
+    transform: scale(0.8);
+    margin: -8px 0px 0px -20px;
+  }
+  .resultbar-container {
+    width: 300px; /* 幅を小さく調整 */
+    height: auto; /* 高さを自動調整 */
+    max-width: 100%; /* 最大幅を100%に設定 */
+    margin-top: 10px; /* 上部マージンを調整 */
+    padding: 5px; /* パディングを小さく調整 */
+  }
+
+  .resultbar-content {
+    padding: 5px; /* パディングを小さく調整 */
+  }
+
+  .course-elevation-chart {
+    display: none; /* チャートを非表示にする */
+  }
+}
+
+

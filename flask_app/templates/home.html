@@ -5,25 +5,20 @@
 {% endblock %}
 {% block content %}
 <section>
-    <div class="top-visual-container" style="position: relative">
+    <div class="top-visual-container">
         <div class="top-visual-image">
-            <img src="{{ url_for('static', filename='images/cover-image/cover-image1.png') }}" style="width: 100%; transform: scale(-1, 1);">
+            <img src="{{ url_for('static', filename='images/cover-image/cover-image1.png') }}" class="cover-image">
         </div>
-        <div class="top-visual-title" style="position: absolute; top:20px; left: 20px; color:white;">
+        <div class="top-visual-title">
             <h1>新たな景色を探し求めて、</h1>
             <h1>走り出そう。</h1>
         </div>
-        <form action="{{ url_for('courses.course_list') }}" method="POST" enctype="multipart/form-data">
-            <div class="top-visual-search-container" style="position: absolute; 
-        top: 65%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);">
-            {{ form.freeword(class="top-visual-search-input", type="text", placeholder=" キーワードでコースを検索") }}
-            <button type="submit">
-                <i class="fa fa-search search-icon"></i>
-            </button>
+        <form action="{{ url_for('courses.course_list') }}" method="POST" enctype="multipart/form-data" class="search-form">
+            <div class="top-visual-search-container">
+                {{ form.freeword(class="top-visual-search-input", type="text", placeholder=" キーワードでコースを検索") }}
+                <button type="submit" class="search-button">
+                    <i class="fa fa-search search-icon"></i>
+                </button>
             </div>
         </form>
     </div>

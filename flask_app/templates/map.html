@@ -9,75 +9,70 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
 {% endblock %}
 {% block content %}
-<div class="searchbar-content expand">
-    <div class="searchbar-pane" id="routing">
-        <button class="searchbar-btn close-btn" id="searchbar-close-btn" onclick="closeSearchBar()">
-            <i class="fa-solid fa-times"></i>
-        </button>
-        <div class="route-container expand">
-            <div class="leaflet-route-container">
-                <div class="leaflet-route-geocoders ">
-                    <div class="geocoder">
-                        <div class="leaflet-routing-geocoder">
-                            <input id="input-start-point" placeholder="スタート地点" value="">
-                            <button class="delete-waypoint" id="delete-start-point">
-                                <i class="fa-solid fa-trash" aria-hidden="true"></i>
+<div id="map-container">
+    <div class="searchbar-content expand">
+        <div class="searchbar-pane" id="routing">
+            <button class="searchbar-btn close-btn" id="searchbar-close-btn" onclick="closeSearchBar()">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <div class="route-container expand">
+                <div class="leaflet-route-container">
+                    <div class="leaflet-route-geocoders ">
+                        <div class="geocoder">
+                            <div class="leaflet-routing-geocoder">
+                                <input id="input-start-point" placeholder="スタート地点" value="">
+                                <button class="delete-waypoint" id="delete-start-point">
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="autocomplete-container" id="autocomplete-container-input-start-point"></div>
+                            <div class="leaflet-route-geocoder">
+                                <input id="input-goal-point" placeholder="ゴール地点" value="">
+                                <button class="delete-waypoint" id="delete-goal-point">
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="autocomplete-container" id="autocomplete-container-input-goal-point"></div>
+                        </div>
+                        
+                        <div class="leaflet-route-geocoder" id="custom-distance">
+                            <input class="" id="input-distance" type="number" min="1" max="200" step="0.1" placeholder="走行距離" value="">
+                            <span>&nbsp;km</span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-outline-dark btn-sm" id="searchBtn">
+                                <i class="fa fa-search"></i>
+                                <span>検索</span>
                             </button>
                         </div>
-                        <div class="autocomplete-container" id="autocomplete-container-input-start-point"></div>
-                        <div class="leaflet-route-geocoder">
-                            <input id="input-goal-point" placeholder="ゴール地点" value="">
-                            <button class="delete-waypoint" id="delete-goal-point">
-                                <i class="fa-solid fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="autocomplete-container" id="autocomplete-container-input-goal-point"></div>
-                    </div>
-                    
-                    <div class="leaflet-route-geocoder" id="custom-distance">
-                        <input class="" id="input-distance" type="number" min="1" max="200" step="0.1" placeholder="走行距離" value="">
-                        <span>&nbsp;km</span>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-outline-dark btn-sm" id="searchBtn">
-                            <i class="fa fa-search"></i>
-                            <span>検索</span>
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="resultbar-container none">
-    <div class="resultbar-handle" onclick="hideResultBar()">
+    <div class="resultbar-container none">
+        <div class="resultbar-content">
+            <div class="course-selection">
+                <i id="prev-course" class="fa-solid fa-chevron-left"></i>
+                <span class="course-title">&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
+                <i id="next-course" class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="course-distance">
+            </div>
+            <div class="course-elevation-chart">
+                <canvas id="elevation-chart" class="chart"></canvas>
+            </div>
+            <div class="register-course-btns-container">
+                <a type="submit" id="post-course-link" class="btn-register-course" href="">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>このコースを保存</span>
+                </a>
+            </div>
+        </div>
+    </div>    
+    <div class="resultbar-handle hidden" onclick="hideResultBar()" style="display: none;">
         <i class="fa-solid fa-caret-right" style="color: black;"></i>
     </div>
-    <div class="resultbar-content">
-        <div class="course-selection">
-            <i id="prev-course" class="fa-solid fa-chevron-left"></i>
-            <span class="course-title">&nbsp;&nbsp;ルート1&nbsp;&nbsp;</span>
-            <i id="next-course" class="fa-solid fa-chevron-right"></i>
-        </div>
-        <div class="course-distance">
-        </div>
-        <div class="course-elevation-chart">
-            <canvas id="elevation-chart" class="chart"></canvas>
-        </div>
-        <div class="register-course-btns-container">
-            <a type="submit" id="post-course-link" class="btn-register-course" href="">
-                <i class="fa-solid fa-plus"></i>
-                <span>このコースを保存</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- 他のメニューアイテムをここに追加 -->
-</div>
-
-<!-- Your map container here -->
-<div id="map-container">
     <div id="map"></div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

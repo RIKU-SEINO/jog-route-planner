@@ -1,11 +1,9 @@
-/* course_new.css */
-
 /* コース登録フォーム全体のスタイル */
 .course-create-container {
   margin-left: auto;
   margin-right: auto;
   margin-top: 70px;
-  max-width: 600px;
+  width: 600px;
 }
 
 /* 各入力エリアのスタイル */
@@ -43,7 +41,7 @@
 .city-input,
 .facilities-input {
   width: 100%;
-  height: 40px;
+  height: 45px;
   border-radius: 10px;
   border: 1.5px solid rgb(177, 177, 177);
   padding: 8px;
@@ -54,7 +52,7 @@
 .upload-fields {
   display: flex;
   flex-wrap: wrap;
-  gap: 50px; /* 画像間の隙間 */
+  gap: 40px; /* 画像間の隙間 */
 }
 
 .upload-field {
@@ -103,7 +101,6 @@
 }
 
 /* コースの説明 */
-
 .description-input {
   height: 100px;
   resize: none;
@@ -160,4 +157,15 @@
   width: 100%;
   height: 300px;
   border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .course-create-container {
+    padding: 10px;
+    width: 100%;
+  }
+
+  #mapid {
+    height: 200px; /* モバイルの場合の高さを調整 */
+  }
 }

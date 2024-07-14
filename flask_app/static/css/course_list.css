@@ -1,5 +1,6 @@
 .search-sidebar-container {
   display: flex;
+  margin: auto;
 }
 
 .sidebar {
@@ -110,6 +111,7 @@ width: 100%;
 
 .results-container {
 flex: 1;
+width: 800px;
 margin: 50px 50px 30px 0px;
 }
 
@@ -124,9 +126,9 @@ padding: 0;
 }
 
 .results-container li {
-margin-bottom: 15px;
-border: 1px solid #ccc;
-padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
 }
 
 .sc-ae1e9bc7-0 {
@@ -198,5 +200,34 @@ border-radius: 50%;
 margin-right: 10px;
 }
 
+/* モバイル用のスタイル */
+@media (max-width: 768px) {
+  .search-sidebar-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin: 10px 0;
+    height: auto;
+  }
+
+  .results-container {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .course-article {
+    flex-direction: column;
+  }
+
+  .course-image-container img {
+    height: auto;
+  }
+
+  .course-title {
+    padding: 10px 0;
+  }
+}
 
 

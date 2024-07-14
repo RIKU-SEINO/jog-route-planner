@@ -1,30 +1,49 @@
-.search-icon {
-  position: absolute;
-  right: 20px; /* アイコンを左端に配置する位置を調整します */
-  top: 50%; /* アイコンを垂直方向にセンタリング */
-  transform: translateY(-50%); /* アイコンを垂直方向にセンタリング */
-  color: #888; /* アイコンの色を調整します */
+/* 全体のスタイル */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
-.search-icon:hover {
-  cursor: pointer;
+/* 検索フォーム */
+.search-form {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .top-visual-search-input {
   border: none;
-  border-radius: 10px;
-  width: calc(100% - 30px); /* アイコンの幅と左の余白を考慮して、inputの幅を調整 */
-  height: 50px;
-  padding-left: 15px; /* アイコンの幅と左の余白を考慮して、入力フィールド内のテキストの位置を調整 */
-  padding-top: 5px;
-  padding-bottom: 5px;
-  width: 500px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1em;
 }
 
 .top-visual-search-input:focus {
   outline: none;
 }
 
+.search-button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.search-button .fa-search {
+  font-size: 1.2em;
+}
+
+/* セレクションのスタイル */
 .selection-wrapper {
   margin: 0 5vw;
   margin-top: 8vh;
@@ -35,59 +54,116 @@
 
 .selection-container {
   background-color: rgb(238, 238, 238);
-  padding: 10vh;
+  padding: 7vh;
   flex-grow: 1;
   cursor: pointer;
   border-radius: 10px;
 }
 
 .selection-container:hover {
-  background-color: #ccc; /* ホバー時の色 */
+  background-color: #ccc;
 }
 
 .selection-container .i-top-visual__inner-title {
   text-align: center;
+  width: 100%;
 }
 
 .selection-container .i-top-visual__inner-title i {
   margin-left: 5px;
 }
 
-.new-courses-wrapper {
-  padding: 5vh 5vw;
-}
-
-.new-courses-title {
-  background-color: rgb(234, 255, 221);
-  padding: 10px 10px 6px 10px;
-  border-radius: 10px;
-  display: flex;
-  a {
-      margin: auto 0 0 auto;
-  }
-}
-
-.new-courses-container {
-  margin-top: 5vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-.course-item {
-  width: calc(33.33% - 10px);
-  margin-bottom: 20px;
-}
-.course-item img {
+.cover-image {
   width: 100%;
-  height: auto;
 }
+
+.top-visual-title {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.top-visual-title > h1 {
+  font-size: 50px;
+}
+
+.top-visual-container {
+  position: relative;
+}
+
+.top-visual-search-container {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%,-70px);
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* メディアクエリ（レスポンシブ対応） */
 @media (max-width: 768px) {
-  .course-item {
-    width: calc(50% - 10px);
+  .top-visual-title {
+      left: 10px;
+      font-size: 14px;
+  }
+
+  .selection-wrapper {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: 4vh;
+  }
+
+  .selection-container {
+      padding: 5vh;
+  }
+
+  .top-visual-search-input {
+      width: calc(100% - 30px);
+  }
+
+  .top-visual-search-container {
+      flex-direction: column;
+      width: 80%;
+  }
+
+  .top-visual-title > h1 {
+    font-size: 37px;
   }
 }
+
 @media (max-width: 480px) {
-  .course-item {
-    width: 100%;
+  .top-visual-title {
+      left: 5px;
+      font-size: 12px;
   }
+
+  .top-visual-search-input {
+      width: calc(100% - 30px);
+  }
+
+  .cover-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .top-visual-title > h1 {
+    font-size: 30px;
+  }
+
 }
