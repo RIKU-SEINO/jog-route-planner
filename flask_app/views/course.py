@@ -195,22 +195,24 @@ def new():
 
     return render_template("course_new.html", form=form)
 
-@courses.route("/<course_id>/like", methods=["POST"])
+@courses.route("/<course_id>/like", methods=["GET","POST"])
 def like(course_id):
     if current_user.is_authenticated:
         course = Course.query.filter_by(id=course_id).first()
         like = Likes.query.filter_by(user_id=current_user.id, course_id=course_id).first()
 
-        if like:#すでにいいねしている
+        if like:  # すでにいいねしている
             db.session.delete(like)
             db.session.commit()
+            flash("いいねを取り消しました。", "success")
             return jsonify({"result": "unliked", "likes": len(course.likes)})
         else:
             new_like = Likes(user_id=current_user.id, course_id=course_id)
             db.session.add(new_like)
             db.session.commit()
+            flash("いいねしました。", "success")
             return jsonify({"result": "liked", "likes": len(course.likes)})
-        
+    
     return redirect(url_for('auth.login'))
 
 
@@ -236,7 +238,8 @@ def course_to_dict(course):
         'city_name': city_name,
         'facilities': [{'id': facility.id, 'name': facility.name} for facility in course.facilities],
         'user_id': course.user_id,
-        'course_image': course.course_images
+        'course_image': course.course_images,
+        'likes': course.likes
     }
 
     
