@@ -278,11 +278,8 @@ nav a:hover {
         margin-bottom: 0;
     }
 
-    .profile-btn:hover .user-menu__popup {
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        width: 90%;
+    .profile-btn:hover {
+        text-align: left;
     }
 
     .flash-message {
