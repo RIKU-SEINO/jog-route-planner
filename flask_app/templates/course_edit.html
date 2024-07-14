@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="{{ url_for('static', filename='js/script3.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script4.js') }}"></script>
 {% endblock %}
 {% block content %}
 <div class="course-create-container">
@@ -18,23 +19,44 @@
     <div id="course-info-waypoint_indices" data-course="{{ course_dict.waypoint_indices }}" type="hidden"></div>
     <div id="course-info-prefecture" data-course="{{ course_dict.prefecture_id }}" type="hidden"></div>
     <div id="course-info-city" data-course="{{ course_dict.city_id }}" type="hidden"></div>
+    <div id="course-info-image" data-course="{{ course_dict.course_image }}" type="hidden"></div>
     
     <form class="course-create-form" action="{{ url_for('courses.edit', next=request.args.get('next'), course_id=course_dict.id)}}" method="POST" enctype="multipart/form-data">
-        {% for message in get_flashed_messages() %}
-        <p style="color: red;">{{ message }}</p>
-        {% endfor %}
         <div class="title" style="text-align: center; font-size: 25px;">コース編集フォーム</div>
-        <div class="course-image-area">
-            <img alt="course-images" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course_dict.course_image[0].course_image) }}">
-            {{ form.course_images() }}
+        <div class="course_images-area">
+            {{ form.course_images.label(class="course_images-input-label") }}
+            <div class="upload-fields">
+                {% for image_obj in course_dict.course_image %}
+                    {% set image = image_obj.course_image %}
+                    <div class="upload-field" id="upload-field-{{ loop.index }}">
+                        <label for="file-input-{{ loop.index }}" class="upload-label">
+                            {{ form.course_images(class="file-input", id="file-input-" ~ loop.index|string, onchange="saveUpdatedIndex(" ~ loop.index|string ~ ")") }}
+                            <img src="{{ url_for('static', filename='images/course-images/' + image) }}" id="preview-{{ loop.index }}" class="image-preview">
+                        </label>
+                    </div>
+                {% endfor %}
+            
+                {% if course_dict.course_image|length < 5 %}
+                    <div class="upload-field" id="upload-field-{{ course_dict.course_image|length + 1 }}">
+                        <label for="file-input-{{ course_dict.course_image|length + 1 }}" class="upload-label">
+                            {{ form.course_images(class="file-input", id="file-input-" ~ (course_dict.course_image|length + 1)|string) }}
+                            <span class="upload-text" id="upload-text-{{ course_dict.course_image|length + 1 }}">クリックしてコースの写真をアップロード</span>
+                            <img id="preview-{{ course_dict.course_image|length + 1 }}" class="image-preview" style="display:none;">
+                        </label>
+                    </div>
+                {% endif %}
+            </div>
+
+
         </div>
-        <label class="map-label">コースの地図</label>
         <div class="map-area">
+            <label class="map-label">コースの地図</label>
             <div id="mapid" style="width: 600px; height: 300px; border-radius: 10px;"></div>
         </div>
         {{ form.hidden_tag() }}
         <input type="hidden" name="route_latlng" id="route_latlng">
         <input type="hidden" name="waypoint_indices" id="waypoint_indices">
+        <input type="hidden" name="updated_image_indices" id="updated_image_indices" value="[]">
         <div class="title-area">
             {{ form.title.label(class="title-input-label") }}
             <div class="title-input-area">

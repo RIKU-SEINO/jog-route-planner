@@ -9,18 +9,19 @@
 }
 
 /* 各入力エリアのスタイル */
-#map-area,
+.course_images-area,
+.map-area,
 .title-area,
 .description-area,
 .distance-area,
 .prefecture-area,
 .city-area,
 .facilities-area {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 40px;
 }
 
 /* 入力ラベルのスタイル */
+.course_images-input-area
 .map-label,
 .title-input-label,
 .description-input-label,
@@ -48,6 +49,60 @@
   padding: 8px;
   box-sizing: border-box;
 }
+
+/* コース画像アップロード */
+.upload-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px; /* 画像間の隙間 */
+}
+
+.upload-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-preview {
+  width: 120px; /* 画像の最大幅 */
+  height: 120px; /* 画像の最大高さ */
+  object-fit: cover;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px; /* ラベルの幅をフィールドに合わせる */
+  height: 150px; /* ラベルの高さを固定 */
+  padding: 20px;
+  border: 2px dashed #007bff;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  color: #007bff;
+  background-color: #f8f9fa;
+  position: relative;
+}
+
+.upload-label input[type="file"] {
+  display: none;
+}
+
+.upload-label:hover {
+  background-color: #e9ecef;
+}
+
+.upload-text {
+  display: block;
+  width: 100%;
+  white-space: normal; /* テキストを改行させる */
+  overflow: hidden;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* コースの説明 */
 
 .description-input {
   height: 100px;

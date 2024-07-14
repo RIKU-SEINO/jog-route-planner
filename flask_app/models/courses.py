@@ -29,3 +29,4 @@ class CourseImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     course_image = db.Column(db.String(255), default='default-course.png')
     course_id = db.Column(db.Integer, db.ForeignKey('data_models_courses.id'), nullable=False)
+    course_image_index = db.Column(db.Integer)

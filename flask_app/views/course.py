@@ -96,25 +96,24 @@ def edit(course_id):
             course.facilities = [facility for facility in form.facilities.data]
             course.is_public = form.is_public.data
 
-            # 既存の画像を削除
-            CourseImage.query.filter_by(course_id=course.id).delete()
+            updated_image_indices = request.form.get('updated_image_indices')
 
             # 新しい画像を追加
             files_uploaded = False
-            for course_image in request.files.getlist('course_images'):
+            for course_image_index, course_image in enumerate(request.files.getlist('course_images')):
                 if course_image and allowed_file(course_image.filename):
                     filename = secure_filename(course_image.filename)
                     file_path = os.path.join(Config.COURSE_IMAGES_UPLOAD_FOLDER, filename)
                     course_image.save(file_path)
 
                     # 新しいCourseImageインスタンスを作成してコースに追加
-                    new_image = CourseImage(course_image=filename, course_id=course.id)
+                    new_image = CourseImage(course_image=filename, course_id=course.id, course_image_index=course_image_index)
                     db.session.add(new_image)
                     files_uploaded = True
 
             # 画像がアップロードされていない場合、デフォルト画像を追加
             if not files_uploaded:
-                default_image = CourseImage(course_image='default-course.png', course_id=course.id)
+                default_image = CourseImage(course_image='default-course.png', course_id=course.id, course_image_index=0)
                 db.session.add(default_image)
 
             db.session.commit()
