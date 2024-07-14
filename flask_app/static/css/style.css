@@ -196,7 +196,6 @@ nav a:hover {
     color: inherit; /* ホバー時の色を親要素の色に継承 */
     text-decoration: none; /* ホバー時の下線を無効にする */
     transition: border-bottom 0.3s ease;
-    border-bottom: 2px solid rgba(72, 75, 76, 0.738);
 }
 
 /* flash メッセージ *//* Container for the flash message */
@@ -280,12 +279,12 @@ footer {
 
 .footer-links li a {
     text-decoration: none;
-    color: #343a40;
+    color: #4f4f4f;
     font-weight: bold;
 }
 
 .footer-links li a:hover {
-    color: #007bff;
+    color: #000000;
 }
 
 /* ソーシャルリンクのスタイル */
