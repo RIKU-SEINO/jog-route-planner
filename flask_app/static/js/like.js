@@ -10,11 +10,14 @@ $(document).ready(function() {
               if (data.result === 'liked') {
                   button.html(
                     '<i class="fa-regular fa-heart"></i><span>'+data.likes+'</span>');
-              } else {
+              } else if (data.result === "unliked") {
                   button.html(
                     '<i class="fa-regular fa-heart"></i><span>'+data.likes+'</span>');
+              } else {
+                  button.html(
+                  '<i class="fa-regular fa-heart"></i><span>'+data.likes+'</span>');
               }
-              //window.location.reload();#
+              window.location.reload();
           }
       });
   });

@@ -197,8 +197,8 @@ def new():
 
 @courses.route("/<course_id>/like", methods=["GET","POST"])
 def like(course_id):
+    course = Course.query.filter_by(id=course_id).first()
     if current_user.is_authenticated:
-        course = Course.query.filter_by(id=course_id).first()
         like = Likes.query.filter_by(user_id=current_user.id, course_id=course_id).first()
 
         if like:  # すでにいいねしている
@@ -213,7 +213,8 @@ def like(course_id):
             flash("いいねしました。", "success")
             return jsonify({"result": "liked", "likes": len(course.likes)})
     
-    return redirect(url_for('auth.login'))
+    flash("いいねをするにはログインが必要です。", "failure")
+    return jsonify({"result": "invalid", "likes": len(course.likes)})
 
 
 # courseモデルをdictに変換し、jsでjsonに変換することができるようにする
