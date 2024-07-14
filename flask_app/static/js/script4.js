@@ -90,7 +90,7 @@ function saveUpdatedIndex(index) {
         //以前にアップロードした画像フィールドに新たに画像を上書きアップロードしたので、backend側でupdate
         let arrayStr = document.getElementById('updated_image_indices').getAttribute("value");
         let array = JSON.parse(arrayStr);
-        array.push(index);
+        array.push(index-1);
         document.getElementById('updated_image_indices').value = JSON.stringify(array);
     }
 }

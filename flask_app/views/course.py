@@ -9,6 +9,7 @@ from flask_app.models.address import Prefecture, City
 from flask_app.forms.course_forms import CreateCourseForm, SearchCourseForm, EditCourseForm
 from werkzeug.utils import secure_filename
 import os
+import json
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
@@ -96,25 +97,46 @@ def edit(course_id):
             course.facilities = [facility for facility in form.facilities.data]
             course.is_public = form.is_public.data
 
-            updated_image_indices = request.form.get('updated_image_indices')
+            prev_course_images = CourseImage.query.filter_by(course_id=course.id).all()
+            updated_image_indices_str = request.form.get('updated_image_indices')
+            try:
+                updated_image_indices = json.loads(updated_image_indices_str)
+            except:
+                updated_image_indices = []
+
+            uploaded_files_ = request.files.getlist('course_images') # [f1, f2, ..., fn]
+            uploaded_files = [file for file in uploaded_files_ if file.content_type != "application/octet-stream"]
 
             # 新しい画像を追加
-            files_uploaded = False
-            for course_image_index, course_image in enumerate(request.files.getlist('course_images')):
-                if course_image and allowed_file(course_image.filename):
-                    filename = secure_filename(course_image.filename)
-                    file_path = os.path.join(Config.COURSE_IMAGES_UPLOAD_FOLDER, filename)
-                    course_image.save(file_path)
-
-                    # 新しいCourseImageインスタンスを作成してコースに追加
-                    new_image = CourseImage(course_image=filename, course_id=course.id, course_image_index=course_image_index)
-                    db.session.add(new_image)
-                    files_uploaded = True
-
-            # 画像がアップロードされていない場合、デフォルト画像を追加
-            if not files_uploaded:
-                default_image = CourseImage(course_image='default-course.png', course_id=course.id, course_image_index=0)
-                db.session.add(default_image)
+            field_index = 0
+            uploaded_cnt = 0
+            while True:
+                if field_index in updated_image_indices: #そのフィールドでは既存画像→新しい画像をアップロード
+                    uploaded_file = uploaded_files[uploaded_cnt]
+                    if uploaded_file and allowed_file(uploaded_file.filename):
+                        filename = secure_filename(uploaded_file.filename)
+                        file_path = os.path.join(Config.COURSE_IMAGES_UPLOAD_FOLDER, filename)
+                        uploaded_file.save(file_path)
+                        update_image = CourseImage.query.filter_by(course_id=course.id, course_image_index=field_index).first()
+                        update_image.course_image = filename
+                        db.session.commit()
+                    uploaded_cnt += 1
+                    field_index += 1
+                elif field_index < len(prev_course_images): #そのフィールドでは既存画像をそのまま残す
+                    field_index += 1
+                elif uploaded_cnt < len(uploaded_files): #そのフィールドでは新規アップロード
+                    uploaded_file = uploaded_files[uploaded_cnt]
+                    if uploaded_file and allowed_file(uploaded_file.filename):
+                        filename = secure_filename(uploaded_file.filename)
+                        file_path = os.path.join(Config.COURSE_IMAGES_UPLOAD_FOLDER, filename)
+                        uploaded_file.save(file_path)
+                        new_image = CourseImage(course_image=filename, course_id=course.id, course_image_index=field_index)
+                        db.session.add(new_image)
+                        db.session.commit()
+                    uploaded_cnt += 1
+                    field_index += 1
+                else:
+                    break
 
             db.session.commit()
 
@@ -162,7 +184,7 @@ def new():
         db.session.add(new_course)
         db.session.commit()
 
-        default_image = CourseImage(course_image='default-course.png', course_id=new_course.id)
+        default_image = CourseImage(course_image='default-course.png', course_id=new_course.id, course_image_index=0)
         db.session.add(default_image)
         db.session.commit()
 
