@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     courses = db.relationship('Course', backref='user', lazy=True)
+    likes = db.relationship('Likes', backref='user', lazy=True)
 
     @property
     def password(self):

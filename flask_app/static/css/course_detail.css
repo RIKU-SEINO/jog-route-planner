@@ -53,6 +53,25 @@ p {
   background-size: 100%, 100%;
   border-radius: 50%;
   border: 1px solid black;
+  
+}
+
+.like-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  transition: color 0.1s ease-in-out;
+  margin-left: auto; /* 右に寄せる */
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.like-btn .fa-regular {
+  margin-right: 5px; /* Space between icon and text */
 }
 
 #map-area {

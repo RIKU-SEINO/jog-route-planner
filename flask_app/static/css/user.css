@@ -34,7 +34,8 @@
 .my-courses-container {
   flex: 1;
   width: 700px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 30px 30px 30px 10px;
 }
 
@@ -55,6 +56,10 @@
   border: 1px solid #ccc;
 }
 
+p.course-item {
+  margin-left: 30px;
+}
+
 .course-article {
   width: 100%; /* 幅を100%に設定 */
   display: flex; /* フレックスコンテナにする */
@@ -73,6 +78,27 @@
 
 .course-title-column {
   margin-bottom: 10px; /* ヘッダーと本文の間にマージンを追加 */
+}
+
+.detail-description-container {
+  display: flex;
+}
+
+/* Bookmark Button */
+.like-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.1s ease-in-out;
+  margin-left: auto; /* 右に寄せる */
+}
+
+.like-btn .fa-regular {
+  margin-right: 5px; /* Space between icon and text */
 }
 
 .text-span {

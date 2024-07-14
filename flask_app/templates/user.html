@@ -48,48 +48,56 @@
             <ul>
                 {% for course in courses %}
                 <li class="course-item">
-                <article width="100%" direction="column" class="course-article">
-                    <a data-rtui-link="next" href="/courses/{{ course.id }}" class="course-link-1">
-                    <div direction="column" width="100%" class="course-image-container">
-                        <img alt="{{ course.title }}" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course.course_images[0].course_image) }}">
-                    </div>
-                    </a>
-                    <div direction="column" class="course-title">
-                    <header direction="column" class="course-title-column">
-                    <span class="text-span">
-                        <a data-rtui-link="next" href="/courses/{{ course.id }}" class="course-link-2">
-                        <h4 class="text-container">
-                            {{ course.title }}
-                        </h4>
-                        </a>
-                    </span>
-                    <span class="text-span">
-                        <div direction="column" class="course-area">
-                        {{ course.prefecture.name }}{{ course.city.name }} ({{ course.distance }}km)
-                        </div>
-                    </span>
-                    </header>
-                    <p class="text-container">
-                    <span class="text-span">
-                        {{  course.description }}
-                    </span>
-                    </p>
-                    <div class="user-container">
-                        <span class="text-span">
-                        <a data-rtui-link="next" href="/user/{{ course.user_id }}" class="profile-link">
-                            <img alt="user-icon" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/user-icon/'+course.user.profile_image) }}">
-                        </a>
-                        </span>  
-                        <span class="text-span">
-                        <a data-rtui-link="next" href="/user/{{ course.user_id }}" class="profile-link">
-                            <div direction="column" class="username-container">
-                            {{ course.user.username }}
+                    <article width="100%" direction="column" class="course-article">
+                        <a data-rtui-link="next" href="/courses/{{ course.id }}" class="course-link-1">
+                            <div direction="column" width="100%" class="course-image-container">
+                            <img alt="{{ course.title }}" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course.course_images[0].course_image) }}">
                             </div>
                         </a>
-                        </span>
-                    </div>
-                    </div>
-                </article>
+                        <div direction="column" class="course-title">
+                            <header direction="column" class="course-title-column">
+                            <span class="text-span">
+                            <a data-rtui-link="next" href="/courses/{{ course.id }}" class="course-link-2">
+                                <h4 class="text-container">
+                                {{ course.title }}
+                                </h4>
+                            </a>
+                            </span>
+                            <span class="text-span">
+                            <div direction="column" class="course-area">
+                                {{ course.prefecture.name }}{{ course.city.name }} ({{ course.distance }}km)
+                            </div>
+                            </span>
+                            </header>
+                            <div class="detail-description-container">
+                            <div>
+                                <p class="text-container">
+                                <span class="text-span">
+                                    {{ course.description }}
+                                </span>
+                                </p>
+                                <div class="user-container">
+                                <span class="text-span">
+                                    <a data-rtui-link="next" href="/user/{{ course.user_id }}" class="profile-link">
+                                    <img alt="user-icon" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/user-icon/'+course.user.profile_image) }}">
+                                    </a>
+                                </span>  
+                                <span class="text-span">
+                                    <a data-rtui-link="next" href="/user/{{ course.user_id }}" class="profile-link">
+                                    <div direction="column" class="username-container">
+                                        {{ course.user.username }}
+                                    </div>
+                                    </a>
+                                </span>
+                                </div>     
+                            </div>
+                            <button class="like-btn btn btn-sm" data-course-id="{{ course.id }}">
+                                <i class="fa-regular fa-heart"></i>
+                                <span>{{ course.likes|length }}</span>
+                            </button>
+                            </div>
+                        </div>
+                    </article>
                 </li>
                 {% endfor %}
             </ul>
@@ -100,6 +108,78 @@
                 <a href="/map" style="color: rgb(0, 162, 255); font-weight: bold;">こちら</a>からコースを作成してみましょう！
                 {% else %}
                 このユーザーが公開しているコースはありません。
+                {% endif %}
+            </p>
+            {% endif %}
+        </div>
+        <div class="my-courses-title">
+            <h2>いいねしたコース ({{ courses_liked|length }}件)</h2>
+        </div>
+        <div class="my-courses-container">
+            {% if courses_liked %}
+            <ul>
+                {% for course_liked in courses_liked %}
+                <li class="course-item">
+                    <article width="100%" direction="column" class="course-article">
+                        <a data-rtui-link="next" href="/courses/{{ course_liked.id }}" class="course-link-1">
+                            <div direction="column" width="100%" class="course-image-container">
+                            <img alt="{{ course_liked.title }}" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/course-images/'+course_liked.course_images[0].course_image) }}">
+                            </div>
+                        </a>
+                        <div direction="column" class="course-title">
+                            <header direction="column" class="course-title-column">
+                            <span class="text-span">
+                            <a data-rtui-link="next" href="/courses/{{ course_liked.id }}" class="course-link-2">
+                                <h4 class="text-container">
+                                {{ course_liked.title }}
+                                </h4>
+                            </a>
+                            </span>
+                            <span class="text-span">
+                            <div direction="column" class="course-area">
+                                {{ course_liked.prefecture.name }}{{ course_liked.city.name }} ({{ course_liked.distance }}km)
+                            </div>
+                            </span>
+                            </header>
+                            <div class="detail-description-container">
+                            <div>
+                                <p class="text-container">
+                                <span class="text-span">
+                                    {{ course_liked.description }}
+                                </span>
+                                </p>
+                                <div class="user-container">
+                                <span class="text-span">
+                                    <a data-rtui-link="next" href="/user/{{ course_liked.user_id }}" class="profile-link">
+                                    <img alt="user-icon" loading="lazy" decoding="async" data-nimg="fill" src="{{ url_for('static', filename='images/user-icon/'+course_liked.user.profile_image) }}">
+                                    </a>
+                                </span>  
+                                <span class="text-span">
+                                    <a data-rtui-link="next" href="/user/{{ course_liked.user_id }}" class="profile-link">
+                                    <div direction="column" class="username-container">
+                                        {{ course_liked.user.username }}
+                                    </div>
+                                    </a>
+                                </span>
+                                </div>     
+                            </div>
+                            <button class="like-btn btn btn-sm" data-course-id="{{ course_liked.id }}">
+                                <i class="fa-regular fa-heart"></i>
+                                <span>{{ course_liked.likes|length }}</span>
+                            </button>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="course-item">
+                {% if current_user.is_authenticated and (current_user.id == user.id)%}
+                まだコースをいいねしていません。
+                <a href="/courses" style="color: rgb(0, 162, 255); font-weight: bold;">こちら</a>からコースをいいねしてみましょう！
+                {% else %}
+                このユーザーがいいねしているコースはありません。
                 {% endif %}
             </p>
             {% endif %}

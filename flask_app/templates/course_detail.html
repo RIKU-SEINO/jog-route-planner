@@ -35,8 +35,16 @@
     </button>
   </div>
 
-  <div class="title" style="font-size: 40px;">{{ course_dict.title }}</div>
-  <div class="title short-description-area" style="font-size: 20px; margin-bottom: 50px;">{{ course_dict.prefecture_name }}{{ course_dict.city_name }} {{ course_dict.distance }}km</div>
+  <div class="title-area" style="display: flex;">
+    <div>
+      <div class="title" style="font-size: 40px;">{{ course_dict.title }}</div>
+      <div class="title short-description-area" style="font-size: 20px; margin-bottom: 50px;">{{ course_dict.prefecture_name }}{{ course_dict.city_name }} {{ course_dict.distance }}km</div>
+    </div>
+    <button class="like-btn btn btn-sm" data-course-id="{{ course_dict.id }}">
+      <i class="fa-regular fa-heart"></i>
+      <span>{{ course_dict.likes|length }}</span>
+    </button>
+  </div>
   <p>コースの地図</p>
   <div id="map-area">
     <label class="map-label"></label>

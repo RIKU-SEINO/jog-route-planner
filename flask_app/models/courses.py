@@ -23,6 +23,7 @@ class Course(db.Model):
     facilities = db.relationship('Facility', secondary=course_facility, lazy='subquery',
                                  backref=db.backref('courses', lazy=True))
     course_images = db.relationship('CourseImage', backref='course', lazy=True)
+    likes = db.relationship('Likes', backref='course', lazy=True)
 
 class CourseImage(db.Model):
     __tablename__ = "data_models_courseimage"
@@ -30,3 +31,11 @@ class CourseImage(db.Model):
     course_image = db.Column(db.String(255), default='default-course.png')
     course_id = db.Column(db.Integer, db.ForeignKey('data_models_courses.id'), nullable=False)
     course_image_index = db.Column(db.Integer)
+
+class Likes(db.Model):
+    __tablename__ = "data_models_likes"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('data_models_users.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('data_models_courses.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)

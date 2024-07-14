@@ -162,6 +162,32 @@ padding: 10px; /* 内側のパディングを追加 */
 margin-bottom: 10px; /* ヘッダーと本文の間にマージンを追加 */
 }
 
+.detail-description-container {
+  display: flex;
+}
+
+/* Bookmark Button */
+.like-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.1s ease-in-out;
+  margin-left: auto; /* 右に寄せる */
+}
+
+.like-btn:hover {
+  background-color: none;
+  color: #007bff; /* Change color on hover */
+}
+
+.like-btn .fa-regular {
+  margin-right: 5px; /* Space between icon and text */
+}
+
 .text-span {
 margin: 0; /* マージンをリセット */
 }

@@ -3,7 +3,7 @@ from flask_app.config import Config
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flask_app.models.users import User
-from flask_app.models.courses import Course
+from flask_app.models.courses import Course, Likes
 from flask_app.forms.auth_forms import EditUserForm
 from werkzeug.utils import secure_filename
 import os
@@ -26,8 +26,10 @@ def index(userid):
     user = User.query.filter_by(id=userid).first()
     if user:
         form = EditUserForm()
+        likes = Likes.query.filter_by(user_id=user.id).all()
         if current_user.is_authenticated and str(current_user.id) == str(userid):
             courses = Course.query.filter_by(user_id=userid).all()
+            courses_liked = [like.course for like in likes]
             if request.method == "POST":
                 filename = secure_filename(form.profile_image.data.filename)
                 if allowed_file(filename):
@@ -43,7 +45,8 @@ def index(userid):
 
         else:
             courses = Course.query.filter_by(user_id=user.id, is_public=True).all()
-        return render_template("user.html", user=user, courses=courses, form=form)
+            courses_liked = [like.course for like in likes if like.course.is_public]
+        return render_template("user.html", user=user, courses=courses, courses_liked=courses_liked, form=form)
     else:
         return render_template("404.html")
     

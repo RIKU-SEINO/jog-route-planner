@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, jsonify, redirect, url_fo
 from sqlalchemy import or_
 from flask_login import login_required, current_user
 from flask_app.models.facilities import Facility
-from flask_app.models.courses import Course, CourseImage
+from flask_app.models.courses import Course, CourseImage, Likes
 from flask_app.models.address import Prefecture, City
 from flask_app.forms.course_forms import CreateCourseForm, SearchCourseForm, EditCourseForm
 from werkzeug.utils import secure_filename
@@ -194,6 +194,25 @@ def new():
         return render_template("course_detail.html",course_dict=new_course_dict)
 
     return render_template("course_new.html", form=form)
+
+@courses.route("/<course_id>/like", methods=["POST"])
+def like(course_id):
+    if current_user.is_authenticated:
+        course = Course.query.filter_by(id=course_id).first()
+        like = Likes.query.filter_by(user_id=current_user.id, course_id=course_id).first()
+
+        if like:#すでにいいねしている
+            db.session.delete(like)
+            db.session.commit()
+            return jsonify({"result": "unliked", "likes": len(course.likes)})
+        else:
+            new_like = Likes(user_id=current_user.id, course_id=course_id)
+            db.session.add(new_like)
+            db.session.commit()
+            return jsonify({"result": "liked", "likes": len(course.likes)})
+        
+    return redirect(url_for('auth.login'))
+
 
 # courseモデルをdictに変換し、jsでjsonに変換することができるようにする
 def course_to_dict(course):
