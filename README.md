@@ -14,15 +14,39 @@ GoogleMapのような通常の経路案内サービスは、移動に最適な�
 
 また、他のユーザーが走ったコースを検索・ブックマークすることもできるため、自分が今まで知らなかった素敵なランニングコースに出会うことができるかもしれません。
 
-## サイトマップ
-これから書く
-
-## 使い方
-これから書く
-
 ## ローカルで使いたい方向け
-これから書く
+1. Pythonの環境構築
+- Windows: https://prog-8.com/docs/python-env-win
+- macOS: https://prog-8.com/docs/python-env
 
+2. お使いの環境にクローンし、作業ディレクトリに移動
+```
+git clone https://github.com/RIKU-SEINO/share-jog
+cd share-jog
+```
+
+3. 仮想環境の構築
+https://qiita.com/shun_sakamoto/items/7944d0ac4d30edf91fde
+
+3. 必要なライブラリをインストール
+```
+pip install -r requirements.txt
+```
+4. データベースの作成
+```
+python -m flask db init
+python -m flask db migrate
+python -m flask db upgrade
+```
+5. 初期データの投入
+```
+chmod +x import_data.sh
+./import_data.sh
+```
+6. ローカルホストでアプリケーションを実行
+```
+python -m flask run
+```
 
 ## 使用技術
 - バックエンド
