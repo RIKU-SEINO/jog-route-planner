@@ -254,8 +254,9 @@ function fetchRoute(startlatLng, goallatLng, targetLength) {
 
 function drawRoute(routeLatLng, wayPointIndices, routeIndex) {
     let routePolyline = L.polyline(routeLatLng, { color: 'red' })
+
     routePolyline.addTo(map);
-    map.fitBounds(routePolyline.getBounds().pad(0.6));
+    map.fitBounds(routePolyline.getBounds().pad(0.8));
 
     var wayPointCnt = 0;
     for (var i = 0; i < routeLatLng.length; i++) {
